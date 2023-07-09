@@ -1,0 +1,481 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MZ}{\mathbb{Z}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MTI}{\mathbb{I}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\MP}{\mathcal{P}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle }
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+\newcommand{\wht}[1]{\widehat{#1}}
+
+%%Трансформация Фурье
+\newcommand{\fourt}[1]{\mathcal{F}\left(#1\right)}
+\newcommand{\ifourt}[1]{\mathcal{F}^{-1}\left(#1\right)}
+
+%%Взятие в скобки, модули и норму
+\newcommand{\parfit}[1]{\left( #1 \right)}
+\newcommand{\modfit}[1]{\left| #1 \right|}
+\newcommand{\sqparfit}[1]{\left\{ #1 \right\}}
+\newcommand{\normfit}[1]{\left\| #1 \right\|}
+
+%%Функция для обозначения равномерной сходимости по множеству
+\newcommand{\uconv}[1]{\overset{#1}{\rightrightarrows}}
+\newcommand{\uconvm}[2]{\overset{#1}{\underset{#2}{\rightrightarrows}}}
+
+
+%%Функция для обозначения нижнего и верхнего интегралов
+\def\upint{\mathchoice%
+	{\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	\int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 30}
+\section*{Преобразование Фурье}
+
+\begin{defn}
+	\uwave{Преобразованием Фурье} функции $f \colon \MR \to \MC$ называется функция вида: 
+	$$
+		\widehat{f}(y) = \fourt{f}(y) =  \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}f(x)e^{-ixy}dx
+	$$
+\end{defn}	
+\begin{prop}
+	Если $f$ абсолютно интегрируема на $\MR$, то есть:
+	$$
+		\ddint{-\infty}{+\infty}|f(x)|dx < \infty
+	$$
+	то преобразование Фурье существует, является непрерывной функцией и верна оценка:
+	$$
+		\left|\wht{f}(y)\right| \leq \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}|f(x)|dx
+	$$
+\end{prop}
+	
+\begin{defn}
+	\uwave{Пространством быстроубывающих функций Шварца} назовем пространство функций:
+	$$
+		S = \left\{f \colon \MR \to \MC, \, f \in C^{\infty}(\MC), \, \forall m, n \in \MN 	\cup\{0\}, \, \sup\limits_{x 
+		\in \MR}\left(1 + |x|^n\right){\cdot}|f^{(m)}(x)| < \infty\right\}
+	$$
+	где под $f \in C^{\infty}(\MC)$ мы понимаем бесконечную дифференцируемость функции $f$: то есть действительные и мнимые части - бесконечно дифференцируемые функции. 
+\end{defn}
+
+\begin{theorem}(\textbf{преобразование Фурье и дифференцирование}) $\forall f \in S$ будут верны следующие соотношения:
+	$$
+		\fourt{f^{(k)}}(y) = (iy)^k\fourt{f}(y)
+	$$
+	$$	
+		\fourt{f}^{(k)}(y) = \fourt{(-ix)^kf(x)}(y)
+	$$
+\end{theorem}
+\begin{corollary}
+	Преобразование Фурье это линейное отображение из $S$ в $S$.
+\end{corollary}
+\begin{proof}
+	Линейность следует из линейности интеграла. Пусть $f \in S$, тогда:
+	\begin{enumerate}[label=\arabic*)]
+		\item $\widehat{f}$ - бесконечно дифференцируемая по теореме $1$;
+		\item Осталось показать, что $\widehat{f}^{(k)}$ стремятся к нулю быстрее всякой степени $\Rightarrow$ рассмотрим следующее:
+		$$
+			|y|^m{\cdot}\left|\wht{f}^{(k)}(y)\right| = |y|^m{\cdot}\left|\fourt{(-ix)^kf(x)}(y)\right| = \left|(iy)^m{\cdot}\fourt{(-ix)^kf(x)}(y)\right| =	\left|\fourt{\left((-ix)^kf(x)\right)^{(m)}}(y)\right| 
+		$$
+		$$
+			f(x) \in S \Rightarrow (-ix)^kf(x) \in S \Rightarrow \left((-ix)^kf(x)\right)^{(m)} \in S \Rightarrow \left|\fourt{\left((-ix)^kf(x)\right)^{(m)}}(y)\right| < \infty
+		$$
+		Преобразование Фурье функции из $S$ является ограниченной функцией $\Rightarrow \widehat{f}^{(k)}$ стремятся к нулю быстрее всякой степени.
+	\end{enumerate}
+\end{proof}
+
+Таким образом, преобразование Фурье это линейный оператор из $S$ в $S$, а пространство $S$ для преобразования Фурье это инвариантное подпространство. Чтобы узнать как устроено линейное преобразование надо посмотреть на его собственные вектора и собственные значения. Спектр преобразования Фурье мы не можем изучить, но самую важную собственную функцию указать можем.
+
+\begin{theorem}
+	$$
+		\fourt{e^{-\frac{x^2}{2}}}(y) = e^{-\frac{y^2}{2}}
+	$$
+\end{theorem}
+\begin{proof}
+	Заметим, что:
+	$$
+		\left(e^{-\frac{x^2}{2}}\right)' = -xe^{-\frac{x^2}{2}}
+	$$
+	Также отметим, что функция $f(x) = e^{-\frac{x^2}{2}}$ решает дифференциальное уравнение: 
+	$$
+		\left\{
+		\begin{array}{ccc}
+			f' &=& -xf \\ 
+			f(0) &=& 1
+		\end{array}
+		\right.
+	$$
+	и такое решение единственное. Продифференцируем преобразование Фурье этой функции:
+	$$
+		\fourt{e^{-\frac{x^2}{2}}}'(y) = \fourt{-ixe^{-\frac{x^2}{2}}}(y) = i\fourt{-xe^{-\frac{x^2}{2}}}(y) = i\fourt{\left(e^{-\frac{x^2}{2}}\right)' }(y) =
+	$$
+	$$
+		=	i{\cdot}(iy){\cdot}\fourt{e^{-\frac{x^2}{2}}}(y) = -y\fourt{e^{-\frac{x^2}{2}}}(y)
+	$$
+	$$
+			\fourt{e^{-\frac{x^2}{2}}}(0) = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}e^{-\frac{x^2}{2}}{\cdot}1 \, dx = \dfrac{1}{\sqrt{2\pi}}\sqrt{2\pi} = 1 
+	$$
+	Из-за четности функции $e^{-\frac{x^2}{2}}$ её преобразование Фурье это вещественная  функция, поскольку в разложении интеграл с синусом будет равен $0$. Тем самым, преобразование Фурье удовлетворяет дифференциальному уравнению выше, а в силу единственности решения мы получаем требуемое.
+\end{proof}
+\begin{rem}
+	Заметим, что замена переменных в преобразовании Фурье будет происходить так ($a \neq 0$):
+	$$
+		\fourt{f(ax + b)}(y) = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}f(ax + b)e^{-ixy}dx = \dfrac{1}{\sqrt{2\pi}}{\cdot}\dfrac{1}{|a|}\ddint{-\infty}{+\infty}f(t)e^{-\frac{i(t-b)y}{a}}dt = \dfrac{e^{\tfrac{iby}{a}}}{|a|}\fourt{f\left(\tfrac{y}{a}\right)}
+	$$
+\end{rem}
+
+Мы бы хотели показать, что преобразование Фурье это изоморфизм, но для этого нам надо установить обратное преобразование Фурье. Начнём с рассмотрения важной леммы.
+\begin{lemma}
+	Пусть $f,g \in S$, тогда верно равенство:
+	$$
+		\forall x \in \MR, \, \ddint{-\infty}{+\infty}\wht{f}(y)g(y)e^{ixy}dy = \ddint{-\infty}{+\infty}f(x + y)\wht{g}(y)dy
+	$$
+\end{lemma}
+\begin{proof}
+	По определению преобразования Фурье:
+	$$
+		\ddint{-\infty}{+\infty}\wht{f}(y)g(y)e^{ixy}dy = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}\left(\ddint{-\infty}{+\infty}f(t)e^{-ity}dt\right)g(y)e^{ixy}dx = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}\left(\ddint{-\infty}{+\infty}f(t)g(y)e^{-iy(t-x)}dt\right)dy = 
+	$$
+	$$
+		=\dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}\left(\ddint{-\infty}{+\infty}f(t)g(y)e^{-iy(t-x)}dy\right)dt = \ddint{-\infty}{+\infty}f(t)\left(\dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}g(y)e^{-iy(t-x)}dy\right)dt =
+	$$
+	$$
+		=	\ddint{-\infty}{+\infty}f(t)\wht{g}(t-x)dt =|t = s + x| = \ddint{-\infty}{+\infty}f(x + x)\wht{g}(s)ds
+	$$
+	где мы поменяли интегралы местами в силу того, что все функции бесконечно гладкие,  убывают быстрее любой степени и экспонента оценивается единицей. Распишем подробнее:
+	\begin{enumerate}[label=\arabic*)]
+		\item Функция по $y$ - гладкая функция на $\MR$:
+		$$
+			y \mapsto g(y) e^{iyx}\ddint{-\infty}{+\infty}f(t)e^{-iyt}dt = g(y) (\cos{(xy)} + i\sin{(xy)})\fourt{f}(y)
+		$$
+		так как $\fourt{f}(y) \in S$ - гладкая функция, $g(y) \in S \Rightarrow$ бесконечно гладкая, $e^{iyx}$ - раскладывается в косинусы и синусы $\Rightarrow$ тоже гладкая функция. Для модуля:
+		$$
+			y \mapsto |g(y)|{\cdot} |e^{iyx}|\ddint{-\infty}{+\infty}|f(t)|{\cdot}\left|e^{-iyt}\right|dt = |g(y)|\ddint{-\infty}{+\infty}|f(t)|dt = C_1|g(y)| < \infty
+		$$
+		Модули функций из $S$ как минимум непрерывные функции $\Rightarrow$ функция интегрируема;
+		\item Функция по $t$ - гладкая функция на $\MR$:
+		$$
+			t \mapsto f(t) \ddint{-\infty}{+\infty}g(y)e^{-iy(t-x)}dy = f(t)\fourt{g}(t-x)
+		$$
+		так как $\fourt{g}(t-x)$ - гладкая функция, $f(t) \in S \Rightarrow$ бесконечно гладкая. Для модуля:
+		$$
+			t \mapsto |f(t)| \ddint{-\infty}{+\infty}|g(y)|{\cdot}\left|e^{-iy(t-x)}\right|dy = |f(t)|\ddint{-\infty}{+\infty}|g(y)|dy = C_2|f(t)|< \infty
+		$$
+		Модули функций из $S$ как минимум непрерывные функции $\Rightarrow$ функция интегрируема;
+		\item Повторный интеграл от модуля сходится:
+		$$
+			\ddint{-\infty}{+\infty}\left(\ddint{-\infty}{+\infty}\left|f(t)g(y)e^{-iy(t-x)}\right|dt\right)dy \leq
+			\ddint{-\infty}{+\infty}\left(\ddint{-\infty}{+\infty}|f(t)|{\cdot}|g(y)|dt\right)dy =
+		$$
+		$$	
+			= \ddint{-\infty}{+\infty}|g(y)|\left(\ddint{-\infty}{+\infty}|f(t)|{\cdot}dt\right)dy = C_1\ddint{-\infty}{+\infty}|g(y)|dy = C_1{\cdot}C_2 < \infty
+		$$
+		
+	\end{enumerate}
+	Таким образом, применение теоремы о перестановке двух несобственных интегралов возможно.
+\end{proof}
+
+\begin{corollary}
+	При $x = 0$ получаем равенство: 
+	$$
+		\ddint{-\infty}{+\infty}\wht{f}(y)g(y)dy = \ddint{-\infty}{+\infty}f(y)\wht{g}(y)dy	
+	$$
+\end{corollary}
+
+\begin{theorem}(\textbf{формула обращения преобразования Фурье})
+	$$
+		\forall f \in S, \, f(x) = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}\wht{f}(y)e^{ixy}dy
+	$$
+\end{theorem}
+\begin{proof}
+	Пусть $\VE > 0$, рассмотрим функцию $g_\VE(x) = e^{-\tfrac{\VE^2 x^2}{2}}$ и найдем её преобразование Фурье:
+	$$
+		\wht{g_\VE}(y) = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}e^{-\tfrac{\VE^2 x^2}{2}}e^{-ixy}dx = \left|\VE x = t \Rightarrow x =\tfrac{t}{\VE}\right| = \dfrac{1}{\sqrt{2\pi}}{\cdot}\dfrac{1}{\VE}\ddint{-\infty}{+\infty}e^{-\tfrac{t^2}{2}}e^{-it\tfrac{y}{\VE}}dt = \dfrac{1}{\VE}e^{-\tfrac{y^2}{2\VE^2}}
+	$$
+	где мы воспользовались теоремой $2$. Видим, что получили дельтаобразную последовательность (не хватает только нормировки). Подставляем эту функцию в лемму, тогда:
+	$$
+		\ddint{-\infty}{+\infty}\wht{f}(y)e^{-\tfrac{\VE^2 y^2}{2}}e^{ixy}dy = \ddint{-\infty}{+\infty}f(x + y)\dfrac{1}{\VE}e^{-\tfrac{y^2}{2\VE^2}}dy = \left|\tfrac{y}{\VE} = z\right| = \ddint{-\infty}{+\infty}f(x + \VE z)e^{-\tfrac{z^2}{2}}dz
+	$$
+	Поскольку: $f(x) \in S \Rightarrow$ она непрерывная, ограниченная и по признаку Вейерштрасса у нас есть равномерная сходимость:
+	$$
+		\left|\,\ddint{-\infty}{+\infty}f(x + \VE z)e^{-\tfrac{z^2}{2}}dz\right| \leq \ddint{-\infty}{+\infty}|f(x + \VE z)|{\cdot} e^{-\tfrac{z^2}{2}}dz \leq C_1\ddint{-\infty}{+\infty}e^{-\tfrac{z^2}{2}}dz < \infty
+	$$
+	В этом случае мы можем переставить предел и интеграл местами. Аналогично:
+	$$
+		\left|\,\ddint{-\infty}{+\infty}\wht{f}(y)e^{-\tfrac{\VE^2 y^2}{2}}e^{ixy}dy\right| \leq \ddint{-\infty}{+\infty}\left|\wht{f}(y)\right|e^{-\tfrac{\VE^2 y^2}{2}}dy \leq C_2 \ddint{-\infty}{+\infty}e^{-\tfrac{\VE^2 y^2}{2}}dy < \infty 
+	$$
+	Перейдем к пределу под интегралами:
+	$$
+		\ddint{-\infty}{+\infty}\lim\limits_{\VE \to 0}\left(\wht{f}(y)e^{-\tfrac{\VE^2 y^2}{2}}e^{ixy}\right)dy = \ddint{-\infty}{+\infty}\wht{f}(y)e^{ixy}dy = \ddint{-\infty}{+\infty}\lim\limits_{\VE \to 0}\left(f(x + \VE z)e^{-\tfrac{z^2}{2}}\right)dz = f(x)\sqrt{2\pi}
+	$$
+\end{proof}
+\newpage
+\section*{Обратное преобразование Фурье}
+
+\begin{defn}
+	\uwave{Обратным преобразованием Фурье} функции $f \colon \MR \to \MC$ называется функция вида: 
+	$$
+		\ifourt{f}(x) =  \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}f(y)e^{ixy}dy
+	$$
+\end{defn}
+	
+\begin{prop}
+	Верны следующие свойства обратного преобразования Фурье:
+	\begin{enumerate}[label=\arabic*)]
+		\item $\ifourt{f}(x) = \fourt{f}(-x)$;
+		\item $\ifourt{f}(x) = \overline{\fourt{\overline{f}}}(x)$;
+	\end{enumerate}
+\end{prop}
+\begin{proof}\hfill
+	\begin{enumerate}[label=\arabic*)]
+		\item Просто по определению;
+		\item По определению:
+		$$
+			\fourt{\overline{f}}(x) = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}\overline{f(y)}e^{-ixy}dy \Rightarrow \overline{\fourt{\overline{f}}}(x) = \dfrac{1}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}f(y)e^{ixy}dy
+		$$
+	\end{enumerate}
+\end{proof}
+Отсюда очевидно, что обратное преобразование Фурье функции из $S$ переводит в функции из $S$, это очевидно, поскольку его можно записать как обычное преобразование Фурье и потом взять сопряжение, а сопряжение не выводит нас из класса быстроубывающих функций.
+\begin{prop}
+	Верны следующие равенства:
+	\begin{enumerate}[label=\arabic*)]
+		\item $\ifourt{\fourt{f}}(x) = f(x)$;
+		\item $\fourt{\ifourt{f}}(x) = f(x)$;
+	\end{enumerate}
+\end{prop}
+\begin{proof}\hfill
+	\begin{enumerate}[label=\arabic*)]
+		\item Доказано в теореме $3$;
+		\item $\fourt{\ifourt{f}}(x) = \fourt{ \overline{\fourt{\overline{f}}}}(x) = \overline{\overline{\fourt{ \overline{\fourt{\overline{f}}}}}}(x) = \overline{\ifourt{\fourt{\overline{f}}}}(x) = \overline{\overline{f}}(x) = f(x)$
+	\end{enumerate}
+\end{proof}
+
+\begin{corollary}
+	Преобразование Фурье это линейный изоморфизм пространства $S$.
+\end{corollary}
+\begin{proof}
+	Из утверждения $3$ следует, что преобразование Фурье это биекция из $S$ в $S$, по определению. Или по-другому, мы написали правое и левое обратное преобразование, тем самым установили, что преобразование - линейный изоморфизм.
+\end{proof}
+\begin{rem}
+	Получается, что преобразование Фурье это невырожденная замена координат, которая превращает дифференцирование в умножение на $ix$:
+	$$
+		\mathcal{F}\colon (S,f) \leftrightarrow (S,g), \, g = \wht{f}, \,  \dfrac{d}{dx}f(x) \Leftrightarrow ix{\cdot}g(x)
+	$$
+\end{rem}
+
+\begin{theorem} Верны следующие соотношения для свёртки:
+	\begin{enumerate}[label=\arabic*)]
+		\item $f, g \in S \Rightarrow f*g \in S$;
+		\item $\fourt{f*g} = \sqrt{2\pi}\fourt{f}{\cdot}\fourt{g}$;
+	\end{enumerate}
+\end{theorem}
+\begin{rem}
+	Отсюда видно, почему в пространстве $S$ нет единицы, потому что единица не быстроубывающая функция.
+\end{rem}
+\begin{proof}\hfill
+	\begin{enumerate}[label=\arabic*)]
+		\item По определению:
+		$$
+			f*g(x) = \ddint{-\infty}{+\infty}f(t)g(x-t)dt
+		$$
+		Сам интеграл сходится, подинтегральные функции бесконечно гладкие. Также верно:
+		$$
+			g \in S \Rightarrow \exists \, M \colon |g'| \leq M \Rightarrow \left|\,\ddint{-\infty}{+\infty}f(t)g'(x-t)dt\right| \leq \ddint{-\infty}{+\infty}M|f(t)dt < \infty
+		$$
+		Следовательно, интеграл сходится равномерно по признаку Вейерштрасса $\Rightarrow$ можно дифференцировать под несобственным интегралом:
+		$$
+			f,g \in S \Rightarrow \dfrac{d}{dx}f*g(x) = \ddint{-\infty}{+\infty}f(t)g'(x-t)dt
+		$$
+		И это будет верно для любой производной $\Rightarrow$ получили бесконечную гладкость из теоремы о дифференцировании по параметру. Проверим, что это будет быстроубывающая функция:
+		$$
+			g \in S \Rightarrow (1 + |x|^m){\cdot}\ddint{-\infty}{+\infty}|f(t)|{\cdot}|g(x - t)|dt = \ddint{-\infty}{+\infty}|f(t)|{\cdot}\dfrac{1 + |x|^m}{1 + |x -t|^m}{\cdot}(1 + |x-t|^m){\cdot}|g(x-t)|dt \leq 
+		$$
+		$$
+			\leq M\ddint{-\infty}{+\infty}|f(t)|{\cdot}\dfrac{1 + |x|^m}{1 + |x -t|^m}dt \leq 2^mM\ddint{-\infty}{+\infty}|f(t)|{\cdot}\dfrac{|t|^m + |x-t|^m}{1 + |x-t|^m}dt \leq 2^mM \ddint{-\infty}{+\infty}|f(t)|(|t|^m+1)dt
+		$$
+		где мы воспользовались тем, что:
+		$$
+			|x| \leq |t| + |x - t| \Rightarrow |x|^m \leq (|t| + |x - t|)^m \leq 2^m(|t|^m + |x-t|^m) \Rightarrow
+		$$
+		$$
+			\Rightarrow \forall x,t \in \MR, \, \dfrac{1 + |x|^m}{1 + |x -t|^m} \leq 2^m\dfrac{1 + |t|^m + |x-t|^m}{1 + |x-t|^m}\leq 2^m\left(\dfrac{|t|^m}{1} + \dfrac{|x-t|^m+ 1}{|x-t|^m + 1}\right) \leq 2^m(|t|^m + 1)
+		$$
+		Тогда мы получаем, что: 
+		$$
+			f \in S \Rightarrow M\ddint{-\infty}{+\infty}|f(t)|{\cdot}\dfrac{1 + |x|^m}{1 + |x -t|^m}dt \leq 2^mM \ddint{-\infty}{+\infty}|f(t)|{\cdot}(|t|^m+1)dt < \infty
+		$$
+		\item Проверим преобразование Фурье свёртки:
+		$$
+			\fourt{f*g} = \sqrt{2\pi}\fourt{f}{\cdot}\fourt{g} \Leftrightarrow  f*g = \sqrt{2\pi}\ifourt{\fourt{f}{\cdot}\fourt{g}} \Rightarrow
+		$$
+		$$
+			\Rightarrow \sqrt{2\pi}\ifourt{\fourt{f}{\cdot}\fourt{g}} = \dfrac{\sqrt{2\pi}}{\sqrt{2\pi}}\ddint{-\infty}{+\infty}\fourt{f}(y){\cdot}\fourt{g}(y){\cdot}e^{ixy}dy  = \ddint{-\infty}{+\infty}f(x + y) \fourt{\fourt{g}}(y)dy
+		$$
+		где мы применили лемму $1$. Попробуем понять, что такое $\fourt{\fourt{g}}(y)$:
+		$$
+			\fourt{\fourt{g}}(y) = \ifourt{\fourt{g}}(-y) = g(-y) \Rightarrow
+		$$
+		$$
+			\Rightarrow \ddint{-\infty}{+\infty}f(x + y) \fourt{\fourt{g}}(y)dy = \ddint{-\infty}{+\infty}f(x + y)g(-y)dy = |y \to -y| 
+		$$
+		$$
+			= \ddint{-\infty}{+\infty}f(x - y) g(y)dy = g*f(x) = f*g(x)
+		$$
+	\end{enumerate}
+\end{proof}
+
+\begin{theorem}(\textbf{равенство Парсеваля})
+	Рассмотрим на $S$ скалярное произведение:
+	$$
+		\inner{f}{g} = \ddint{-\infty}{+\infty}f(x)\overline{g(x)}dx
+	$$
+	Тогда справедливо равенство: 
+	$$
+		\inner{f}{g} = \inner{\fourt{f}}{\fourt{g}}
+	$$
+\end{theorem}
+\begin{rem}
+	Линейные операторы, сохраняющие скалярное произведение называются ортогональными операторы (или унитарными). Оказывается преобразование Фурье это ещё и ортогональная замена координат, если мы рассматриваем скалярное произведение, определенное выше.
+\end{rem}
+\begin{proof}
+	Запишем скалярное произведение по определению и воспользуемся леммой $1$ при $x = 0$:
+	$$
+		\inner{\fourt{f}}{\fourt{g}} = \ddint{-\infty}{+\infty}\fourt{f}(x)\overline{\fourt{g}(x)}dx = \ddint{-\infty}{+\infty}f(x)\fourt{\overline{\fourt{g}(x)}}dx = 
+	$$
+	$$
+		= \ddint{-\infty}{+\infty}f(x)\fourt{\overline{\fourt{\overline{\overline{g}}}(x)}}dx = \ddint{-\infty}{+\infty}f(x)\fourt{\ifourt{\overline{g}}}(x)dx = \ddint{-\infty}{+\infty}f(x)\overline{g(x)}d = \inner{f}{g}
+	$$
+\end{proof}
+
+Равенство Парсеваля очень часто используют в уравнениях математической физики, поскольку дифференциальные уравнения в пространстве $S$ решать очень легко.
+
+\textbf{Пример}: $g'' - g = f \in S, \, g \in S$ какое будет решение? Возьмем преобразование Фурье:
+$$
+	(iy)^2\fourt{g} - \fourt{g} = \fourt{f} \Leftrightarrow \fourt{g} = - \dfrac{\fourt{f}}{1 + y^2} \Rightarrow  g = \ifourt{- \dfrac{\fourt{f}}{1 + y^2}}
+$$
+
+\end{document}

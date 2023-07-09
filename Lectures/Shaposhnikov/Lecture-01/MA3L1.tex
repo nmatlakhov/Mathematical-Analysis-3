@@ -1,0 +1,410 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 1}
+\section*{Числовые ряды}
+
+Пусть $\{a_n\}$ - числовая последовательность.
+\begin{defn}
+	Формальное выражение $\ssum{a}$ называется \uwave{рядом}.
+\end{defn}
+\begin{defn}
+	Сумма первых $N$ слагаемых $S_N = a_1 + \dotsc + a_N$ называется \uwave{частичной суммой}.
+\end{defn}
+\begin{defn}
+	Говорят, что \uwave{ряд сходится} и $S$ - его сумма, если существует конечный предел: 
+	$$
+		\lim\limits_{N\to \infty}S_N = S
+	$$
+	Обозначаем $S$ также, как и сам ряд:
+	$$
+		S = \sum\limits_{n = 1}^{\infty}a_n
+	$$
+\end{defn}
+\begin{rem}
+	С рядом $\displaystyle \sum\limits_{n=1}^{\infty}a_n$ связяна последовательность частичных сумм $S_N$ и обратно, со всякой последовательностью $x_n$ связан ряд 
+	$$
+		\sum\limits_{n=1}^{\infty}(x_n - x_{n-1}) = (x_1 - 0) + (x_2 - x_1) + (x_3 - x_2) + (x_4 - x_3) + \dotsc 
+	$$
+	где частичная сумма $S_n$ равна $n$-ому члену последовательности $\{x_n\}$:
+	$$
+		x_n = x_1 + (x_2 - x_1) + \dotsc + (x_n - x_{n-1}) = S_n, \, x_0 = 0
+	$$
+	то есть это последовательность частичных сумм этого ряда.
+\end{rem}
+
+\begin{prop}(\textbf{Необходимое условие сходимости})
+	Если ряд $\displaystyle \sum\limits_{n=1}^{\infty}a_n$ сходится, то $a_n \to 0$.
+\end{prop}
+\begin{proof}
+	$a_n = S_n - S_{n-1} \to S - S = 0$, поскольку ряд сходится.
+\end{proof}
+\begin{prop}
+	Добавление, отбрасывание, изменение конечного набора слагаемых ряда не влияет на его сходимость, но может изменить его сумму.
+\end{prop}
+\begin{proof}
+	Такое изменение при достаточно большом $N$ просто добавляет к $S_N$ фиксированное число: пусть изменение касается членов ряда с номерами меньше $N_0 \Rightarrow \exists \, C \colon \forall N > N_0, \, S_N^\prime = S_N + C$, где $S_N^\prime$ - это частичная сумма измененного ряда. Сходимость исходной последовательности $(S_N)$ равносильна сходимости новой последовательности $(S_N + C)$.
+\end{proof}
+
+Можно ли расставлять скобки произвольным образом в ряде? Например, был ряд: 
+$$
+	a_1 + a_2 + a_3 + \dotsc + a_n + \dotsc
+$$
+можно ли вместо него рассматривать ряд:
+$$
+	(a_1 + a_2) + (a_3 + \dotsc + a_n) + (\dotsc) + \dotsc + (\dotsc) + \dotsc
+$$
+Рассмотрим следующий  ряд:
+$$
+	1 - 1 + 1 - 1 + 1 - 1 + \dotsc
+$$
+Если расставить скобки произвольным образом, то мы получим:
+$$
+	(1 - 1) + (1 - 1) + (1 - 1) + \dotsc = 0 + 0 + 0 + \dotsc
+$$
+
+Таким образом нас волнуют два вопроса:
+\begin{enumerate}[label ={(\arabic*)}]
+	\item Пусть ряд сходится, можно ли в нем расставить скобки произвольным образом?
+	\item Не знаем, сходится ряд или нет, но если расставим скобки, то он будет сходится. Правда ли что исходный ряд сходится?
+\end{enumerate}
+
+\begin{prop}
+	Пусть ряд $\ssum{a}$ сходится и $0 = n_0 < n_1 < n_2 < \dotsc$ - возрастающая последовательность натуральных чисел, тогда следующий ряд:
+	$$
+		\sum\limits_{k = 0}^{\infty}\left(\sum\limits_{n = n_k + 1}^{n_{k+1}}a_n\right)
+	$$
+	сходится к той же сумме.
+\end{prop}
+\begin{proof}
+	Пусть
+	$$
+		\widetilde{S}_{K+1} = \displaystyle \sum\limits_{k = 0}^{K}\left(\sum\limits_{n = n_k + 1}^{n_{k+1}}a_n\right) = a_1 + \dotsc + a_{n_{K+1}}
+	$$ 
+	Заметим, что $\widetilde{S}_{K+1} = S_{n_{K+1}}$ - подпоследовательность сходящейся последовательности $S_N \Rightarrow$ предел подпоследовательности равен пределу последовательности.
+\end{proof}
+\begin{prop}
+	Пусть последовательность $a_n \to 0$ и $0 = n_0 < n_1 < n_2 < \dotsc$ - возрастающая последовательность натуральных чисел, причем $n_{k+1} - n_k \leq L, \, \forall k$. Тогда из сходимости сгруппированного ряда:
+	$$
+		\sum\limits_{k = 0}^{\infty}\left(\sum\limits_{n = n_k + 1}^{n_{k+1}}a_n\right)
+	$$
+	следует сходимость исходного ряда $\ssum{a}$.
+\end{prop}
+\begin{rem}
+	Условием $n_{k+1} - n_k \leq L, \, \forall k$ запрещается брать группировку сколь угодно большой длины.
+\end{rem}
+\begin{proof}
+	Возьмем произвольную частичную сумму $S_N = a_1 + \dotsc + a_N$, она устроена следующим образом:
+	$$
+		S_N = a_1 + \dotsc + a_N = a_1 + \dotsc + a_{n_K} + a_{n_K + 1} + \dotsc + a_N
+	$$
+	где после $a_N$ может не хватать слагаемых до $a_{n_{K+1}} \colon a_{N+1}, \dotsc, a_{n_{K+1} -1}, a_{n_{K+1}}$. Пусть $\widetilde{S}_K \to S$, то есть сгруппированный ряд сходится и верно следующее:
+	$$
+		\forall \VE > 0, \, \exists \, K_\VE \colon \forall K \geq K_\VE, \, |\widetilde{S}_K - S| = |a_1 + \dotsc + a_{n_{K-1}} + a_{n_{K-1} + 1} + \dotsc + a_{n_{K}} - S| < \VE	
+	$$
+	Кроме того, мы знаем, что:
+	$$
+		\forall \VE > 0, \, \exists \, N_\VE \colon \forall n > N_\VE, \, |a_n| < \VE
+	$$
+	Сравним сумму $S_N$ с пределом $S$ частичных сумм сгруппированного ряда:
+	$$
+		|S_N - S|\leq |(a_1 + \dotsc + a_{n_K}) - S| + |a_{n_K + 1}| + \dotsc + |a_N|, \, n_K < N \leq n_{K+1}
+	$$
+	Пусть $N > \max\{n_{K_\VE},n_{N_\VE}\}$, где $n_{N_\VE} \geq N_\VE$, поскольку $n_p \geq p$ (см. лекцию $9$, $1$-ый курс, теорема $1$). Так как $K$ - последний номер, при котором $N > n_K$, то $n_K \geq \max\{n_{K_\VE},n_{N_\VE}\} \Rightarrow n_{K} + 1 > \max\{n_{K_\VE},n_{N_\VE}\}$.
+	
+	Тогда $n_K + 1 > n_{N_\VE} \geq N_\VE \wedge n_K + 1 > n_{K_\VE}\Rightarrow$ выполняются условия сходимости выше. Так как слагаемых между $n_K + 1$ и $N$ не больше $L$, то будет верно следующее:
+	$$
+		|S_N - S| \leq |\widetilde{S}_K - S| + |a_{n_K + 1}| + \dotsc + |a_N| \leq \VE + L\VE = \VE(1+L)
+	$$
+\end{proof}
+\begin{exrc}
+	Придумать ряд $\ssum{a}$, такой что $\forall A \in \MR ,\, \exists$ расстановка скобок такая, что сгруппированный ряд сходится к $A$.
+\end{exrc}
+\begin{proof}
+	Поскольку любой ряд можно связать с последовательностью частичных сумм и обратно, то нам необходимо придумать такую последовательность чисел, из которой можно получить сходяющуюся подпоследовательность к любому числу $a \in \MR$. Рассмотрим произвольную нумерацию рациональных чисел в виде бесконечной последовательности вида:
+	$$
+		r_1, r_1, r_2, r_1, r_2, r_3, r_1, \dotsc, r_1, r_2, \dotsc, r_n, \dotsc 
+	$$
+	В ней каждое рациональное число встречается бесконечно много раз. Соответственно, для любого произвольного числа $a \in \MR$ можно выбрать подпоследовательность из последовательности $\{r_n\}$, которая будет сходиться к этому числу. Обозначим члены этой последовательности следующим образом:
+	$$
+		\{a_n\} \colon a_0 = 0, a_1 = r_1, a_2 = r_1, a_3 = r_2, a_4 = r_1, a_5 = r_2, a_6 = r_3, a_7 = r_1, \dotsc
+	$$
+	
+	Сформируем из этой последовательности ряд:
+	$$
+		\sum\limits_{n = 1}^{\infty} (a_n - a_{n-1}) = a_1 + a_2 - a_1 + a_3 - a_2 + a_4 - a_3 + a_5 - a_4 + a_6 - a_5 + a_7 - a_6 + \dotsc
+	$$
+	расставляя в полученном ряду скобки, можно получить любую исходную подпоследовательность в виде последовательности частичных сумм. Например, последовательность $\widetilde{S}_1 = a_3, \widetilde{S}_2 = a_4, \widetilde{S}_3 = a_7$ можно получить расставив скобки следующим образом:
+	$$
+		(a_1 + a_2 - a_1 + a_3 - a_2) + (a_4 - a_3) + (a_5 - a_4 + a_6 - a_5 + a_7 - a_6) + \dotsc
+	$$
+	Следовательно, частичные суммы сгруппированного ряда будут равны требуемому:
+	$$
+		\sum\limits_{k = 0}^{\infty}\left(\sum\limits_{n = n_k+1}^{n_{k+1}}a_n\right) = a_3 + (a_4 - a_3) + (a_7 - a_4) + \dotsc \Rightarrow \widetilde{S}_1 = a_3, \widetilde{S}_2 = a_4, \widetilde{S}_3 = a_7
+	$$
+	Предел частичных сумм сгруппированного ряда будет сходится к заранее заданному $a \in \MR$. 
+\end{proof}
+\newpage
+\subsection*{Критерий Коши}
+\begin{defn}
+	Ряд $\ssum{a}$ \uwave{сходится абсолютно}, если сходится ряд $\displaystyle \sum\limits_{n = 1}^{\infty} |a_n|$.
+\end{defn}
+\begin{defn}
+	Ряд $\ssum{a}$ \uwave{сходится условно}, если ряд $\ssum{a}$ сходится и ряд $\displaystyle \sum\limits_{n = 1}^{\infty} |a_n|$ расходится.
+\end{defn}
+
+\begin{theorem}(\textbf{Критерий Коши})
+	Ряд $\ssum{a}$ сходится $\Leftrightarrow \forall \VE > 0, \, \exists \, N \colon \forall n,m > N, \, |S_n - S_m| < \VE$ или подробнее:
+	$$
+	\forall \VE > 0, \, \exists \, N \colon \forall n, m \colon n > m > N, \, \left|\sum\limits_{k = m+1}^{n} a_k \right| < \VE
+	$$
+\end{theorem}
+\begin{proof}
+	Сразу следует из критерия Коши для последовательностей, поскольку сходимость равна фундаментальности последовательности частичных сумм.
+\end{proof}
+
+\begin{prop}
+	Если ряд сходится абсолютно, то он сходится.
+\end{prop}
+\begin{proof}
+	Так как ряд из модулей $a_n$ сходится, то используем критерий Коши:
+	$$
+		\forall \VE > 0, \, \exists \, N \colon \forall n > m > N, \big||a_{m+1}| + \dotsc + |a_n|\big| = |a_{m+1}| + \dotsc + |a_n| < \VE
+	$$
+	Тогда по неравенству треугольника:
+	$$
+		|a_{m+1} + \dotsc + a_n| \leq  |a_{m+1}| + \dotsc + |a_n| < \VE 
+	$$
+	Следовательно, для ряда $\ssum{a}$ выполнено условия критерия Коши $\Rightarrow$ ряд сходится.
+\end{proof}
+\begin{rem}
+	Прежде чем исследовать исходный ряд на сходимость, необходимо посмотреть на сходимость ряда из модулей, поскольку он будет состоять из неотрицательных слагаемых, что в свою очередь проще анализировать.
+\end{rem}
+\subsection*{Ряды с неотрицательными слагаемыми}
+Пусть $a_n \geq 0$, тогда $S_N$ не убывают и следовательно по теореме Вейрштрасса (про монотонные последовательности см. лекцию $8$, $1$-ый курс, теор. $1$ и $6$) сходимость $S_N$ равносильна их ограниченности.
+\begin{prop}
+	Ряд $\ssum{a}$ из неотрицательных слагаемых ($\forall n, \, a_n \geq 0$) сходится $\Leftrightarrow S_N$ - ограничены.
+\end{prop}
+\begin{corollary}
+	Пусть $0 \leq a_n \leq b_n$, тогда:
+	\begin{enumerate}[label ={(\arabic*)}]
+		\item из сходимости ряда $\ssum{b}$ следует сходимость ряда $\ssum{a}$;
+		\item из расходимости ряда $\ssum{a}$ следует расходимость ряда $\ssum{b}$;
+	\end{enumerate} 
+\end{corollary} 
+\begin{proof}
+	Сразу следует из замечания про теорему Вейрштрасса. Частичные суммы ряда $\ssum{a}$ ограничены частичными суммами ряда $\ssum{b}$. Тогда:
+	\begin{enumerate}[label ={(\arabic*)}]
+		\item Если ряд $\ssum{b}$ сходится, то его частичные суммы ограничены, а значит ограничены и частичные суммы ряда $\ssum{a} \Rightarrow$ он сходится;
+		\item Если ряд $\ssum{a}$ расходится, то его частичные суммы не ограничены, а значит не ограничены и частичные суммы ряда $\ssum{b} \Rightarrow$ он расходится;
+	\end{enumerate}
+\end{proof}
+\begin{corollary}
+	Пусть, начиная с некоторого номера, выполнено: 
+	$$
+		\forall n, \, c_1 b_n \leq a_n \leq c_2 b_n
+	$$
+	где $c_1, c_2 >0$ - фиксированы $\Rightarrow$ ряды $\ssum{a}$ и $\ssum{b}$ сходятся и расходятся одновременно.
+\end{corollary}
+\begin{proof}
+	Это прямое следствие предыдущего следствия.
+\end{proof}
+\begin{rem}
+	Как получать такого рода неравенства? Взяли некий ряд $a_n$ и хотим его подменить чем-то более простым и это следствие объясняет, что можно заменить ряд из $a_n$ на ряд из $b_n$. Для этого нужно проверить неравенства из условия, но очень часто доказать его сложно, а вычислить предел - нет. 
+\end{rem}
+\uline{\textbf{Типичный пример}}: Пусть $a_n > 0, \, b_n > 0$ и мы знаем, что $\lim\limits_{n \to \infty}\dfrac{a_n}{b_n} = c > 0$. Оказывается, что из этого следует, что ряды $\ssum{a}$ и $\ssum{b}$ сходятся и расходятся одновременно.
+
+Предел отношения $\lim\limits_{n \to \infty}\dfrac{a_n}{b_n} = c \Rightarrow$ начиная с некоторого номера, все элементы последовательности $\dfrac{a_n}{b_n}$ лежат между $c_1$ и $c_2$.
+
+\newpage
+\section*{Примеры}
+Рассмотрим типичные примеры числовых рядов.
+
+$1)$ \uwave{Геометрическая прогрессия}: $\displaystyle \sum\limits_{n = 0}^{\infty}q^n$, если $|q| < 1 \Rightarrow$ сходится, если $|q| \geq 1 \Rightarrow$ расходится.
+
+$2)$ \uwave{Гармонический ряд}:  $\displaystyle \sum\limits_{n = 1}^{\infty}\dfrac{1}{n}$, данный ряд расходится.
+\begin{proof}
+	Рассмотрим суммы вида:
+	$$
+		\forall m, \, \dfrac{1}{m+1} + \dotsc + \dfrac{1}{2m} \geq \dfrac{1}{2m} + \dotsc + \dfrac{1}{2m} = \dfrac{m}{2m} = \dfrac{1}{2}
+	$$
+	тогда частичные суммы не ограничены, поскольку: 
+	$$
+		1 + \dfrac{1}{2} \geq \dfrac{1}{2}, \, \dfrac{1}{3} + \dfrac{1}{4} \geq \dfrac{1}{2}, \, \dfrac{1}{5} + \dotsc + \dfrac{1}{8} \geq \dfrac{1}{2} ,\dotsc \Rightarrow \forall n \in \MN, \, |S_{2n} - S_{n}| \geq \dfrac{1}{2}
+	$$
+	то есть последовательность не фундаментальна.
+\end{proof}
+
+$3)$ $\displaystyle \sum\limits_{n=1}^{\infty} \dfrac{1}{n^p}$, если $p \leq 1 \Rightarrow$ ряд расходится, поскольку тогда $\dfrac{1}{n^p} \geq \dfrac{1}{n}$, если $p > 1 \Rightarrow$ ряд сходится.
+\begin{proof}
+	Рассмотрим следующий ряд:
+	$$
+		\sum\limits_{n = 1}^{\infty}\left(\dfrac{1}{n^q} - \dfrac{1}{(n+1)^q}\right) \Rightarrow S_N = 1 - \dfrac{1}{(N+1)^q}, \, q > 0 \Rightarrow \lim\limits_{N \to \infty} S_N = 1
+	$$
+	Распишем слагаемое внутри скобок и используем бином Ньютона:
+	$$
+ 		\dfrac{1}{n^q} - \dfrac{1}{(n+1)^q} = \dfrac{(n+1)^q - n^q}{n^q (n+1)^q} = \dfrac{1}{n^q}{\cdot}\dfrac{\left(1 + \tfrac{1}{n}\right)^q -1 }{\left(1 + \tfrac{1}{n}\right)^q} = \dfrac{1}{n^q}{\cdot}\dfrac{1 + \tfrac{q}{n} + \overline{o}\left(\tfrac{1}{n}\right) - 1 }{\left(1 + \tfrac{1}{n}\right)^q} = \dfrac{1}{n^{q+1}}{\cdot}\dfrac{q + \overline{o}(1)}{\left(1 + \tfrac{1}{n}\right)^q}
+	$$
+	где предел правого сомножителя последнего слагаемого равен $q$ при $n\to \infty$: 
+	$$
+		\lim\limits_{n \to \infty}\overline{o}(1) = 0, \, \lim\limits_{n \to \infty}(1 + \tfrac{1}{n})^q = 1 \Rightarrow \lim\limits_{n \to \infty} \dfrac{q + \overline{o}(1)}{(1 + \tfrac{1}{n})^q} = q
+	$$
+	Тогда заметим, что:
+	$$
+		\dfrac{\dfrac{1}{n^q} - \dfrac{1}{(n+1)^q}}{\dfrac{1}{n^{q+1}}} \to q > 0
+	$$
+	По следствию выше, ряд $\displaystyle \sum\limits_{n = 1}^{\infty}\left(\dfrac{1}{n^q} - \dfrac{1}{(n+1)^q}\right)$ сходится $\Leftrightarrow$ ряд $\displaystyle \sum\limits_{n = 1}^{\infty}\dfrac{1}{n^{q+1}}$ сходится. Поскольку $q > 0$, то мы получили требуемое: интересующий нас ряд сходится при $p = 1 + q > 1$.
+\end{proof}
+\newpage
+
+$4)$ \uwave{Ряд Лейбница}: $\displaystyle \sum\limits_{n = 1}^{\infty} \dfrac{(-1)^n}{n}$, данный ряд сходится. Докажем это через теорему о сходимости любых убывающих монотонных последовательностей.
+\begin{theorem}(\textbf{Признак Лейбница})
+	Пусть $a_n$ не возрастают и $a_n \to 0$, тогда ряд $\displaystyle \sum\limits_{n = 1}^{\infty}(-1)^n{\cdot}a_n$ сходится.
+\end{theorem}
+\begin{proof}
+	Невозрастание $a_n$ ($\forall n \in \MN, \, a_n \geq a_{n+1}$) и $a_n \to 0$ автоматически делает эту последовательность неотрицательной. Распишем четную частичную сумму $S_{2k}$:
+	$$
+		S_{2k} = -a_1 + a_2 -a_3 + a_4 - \dotsc + a_{2k} = -a_1 + (a_2 - a_3) + (a_4 - a_5) + \dotsc + a_{2k}
+	$$ 
+	Поскольку последовательность не возрастает, то $a_n - a_{n+1} \geq 0$, а также $a_{2k} \geq 0 \Rightarrow S_{2k} \geq -a_1$. Перейдем в частичной сумме от $k$ к $k+1$:
+	$$
+		S_{2k + 2} = S_{2k} - a_{2k+1} + a_{2k + 2}, \, a_{2k+1} \geq a_{2k+2} \Rightarrow -a_{2k+1} + a_{2k + 2} \leq 0 \Rightarrow S_{2k} \geq S_{2k+2} 
+	$$
+	Следовательно, $S_{2k}$ - не возрастает и ограничена снизу $\Rightarrow$ она сходится к $S$. Рассмотрим нечетную частичную сумму $S_{2k+1}$:
+	$$
+		S_{2k+1} = S_{2k} - a_{2k+1}, \, \lim\limits_{k \to \infty} a_{2k+1} = 0 \Rightarrow \lim\limits_{k \to \infty} S_{2k+1} = \lim\limits_{k \to \infty} S_{2k} = S
+	$$
+	Если в последовательности элементы с четными номерами и нечетными номерами сходятся к одному и тому же, то эта последовательность сходится, поскольку начиная с некоторого номера все четные и все нечетные, то есть все члены, мало отличаются от предельного значения $S$.
+\end{proof}
+\begin{defn}
+	Пусть $a_n$ не возрастают и $a_n \to 0$, тогда ряды $\displaystyle \sum\limits_{n = 1}^{\infty}(-1)^n{\cdot}a_n$ называются \uwave{рядами Лейбница}.
+\end{defn}
+\begin{rem}
+	Ряд Лейбница $4)$ также дает нам пример условно сходящегося ряда, который не сходится абсолютно.
+\end{rem}
+\begin{rem}
+	При работе со знакопеременными рядами рассматривать только асимптотику нельзя.
+\end{rem}
+
+$5)$ Ряд $\displaystyle \sum\limits_{n = 1}^{\infty} \left(\dfrac{(-1)^n}{\sqrt{n}} + \dfrac{1}{n}\right)$ имеет слагаемые, которые ведут себя асимптотически как $\dfrac{(-1)^n}{\sqrt{n}}$, а ряд из них сходится как ряд Лейбница. Но на самом деле исходный ряд построен как сумма ряда Лейбница и гармонического, который расходится $\Rightarrow$ исходный ряд расходится.
+
+\begin{rem}
+	Асимптотика работает только для неотрицательных рядов, потому что только там можно использовать теорему сравнения. Чтобы смотреть сходимость знакопеременных рядов асимптотически теорема сравнения не применима, поскольку последовательность немонотонна и может колебаться будучи ограниченной $\Rightarrow$ надо смотреть что в ряде происходит дальше со следующими асимптотическими членами $\Rightarrow$ надо раскладывать ряд дальше.
+\end{rem}
+\end{document}

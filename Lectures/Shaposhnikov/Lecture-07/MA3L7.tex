@@ -1,0 +1,512 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 7}
+\section*{Сходимость несобственных интегралов}
+\subsection*{Критерий Коши}
+\begin{theorem}(\textbf{Критерий Коши})
+	$$
+		\ddint{a}{b}f(x)dx \text{ - сходится}\Leftrightarrow \forall \VE > 0, \, \exists \, \delta > 0, \, \forall c_1, c_2 \in (b -\delta,b), \, \left|\ddint{c_1}{c_2}f(x)dx \right| < \VE
+	$$
+Если $b = \infty$, то берем $c_1, c_2 > A$, где $A < \infty$.
+\end{theorem}
+\begin{corollary}
+	Если несобственный интеграл $\ddint{a}{b}\left|f(x)\right|dx$ - сходится, то сходится и интеграл $\ddint{a}{b}f(x)dx$.
+\end{corollary}
+\subsection*{Сходимость произведения функций в несобственном интеграле}
+
+Есть понятные наблюдения при исследовании интегралов от знакопостоянных функций: доказывать ограниченность первообразных или сравнивать с чем-то сходящимся. В случае знакопеременной функции под интегралом возникает больше эффектов. Например, может сходиться из-за того, что функция подсокращает площади под своим графиком. Как этим можно воспользоваться? 
+
+Правильный взгляд на такие вещи - это интегрирование по частям: выделяем функцию $f$ стремящуюся к нулю и функцию $g$ отвечающую за смену знака. Таким образом, надо бы усилить стремление к нулю функции $f$, не испортив функцию $g$.
+$$
+	\ddint{a}{b}f(x){\cdot}g(x)dx
+$$
+Способ усиления обычно это дифференцирование. Во многих случаях это приводит к улучшению $\Rightarrow$ то, что стремится к нулю надо бы продифференцировать $\Rightarrow$ в функции $g$ надо увидеть производную. Если $g$ - ``хорошая'', то она равна просто производной своей первообразной и возникает понятный способ исследования интеграла. В прошлый раз рассмотрели следующий пример:
+$$
+	\ddint{1}{+\infty}\dfrac{\sin{x}}{x}dx = \ddint{1}{+\infty}\dfrac{1}{x}(-\cos{x})^\prime dx = \dfrac{\cos{1}}{1} - \ddint{1}{+\infty}\dfrac{\cos{x}}{x^2}dx
+$$
+В данном случае, возникает возможность перебросить производную. Ограниченность не пропадает с заменой синуса на косинус, то есть не становится хуже после интегрирования  по частям. А получившийся интеграл справа уже сходится абсолютно.
+$$
+	\left|\dfrac{\cos{x}}{x^2}\right| \leq \dfrac{1}{x^2} \Rightarrow \ddint{1}{+\infty}\left|\dfrac{\cos{x}}{x^2}\right| \leq \ddint{1}{+\infty}\dfrac{1}{x^2} < \infty \Rightarrow \ddint{1}{+\infty}\dfrac{\cos{x}}{x^2}dx < \infty
+$$
+\begin{lemma}(\textbf{Формула интегрирования по частям})
+	Пусть $g$ непрерывна на $[a,c]$, $f$ непрерывно дифференцируема на $[a,c]$, тогда:
+	$$
+		\ddint{a}{c}f(x)g(x)dx = \ddint{a}{c}f(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)^\prime dx = f(c){\cdot\!\!}\ddint{a}{c}g(t)dt - \ddint{a}{c}f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)dx
+	$$
+\end{lemma}
+\begin{proof}
+	Очевидно следует из формулы интегрирования по частям.
+\end{proof}
+
+\begin{corollary}
+	Пусть $f$ - непрерывно дифференцируема, $g$ - непрерывна на $[a,b)$ и $\exists \, \lim\limits_{c \to b-}f(c){\cdot\!\!}\ddint{a}{c}g(t)dt$. Тогда интегралы $\ddint{a}{b}f(x)g(x)dx$ и $\ddint{a}{b}f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)dx$ сходятся и расходятся одновременно.
+\end{corollary}
+\begin{proof}
+	Следует сразу из формулы интегрирования по частям.
+\end{proof}
+
+\begin{theorem}(\textbf{Признаки Абеля-Дирихле})
+	Пусть $f$ непрерывно дифференцируема на $[a,b)$ и $g$ непрерывна на $[a,b)$, причем $f^\prime \leq 0$. Тогда:
+	\begin{enumerate}[label ={\textbf{(\Roman*)}}]
+		\item (\textbf{Признак Дирихле}): Если $f(x) \xrightarrow[x \to b-]{} 0$ и первообразная $\ddint{a}{x}g(t)dt$ - ограничена на $[a,b)$, то интеграл $\ddint{a}{b}f(x)g(x)dx$ сходится;
+		
+		\item (\textbf{Признак Абеля}): Если $f$ - ограничена и $\ddint{a}{x}g(t)dt$ - сходится, то $\ddint{a}{b}f(x)g(x)dx$ сходится;
+	\end{enumerate}
+\end{theorem}
+\begin{proof} Будем использовать предыдущее следствие.
+	\begin{enumerate}[label ={\textbf{(\Roman*)}}]
+		\item По условию $\lim\limits_{c \to b-}\left(f(c){\cdot\!\!}\ddint{a}{c}g(t)dt\right) = 0$, как произведение сходящейся и ограниченной функций. Тогда достаточно исследовать сходимость $\ddint{a}{b}f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)dx$. Мы знаем, что: 
+		$$
+			\ddint{a}{b}\left|f^\prime(x)\right|dx = - \ddint{a}{b}f^\prime(x)dx = -\left(f(b-) - f(a)\right) = f(a) < \infty
+		$$
+		Таким образом, в силу ограниченности первообразной:
+		$$
+			\left|f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)\right| \leq C\left|f^\prime(x)\right| \Rightarrow \ddint{a}{b}\left|f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)\right|dx < \infty \Rightarrow \ddint{a}{b}f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)dx < \infty
+		$$
+		\item Функция $f$ - ограничена и монотонна $\Rightarrow \exists \, \lim\limits_{x \to b-}f(x) = A$, тогда:
+		$$
+			\ddint{a}{b}f(x)g(x)dx = \ddint{a}{b}\left(f(x) - A\right){\cdot}g(x)dx + A\ddint{a}{b}g(x)dx
+		$$
+		Последний интеграл сходится по условию, значит, в частности, первообразная $g$ - ограничена (потому что предел есть $\Rightarrow$ ограничена), а $f(x) - A$ монотонно стремится к нулю. Применяя признак Дирихле, получаем требуемое;
+	\end{enumerate}
+\end{proof}
+\begin{exrc}
+	Доказать признак Абеля напрямую из следствия.
+\end{exrc}
+\begin{proof}
+	Функция $f$ - ограничена и монотонна $\Rightarrow \exists \, \lim\limits_{x \to b-}f(x) = A < \infty \Rightarrow$ существует $\lim\limits_{c \to b-}\left(f(c){\cdot\!\!}\ddint{a}{c}g(t)dt\right)$. Тогда достаточно исследовать сходимость интеграла $\ddint{a}{b}f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)dx$. Мы знаем, что: 
+	$$
+		\ddint{a}{b}\left|f^\prime(x)\right|dx = - \ddint{a}{b}f^\prime(x)dx = -\left(f(b-) - f(a)\right) = f(a) - A < \infty
+	$$
+	Интеграл $\ddint{a}{x}g(t)dt$ сходится $\Rightarrow$ ограничен. Следовательно, мы получим:
+	$$
+		\left|f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)\right| \leq C\left|f^\prime(x)\right| \Rightarrow \ddint{a}{b}\left|f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)\right|dx < \infty \Rightarrow \ddint{a}{b}f^\prime(x){\cdot\!\!}\left(\ddint{a}{x}g(t)dt\right)dx < \infty
+	$$
+	
+\end{proof}
+
+
+Бывает понятно, почему признак Дирихле легко применять: когда уже сделали интегрирование по частям и нужно проверить, что интеграл сошелся. Иногда возникает вопрос, зачем нужен признак Абеля? Он же явно слабее признакак Дирихле, но бывают ситуации в которых он сразу дает ответы на вопрос. Например, рассмотрим интеграл:
+$$
+	\ddint{1}{+\infty}f(x){\cdot}\dfrac{\sin{x}}{x}dx
+$$
+Возникает вопрос, на какую функцию здесь можно умножить, чтобы интеграл всё ещё оставался сходящимся? Признак Абеля отвечает, что можно умножить на любую монотонную ограниченную функцию. То есть, выделив под интегралом функцию, от которой интеграл сходится, то для исследования сходимости достаточно проверить, что $f(x)$ - монотонная ограниченная функция. При этом совместная проверка сходимости под одним интегралом может оказаться небанальной.
+\newpage
+\section*{Функции Эйлера}
+\begin{defn}
+	\uwave{Гамма-функция Эйлера}: $\Gamma(x) = \ddint{0}{+\infty}t^{x-1}e^{-t}dt$.
+\end{defn}
+\begin{defn}
+	\uwave{Бета-функция Эйлера}: $\MB(x,y) = \ddint{0}{1}t^{x-1}(1-t)^{y-1}dt$.
+\end{defn}
+Прежде чем изучать свойства этих функций, нам необходимо понять, когда эти функции сходятся. Для этого в свою очередь надо понять, где у них есть особенности. 
+\subsection*{Сходимость гамма-функции}
+У гамма-функции две особенности: в бесконечности и в нуле. Когда особенностей несколько, мы всегда разбиваем интеграл на части, так чтобы каждый из них был с одной особенностью. И требуем, чтобы эти части сходились одновременно. Для гамма-функции получается:
+$$
+	\ddint{0}{+\infty}t^{x-1}e^{-t}dt = \ddint{0}{1}t^{x-1}e^{-t}dt + \ddint{1}{+\infty}t^{x-1}e^{-t}dt
+$$
+Рассмотрим интеграл с ${+\infty}$. Любая степень оценивается экспонентой. Пусть $x$ фиксирован, тогда:
+$$
+	\forall t \geq 1, \, t^{x-1} \leq Ce^{\tfrac{t}{2}} \Rightarrow t^{x-1}e^{-t} \leq Ce^{-\tfrac{t}{2}}
+$$
+Первое неравенство выше можно доказать, через правило Лопиталя для неопределенности вида $\tfrac{\infty}{\infty}$. Интеграл от $Ce^{-\tfrac{t}{2}}$ очевидно сходится. Рассмотрим интеграл с $0$. Пусть $x$ фиксирован, тогда:
+$$
+	\dfrac{1}{10}t^{x-1} \leq t^{x-1}e^{-t} \leq t^{x-1}, \,  0 < t < 1
+$$
+Тогда по теореме сравнения, интеграл сходится $\Leftrightarrow$ сходится интеграл от $t^{x-1}$ в нуле. А это происходит, когда  степень не падает ниже $-1$, то есть когда $x > 0$. Получили, что $\Gamma(x)$ определена при $x > 0$.
+
+\subsection*{Сходимость бета-функции}
+\begin{exrc}
+	Доказать, что $\MB(x,y)$ существует при $x > 0$, $y >0$.
+\end{exrc}
+\begin{proof}
+	Рассмотрим $x \geq 1, y \geq 1$, тогда:
+	$$
+		\MB(x,y) = \ddint{0}{1}\left(t^{x-1} - t^{x + y - 2}\right)dt = \dfrac{1}{x} - \dfrac{1}{x + y - 1} < \infty 
+	$$
+	То есть интеграл является просто собственным. Рассмотрим случай, когда $x < 1, \, y < 1$, в этом случае мы получаем несколько особенностей в точках $0$ и $1$, получается:
+	$$
+		\MB(x,y) = \ddint{0}{\tfrac{1}{2}}t^{x-1}(1 - t)^{y-1}dt + \ddint{\tfrac{1}{2}}{1}t^{x-1}(1 - t)^{y-1}dt
+	$$
+	При $0 < t \leq \dfrac{1}{2}$ будет верно, что: 
+	$$
+		(1 - t)^{y - 1} \leq \left(\tfrac{1}{2}\right)^{y-1} = 2^{1- y} \Rightarrow t^{x-1}(1 - t)^{y - 1} \leq t^{x-1}2^{1-y}
+	$$ 
+	где первое неравенство верно поскольку $y<1$, тогда:
+	$$
+		\ddint{0}{\tfrac{1}{2}}t^{x-1}(1 - t)^{y-1}dt \leq 2^{1- y} \ddint{0}{\tfrac{1}{2}}t^{x-1}dt = 2^{1-y}\left.\dfrac{t^x}{x}\right|_0^{\tfrac{1}{2}} = 2^{1-y}\dfrac{1}{2^x x}
+	$$
+	Следовательно, интеграл сходится при $x > 0$. Рассмотрим второй интеграл и сделаем замену $u = 1 - t$:
+	$$
+		\ddint{\tfrac{1}{2}}{1}t^{x-1}(1 - t)^{y-1}dt = \ddint{0}{\tfrac{1}{2}}(1 - u)^{x-1}u^{y-1}du
+	$$
+	Аналогично первому случаю, интеграл сойдется при $x > 0$. Таким образом, получили, что бета-функция существует при $x > 0, \, y > 0$.
+\end{proof}
+
+\newpage
+\section*{Свойства функций Эйелера}
+\subsection*{Свойства бета-функции}
+
+\textbf{$1)$ Формула понижения}: Пусть $x > 0, \, y > 0$, тогда:
+$$
+	\MB(x, y+1) = \dfrac{y}{x + y}\MB(x,y)
+$$
+\begin{proof}
+	$$
+		\MB(x,y+1) = \ddint{0}{1}t^{x-1}(1-t)^{y-1}(1-t)dt= \MB(x,y) - \MB(x+1,y)
+	$$
+	Можно немного иначе:
+	$$
+		\MB(x,y+1) = \ddint{0}{1}t^{x-1}(1-t)^{y}dt = \dfrac{1}{x}\ddint{0}{1}\left(t^x\right)^\prime(1-t)^{y}dt = 0 - 0 + \dfrac{y}{x}\ddint{0}{1}t^x(1-t)^{y-1}dt = \dfrac{y}{x}\MB(x+1,y)
+	$$
+	Объединим две формулы выше в одну:
+	$$
+		\MB(x, y+1) = \dfrac{y}{x}\MB(x + 1, y) = \dfrac{y}{x}\left(\MB(x,y) - \MB(x + 1, y)\right)
+	$$
+	И отсюда уже мы получаем формулу понижения:
+	$$
+		\MB(x, y+1) = \dfrac{y}{x + y}\MB(x,y)
+	$$
+\end{proof}
+Применим эту формулу и найдем $\MB(x,1)$ и $\MB(x,n)$:
+$$
+	\MB(x,1) = \ddint{0}{1}t^{x-1}dt = \dfrac{1}{x} \Rightarrow \MB(x,2) = \dfrac{1}{x+1}{\cdot}\MB(x,1) = \dfrac{1}{x+1}{\cdot}\dfrac{1}{x}
+$$
+$$
+	\MB(x,n) = \dfrac{n-1}{x + (n-1)}{\cdot}\dfrac{n - 2}{x + (n-2)}{\cdot}\dotsc{\cdot}\dfrac{1}{x+1}{\cdot}\dfrac{1}{x} = \dfrac{(n-1)!}{x{\cdot}(x+1){\cdot}\dotsc{\cdot}(x + (n+1))}
+$$
+Пусть $x = m \in \MN$, тогда мы получим:
+$$
+	\MB(m,n) = \dfrac{(n-1)!}{m{\cdot}(m+1){\cdot} \dotsc {\cdot}(m + n -1)} = \dfrac{(n-1)!(m-1)!}{(n + m -1)!}= \dfrac{1}{n + m - 1}{\cdot}\dfrac{1}{C_{n + m - 2}^{n - 1}}
+$$
+Аналогичным образом, можем расписать $\MB(x,y + n)$:
+$$
+	\MB(x, y + n) = \dfrac{(y + (n - 1))}{(x + y + (n-1))}{\cdot}\dotsc{\cdot}\dfrac{(y+1)}{(x + (y+1))}{\cdot}\dfrac{y}
+	{(x+y)}{\cdot}\MB(x,y)
+$$
+
+\textbf{$2)$ Симметричность}: 
+$$
+	\MB(x,y) = \MB(y,x)
+$$
+\begin{proof}
+	$$
+		\MB(x,y) = \ddint{0}{1}t^{x-1}(1 - t)^{y - 1}dt = \ddint{1}{0}(1-s)^{x-1}s^{y-1}d(1-s) = \ddint{0}{1}s^{y-1}(1-s)^{x-1}ds = \MB(y,x)
+	$$
+\end{proof}
+\newpage
+\textbf{$3)$ Замена границ интегрирования}: 
+$$
+	\MB(x,y) =  \ddint{0}{+\infty}\dfrac{s^{x-1}}{(1 + s)^{x+y}}ds
+$$
+\begin{proof}
+	Сделаем замену: $s = \dfrac{t}{1-t}$, тогда:
+	$$
+		t = \dfrac{s}{1 + s}, \, (1 - t) = \dfrac{1}{1+s}, \, dt = \dfrac{1 - t - t{\cdot}(-1)}{(1 + s)^2} = \dfrac{1}{(1+s)^2}ds \Rightarrow
+	$$
+	$$
+		\MB(x,y) = \ddint{0}{1}t^{x-1}(1 - t)^{y - 1}dt = \ddint{0}{+\infty}\dfrac{s^{x-1}}{(1 + s)^{x+y - 2 + 2}}ds = \ddint{0}{+\infty}\dfrac{s^{x-1}}{(1 + s)^{x+y}}ds
+	$$
+\end{proof}
+
+\subsection*{Свойства гамма-функции}
+\textbf{$1)$ Формула понижения}: 
+$$
+	\Gamma(x+1) = x\Gamma(x)
+$$
+\begin{proof}
+	$$
+		\Gamma(x+1) = \ddint{0}{+\infty}t^x e^{-t}dt =  -\ddint{0}{+\infty}t^x de^{-t} = x \ddint{0}{+\infty}t^{x-1}e^{-t}dt = x\Gamma(x)
+	$$
+\end{proof}
+Применим эту формулу и найдем $\Gamma(1)$ и $\Gamma(n+1)$: 
+$$
+	\Gamma(1) = \ddint{0}{+\infty}e^{-t}dt = 1 
+$$	
+Отсюда мы можем получить:
+$$
+	\Gamma(2) = 1{\cdot}\Gamma(1) = 1 \Rightarrow \Gamma(3) = 2{\cdot}\Gamma(2) = 2{\cdot}1 \Rightarrow \Gamma(4) = 3{\cdot}\Gamma(3) = 3{\cdot}2{\cdot}1 \Rightarrow \Gamma(n+1) = n!
+$$
+
+\textbf{$2)$ Формула Эйлера-Гаусса}: 
+$$
+	\Gamma(x) = \lim\limits_{n \to \infty}n^x{\cdot}B(x,y+n)
+$$
+\begin{rem}
+	Это не совсем классическая формула Эйлера-Гаусса. Напишем формулу для $y = 0$:
+	$$
+		\Gamma(x) = \lim\limits_{n \to \infty}\dfrac{n^x(n-1)!}{x(x + 1){\cdot}\dotsc{\cdot}(x + (n+1))}
+	$$
+\end{rem}
+\begin{proof}
+	Рассмотрим правую часть выражения:
+	$$
+		\lim\limits_{n \to \infty}n^x{\cdot}B(x,y+n) = 	\lim\limits_{n \to \infty} n^x{\cdot\!}\ddint{0}{1}t^{x-1}(1-t)^{y+n - 1}dt
+	$$
+	Делаем замену $nt = s$, тогда:
+	$$
+		\lim\limits_{n \to \infty} n^x{\cdot\!}\ddint{0}{1}t^{x-1}(1-t)^{y+n - 1}dt = \lim\limits_{n \to \infty}\ddint{0}{n}s^{x-1}\left(1 - \dfrac{s}{n}\right)^{y - 1}\left(1 - \dfrac{s}{n}\right)^nds
+	$$
+	Из $1$-го курса мы знаем, что $\forall x \in \MR, \, e^x \geq 1 + x \Rightarrow$ полагая $x = -\dfrac{s}{n}$, при $0 \leq s \leq n$ получаем:
+	$$
+		1 - \dfrac{s}{n} \leq e^{-\tfrac{s}{n}} \Rightarrow 	\left(1 - \dfrac{s}{n}\right)^n \leq e^{-s}
+	$$
+	Или по-другому, зная что:
+	$$
+		\ln{(x)} \leq x - 1 \Rightarrow \ln{(1 -x)} \leq  - x
+	$$ 
+	можем аналогично получить:
+	$$
+		\left(1 - \dfrac{s}{n}\right)^n = e^{n \ln{\left(1- \tfrac{s}{n}\right)}} \leq e^{-s}
+	$$
+	Рассмотрим, чем отличается второе слагаемое под интегралом от еденицы. Пусть $y > 2$, далее уберем это понижением степени. Используя разложение Тейлора:
+	$$
+		1 - \left(1 - \dfrac{s}{n}\right)^{y-1} = 1 - \left(1 - \dfrac{(y-1)s}{n} + O\left(\dfrac{s^2}{n^2}\right) \right) = O\left(\dfrac{s}{n}\right)
+	$$
+	То есть, получили $\dfrac{s}{n}$ умноженное на что-то ограниченное. Можно это понять ещё так, пусть $t \in (0,1)$, хотим показать, что следующая функция ограничена:
+	$$
+		f(t) = \dfrac{1 - (1 -t)^{y-1}}{t}, \, t = 1 \Rightarrow f(1) = 1, \, \lim\limits_{t \to 0}f(t) = \lim\limits_{t \to 0}\dfrac{(y-1)(1-t)^{y-2}}{1} = y-1
+	$$
+	Таким образом, получаем что функция $f(t)$ ограничена $\Rightarrow 1 - \left(1 - \dfrac{s}{n}\right)^{y-1} = O\left(\dfrac{s}{n}\right)$.
+	$$
+		\ddint{0}{n}s^{x-1}\left(1 - \dfrac{s}{n}\right)^{y - 1}\left(1 - \dfrac{s}{n}\right)^nds = \ddint{0}{n}s^{x-1}\left(1 - \dfrac{s}{n}\right)^nds + \ddint{0}{n}s^{x-1}\left(\left(1 - \dfrac{s}{n}\right)^{y-1} - 1 \right)\left(1 - \dfrac{s}{n}\right)^nds
+	$$
+	$$
+		\ddint{0}{n}s^{x-1}\left(\left(1 - \dfrac{s}{n}\right)^{y-1} - 1 \right)\left(1 - \dfrac{s}{n}\right)^nds \leq \ddint{0}{n}O\left(\dfrac{s}{n}\right)s^{x-1}e^{-s}ds = \dfrac{1}{n}\ddint{0}{n}O(1)s^x e^{-s}ds \to 0
+	$$
+	где последнее верно в силу того, что $O(1) \leq C$ и интеграл $\ddint{0}{n}s^{-x}e^{-s}ds$ сходится. Аналогично оценим разность $e^{-s} - \left(1 - \dfrac{s}{n}\right)^n$. Зная $0 \leq s \leq n$, начнем раскладывать по Тейлору:
+	$$
+		e^{-s} - \left(1 - \dfrac{s}{n}\right)^n = e^{-s}\left(1 - e^{s + n\ln{\left(1 - \tfrac{s}{n}\right)}}\right) = e^{-s}\left(1 - e^{s + n\left(-\tfrac{s}{n} - \tfrac{s^2}{n^2} + \dotsc \right)}\right) = e^{-s}\left(1 - e^{-\tfrac{s^2}{n} + \dotsc}\right) =
+	$$
+	$$
+		= e^{-s}\left(1 - 1 + \dfrac{s^2}{n} + \dotsc\right) = e^{-s}\left(\dfrac{s^2}{n} + \dotsc\right) = e^{-s}O\left(\dfrac{s^2}{n}\right)
+	$$
+	Поскольку $\dfrac{s}{n}$ может быть далеко от $0$, необходимо обосновать это через ограниченность функции:
+	$$
+		\dfrac{s}{n} = t, \, t\in (0,1) \Rightarrow \dfrac{e^{-s} - \left(1 - \tfrac{s}{n}\right)^n}{e^{-s}\left(\tfrac{s^2}{n}\right)} = \dfrac{1 - \left(1 - \tfrac{s}{n}\right)^n e^s}{\tfrac{s^2}{n}} =  \dfrac{1 - \left(1 - t\right)^ne^{nt}}{nt^2} = g(t)
+	$$
+	Проверим, что полученная функция ограничена чем-то не зависящем от $n$ и $s$. Рассмотрим следующее произведение $(1 -t)^ne^{nt}$:
+	$$
+		0 \leq (1 -t)^ne^{nt} = e^{n\ln{(1 - t)} + nt} \leq e^{-nt + nt} = 1
+	$$
+	Получаем, что числитель функции $g(t)$ ограничен $\Rightarrow$ при $t$ близких к $1$ проблем с функцией нет:
+	$$
+		nt^2 \geq 1 \Rightarrow t \geq \dfrac{1}{\sqrt{n}} \Rightarrow  \dfrac{1 - \left(1 - t\right)^ne^{nt}}{nt^2} \leq 1
+	$$
+	Таким образом, отрезок можем разделить на две части: $\left[0,\tfrac{1}{\sqrt{n}}\right]$ и $\left[\tfrac{1}{\sqrt{n}},1\right]$. Поскольку $n$ будем стремить в бесконечность, будем считать $n \geq 4$. Оценим теперь $g(t)$ на отрезке $\left[0,\tfrac{1}{\sqrt{n}}\right]$:
+	$$
+		t < \dfrac{1}{\sqrt{n}} \Rightarrow nt^2 < 1 \Rightarrow \dfrac{1 - \left(1 - t\right)^ne^{nt}}{nt^2} > \dfrac{1 - (1 - t)^ne^{nt}}{1} = 1 - (1 - t)^ne^{nt}
+	$$
+	При этом, когда $t = \dfrac{s}{n} < \dfrac{1}{\sqrt{n}}$ (то есть подходим к нулю) можно воспользоваться разложением Тейлора:
+	$$
+		e^{-s} - \left(1 - \dfrac{s}{n}\right)^n = O\left(\dfrac{s^2e^{-s}}{n}\right)
+	$$
+	Либо рассмотрим это детальнее:
+	$$
+		e^{-s} - \left(1 - \dfrac{s}{n}\right)^n = e^{-s}\left(1 - e^{s + n\ln{\left(1 - \tfrac{s}{n}\right)}}\right) \Rightarrow n\left(\dfrac{s}{n} + \ln{\left(1 - \tfrac{s}{n}\right)}\right) = n\left(t + \ln{(1 - t)}\right) = n h(t)
+	$$
+	Поскольку считаем, что $n \geq 4$, то $t = \dfrac{s}{n} \leq \dfrac{1}{\sqrt{4}} = \dfrac{1}{2}$. Рассмотрим на этом отрезке ограниченность следующей функции:
+	$$
+		\dfrac{h(t)}{t^2} = \dfrac{t + \ln{(1 - t)}}{t^2} \Rightarrow \lim\limits_{t \to 0}\dfrac{h(t)}{t^2} = \lim\limits_{t \to 0}\dfrac{1 - \tfrac{1}{1-t}}{2t} = \lim\limits_{t \to 0}\dfrac{ - \tfrac{1}{(1-t)^2}}{2} = -\dfrac{1}{2} < \infty
+	$$
+	Таким образом, она непрерывна на $\left(0,\tfrac{1}{2}\right]$, а в нуле у неё конечный предел $\Rightarrow$ она ограничена:
+	$$
+		\left|\dfrac{t + \ln{(1 - t)}}{t^2}\right| \leq C_1 \Rightarrow \left|n\left(\dfrac{s}{n} + \ln{\left(1 - \tfrac{s}{n}\right)}\right)\right| \leq C_1{\cdot}\dfrac{s^2}{n}
+	$$
+	Знаем, что $t =\dfrac{s}{n} \leq \dfrac{1}{\sqrt{n}} \Rightarrow C_1\dfrac{s^2}{n} \leq  C_1 \Rightarrow C_1\dfrac{s^2}{n} \in [0,C_1]$. По теореме Лагранжа мы получим:
+	$$
+		\left|e^0 - e^x\right| = \left|1 - e^x\right|= \leq e^c|x| = C_2|x|
+	$$
+	Объединяя рассуждения выше, мы получим:
+	$$
+		\left|1 - e^{s + n\ln{\left(1 - \tfrac{s}{n}\right)}}\right| = \leq C_2{\cdot}C_1{\cdot}\dfrac{s^2}{n} = C\dfrac{s^2}{n} \Rightarrow \left|\dfrac{1 - \left(1 - \tfrac{s}{n}\right)^n e^s}{\tfrac{s^2}{n}} \right| \leq (C+1)
+	$$
+	где к $C$ добавили $1$, чтобы утверждение было верно $\forall t = \dfrac{s}{n} \in [0,1]$. Осталось разобраться с интегралом:
+	$$
+		\ddint{0}{n}s^{x-1}\left(1 - \dfrac{s}{n}\right)^nds = \ddint{0}{n}s^{x-1}e^{-s}dx + \ddint{0}{n}s^{x-1}\left( \left(1 - \dfrac{s}{n} \right)^n - e^{-s}\right)ds 
+	$$
+	$$
+		 \ddint{0}{n}s^{x-1}\left( \left(1 - \dfrac{s}{n} \right)^n - e^{-s}\right)ds = \ddint{0}{n}s^{x-1}O\left(\dfrac{s^2e^{-s}}{n}\right)ds = \dfrac{C}{n}{\cdot\!}\ddint{0}{n}s^{x+1}e^{-s}ds \xrightarrow[n \to \infty]{} 0 {\cdot}\Gamma(x+2) = 0
+	$$ 
+	$$
+		\lim\limits_{n \to \infty}\ddint{0}{n}s^{x-1}e^{-s}dx = \Gamma(x)
+	$$
+	Таким образом, мы доказали, что при $y > 2$:
+	$$
+		\lim\limits_{n \to \infty}n^x\MB(x,y + n) = \Gamma(x) 
+	$$
+	Воспользуемся формулой понижения:
+	$$
+		\MB(x,y + n) =  \dfrac{y -1 + n}{x + y -1 + n}\MB(x, (y-1) + n), \, \lim\limits_{n \to \infty}\dfrac{y -1 + n}{x + y -1 + n} = 1 
+	$$
+	Тем самым, мы установили предел для всех $y$.
+\end{proof}
+\newpage
+\begin{proof}(\textbf{Второе доказательство})\hfill\\
+	
+	Учитывая формулу понижения:
+	$$
+		\MB(x,y + n) =  \dfrac{y -1 + n}{x + y -1 + n}\MB(x, (y-1) + n), \, \lim\limits_{n \to \infty}\dfrac{y -1 + n}{x + y -1 + n} = 1 
+	$$
+	рассмотрим случай $y > 2$. Делаем замену $nt = s$, тогда:
+	$$
+		n^x{\cdot}B(x,y+n) =  n^x{\cdot\!}\ddint{0}{1}t^{x-1}(1-t)^{y+n - 1}dt = \ddint{0}{n}s^{x-1}\left(1 - \dfrac{s}{n}\right)^{y + n - 1}ds
+	$$
+	Покажем, что при $0 \leq s \leq n$ верно неравенство:
+	$$
+		\left|\left(1 - \dfrac{s}{n}\right)^{n + y - 1} -e^{-s}\right| \leq \dfrac{(s + y - 1)se^{-s}}{n}
+	$$
+	Из $1$-го курса мы знаем, что $\forall x \in \MR, \, e^x \geq 1 + x \Rightarrow$ полагая $x = -\dfrac{s}{n}$, при $0 \leq s \leq n$ получаем:
+	$$
+		1 - \dfrac{s}{n} \leq e^{-\tfrac{s}{n}} \Rightarrow 	\left(1 - \dfrac{s}{n}\right)^n \leq e^{-s}
+	$$
+	Рассмотрим на отрезке $[0,s]$ функцию:
+	$$
+		f(t) = e^t \left(1 - \dfrac{t}{n}\right)^{n + y - 1}
+	$$
+	Тогда:
+	$$
+		|f^\prime(t)| = \left| e^t\left(1 - \dfrac{t}{n}\right)^{n + y-1} - e^t\dfrac{n + y - 1}{n}\left(1 - \dfrac{t}{n}\right)^{n + y - 2} \right| = e^t\left(1 - \dfrac{t}{n}\right)^{n+y - 2}\left|1 - \dfrac{t}{n} - \dfrac{n + y - 1}{n}\right|
+	$$
+	$$
+		|f^\prime(t)| \leq e^te^{-t}\left(1 - \dfrac{t}{n}\right)^{y - 2}\left|\dfrac{t + y - 1}{n}\right| \leq \dfrac{t + y - 1}{n}
+	$$
+	По теореме Лагранжа:
+	$$
+		\exists \, t \in (0,s) \colon |f(s) - f(0)| = |f^\prime(t)|s \Rightarrow \left|e^s\left(1 - \dfrac{s}{n}\right)^{n + y - 1} -1\right|  \leq \dfrac{(s + y - 1)s}{n}
+	$$
+	Домнажая на $e^{-s}$ мы получим требуемую оценку. Рассмотрим следующую разность:
+	$$
+		\left|\ddint{0}{n}s^{x-1}\left(1 - \dfrac{s}{n}\right)^{y +n -1}ds - \ddint{0}{n}s^{x-1}e^{-s}ds\right| \leq \dfrac{1}{n}\ddint{0}{n}s^{x+2}e^{-s}ds + \dfrac{y-1}{n}\ddint{0}{n}s^xe^{-s}ds \leq
+	$$
+	$$
+		\leq \dfrac{1}{n}\ddint{0}{+\infty}s^{x+2}e^{-s}ds + \dfrac{y-1}{n}\ddint{0}{+\infty}s^xe^{-s}ds = \dfrac{1}{n}\left(\Gamma(x+2) + (y-1)\Gamma(x+1)\right)
+	$$
+	Следовательно, переходя к пределу по $n$ мы получим, что:
+	$$
+		\lim\limits_{n \to \infty}\ddint{0}{n}s^{x-1}\left(1 - \dfrac{s}{n}\right)^{y +n -1}ds = \lim\limits_{n \to \infty}\ddint{0}{n}s^{x-1}e^{-s}ds = \Gamma(x)
+	$$
+\end{proof}
+
+\end{document}

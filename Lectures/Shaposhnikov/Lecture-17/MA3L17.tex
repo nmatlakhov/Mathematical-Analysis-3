@@ -1,0 +1,413 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MTI}{\mathbb{I}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+%%Функция для обозначения равномерной сходимости по множеству
+\newcommand{\uconv}[1]{\overset{#1}{\rightrightarrows}}
+\newcommand{\uconvm}[2]{\overset{#1}{\underset{#2}{\rightrightarrows}}}
+
+%%Функция для обозначения нижнего и верхнего интегралов
+\def\upint{\mathchoice%
+	{\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	\int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 17}
+\section*{Суммирование расходящихся рядов}
+В чем может быть интерес к расходящимся рядам? Рассмотрим следующий пример:
+$$
+	\ddsum{n = 0}{\infty}x^n = \dfrac{1}{1-x}
+$$
+Если возьмем $x = -1$, то получим расходящийся ряд слева, а справа получим $\frac{1}{2}$. Следовательно, то чему была равна сумма непрерывно продолжается на точку $x = -1$, несмотря на ряд слева. 
+
+Хотелось бы, чтобы такие ``моменты'' ряды не портили и суммировались к чему-то разумному. То есть как-то такие ряды преобразовать, чтобы в подобных точках сумма сходилась. Особенно этим часто пользуются физики. Мы будем рассматривать несколько способов суммирования.
+
+\subsection*{(\RN{1}) Суммирование Пуассона-Абеля}
+\begin{defn}
+	Число $A$ называется \uwave{суммой по методу Пуассона-Абеля} ряда $\ddsum{n = 0}{\infty}a_n$ (который не предполагается сходящимся), если $\forall x \in (0,1), \, \ddsum{n = 0}{\infty}a_n x^n$ - сходится и число $A$ равно: 
+	$$
+		A = \lim\limits_{x \to 1-}\ddsum{n = 0}{\infty}a_n x^n
+	$$ 
+	Говорят, что ряд $\ddsum{n = 0}{\infty}a_n$ \uwave{суммируем по Пуассону-Абелю}.
+\end{defn}
+Возникает вопрос, почему бы просто не присвоить расходящимся суммам значение $0$? Ответ на него связан с желанием, чтобы заданные суммы обладали каким-то набором естественных свойств. Хотим, чтобы были удовлетворены следующие свойства:
+
+\textbf{1) \uline{Линейность}}: Если $\ddsum{n = 0}{\infty}a_n$ суммируем к числу $A$ и $\ddsum{n = 0}{\infty}b_n$ суммируем к числу $B$, то их линейная комбинация: $\ddsum{n = 0}{\infty}(\alpha a_n + \beta b_n)$ суммируема к числу $\alpha A + \beta B$.
+
+\textbf{2) \uline{Регулярность}}: Если ряд $\ddsum{n = 0}{\infty}a_n$ сходится и его сумма равна $A$, то этот ряд суммируем к $A$.
+
+В таком случае, если сумма расходящегося ряда стремится к нулю, мы можем получить:
+$$
+	\ddsum{n = 0}{N}(n + 2^{-n}) \to 0, \, \ddsum{n = 0}{N}n \to 0 \Rightarrow \ddsum{n = 0}{N}(n + 2^{-n} - n) = \ddsum{n = 0}{N} 2^{-n} \to 0
+$$
+что очевидно является противоречием свойству регулярности $\Rightarrow$ присвоение расходящимся рядам нулевых значений нарушеат естественное свойство линейности.
+
+\textbf{3) \uline{Произведение рядов}}: Если $\ddsum{n = 0}{\infty}a_n$ суммируем к числу $A$ и $\ddsum{n = 0}{\infty}b_n$ суммируем к числу $B$, тогда следующий ряд $\ddsum{n = 0}{\infty}c_n$, где $c_n = a_0b_n + a_1 b_{n-1} + \dotsc + a_n b_0$ также суммируем по Пуассону-Абелю и его сумма будет равна:
+$$
+	\ddsum{n = 0}{\infty}c_n = A{\cdot}B = \left(\ddsum{n = 0}{\infty}a_n\right){\cdot}\left(\ddsum{n = 0}{\infty}b_n\right)
+$$
+
+\begin{prop}
+	Метод суммирования Пуассона-Абеля линеен, регулярен и удовлетворяет свойству произведения рядов. 
+\end{prop}
+\begin{proof}
+	Проверим свойства:
+	
+	\textbf{1) Линейность}: Пусть есть два ряда $\ddsum{n = 0}{\infty}a_n$ и $\ddsum{n = 0}{\infty}b_n$, составим из них ряды: $\ddsum{n = 0}{\infty}a_nx^n$ и $\ddsum{n = 0}{\infty}b_nx^n$. По условию, поскольку эти ряды суммируемы по П-А, то они сходятся на $x \in (0,1)$. Тогда: 
+	$$
+		\forall x \in (0,1), \, \ddsum{n = 0}{\infty}(\alpha a_n + \beta b_n)x^n \text{ - сходится}
+	$$
+	$$
+		\lim\limits_{x \to 1-}\ddsum{n = 0}{\infty}(\alpha a_n + \beta b_n)x^n = \lim\limits_{x \to 1-}\alpha \ddsum{n = 0}{\infty}a_n x^n + \lim\limits_{x \to 1-}\beta \ddsum{n = 0}{\infty}b_n x ^n = \alpha A + \beta B
+	$$
+	
+	\textbf{2) Регулярность}: Пусть $\ddsum{n = 0}{\infty}a_n = A$ в обычном смысле, тогда $\ddsum{n = 0}{\infty}a_n x^n$ сходится в $x = 1$. По $\RN{2}$-ой теореме Абеля, этот ряд сходится равномерно на $[0,1]$, следовательно можно переставлять предел и сумму местами, тогда:
+	$$
+		\lim\limits_{x \to 1-}\ddsum{n = 0}{\infty}a_nx^n = \ddsum{n = 0}{\infty}\lim\limits_{x \to 1-}a_n x^n = \ddsum{n = 0}{\infty}a_n = A
+	$$
+	
+	\textbf{3) Произведение рядов}: Рассмотрим две суммы $\ddsum{n = 0}{\infty}a_n x^n$ и $\ddsum{n = 0}{\infty}b_n x^n$, когда $x < 1$, то эти ряды сходятся абсолютно $\Rightarrow$ можно их переменожать (в том числе по Коши):
+	$$
+		\ddsum{n = 0}{\infty}c_n x^n = \left(\ddsum{n = 0}{\infty}a_n x^n\right){\cdot}\left(\ddsum{n = 0}{\infty}b_n x^n\right)
+	$$
+	Устремим $x \to 1-$ и воспользуемся арифметикой пределов:
+	$$
+		\ddsum{n = 0}{\infty}c_n = \lim\limits_{x \to 1-} \ddsum{n = 0}{\infty}c_n x^n = \left(\lim\limits_{x \to 1-}\ddsum{n = 0}{\infty}a_nx^n\right){\cdot}\left(\lim\limits_{x \to 1-}\ddsum{n = 0}{\infty}b_nx^n\right) = \left(\ddsum{n = 0}{\infty}a_n\right){\cdot}\left(\ddsum{n = 0}{\infty}b_n\right) = A{\cdot}B
+	$$
+\end{proof}
+
+\textbf{Пример}: По суммированию Пуассона-Абеля, получаем: $\ddsum{n = 0}{\infty}(-1)^n = \dfrac{1}{2}$, поскольку:
+$$
+	\ddsum{n = 0}{\infty}(-1)^nx^n = \dfrac{1}{1+x} \xrightarrow[x \to 1-]{} = \dfrac{1}{2}
+$$
+
+\textbf{Пример}: Рассмотрим следующий ряд: $\ddsum{n = 1}{\infty}(-1)^n{\cdot}n$. Просуммируем по Пуассону-Абелю:
+$$
+	\forall x \in (0,1), \, \ddsum{n = 1}{\infty}(-1)^nnx^n = x\ddsum{n = 1}{\infty} (-1)^n nx^{n-1} = x \left(\ddsum{n = 1}{\infty}(-1)^n x^n\right)^\prime = x \left(\dfrac{-x}{1+x}\right)^\prime = \dfrac{-x}{(1+x)^2} \xrightarrow[x \to 1-]{} -\dfrac{1}{4}
+$$
+
+\subsection*{(\RN{2}) Суммирование по Чезаро}
+
+\begin{defn}
+	Пусть имеется ряд $\ddsum{n = 0}{\infty}a_n$ (не предполагается сходящимся), $S_N = \ddsum{n = 1}{N}a_n$ - его частичные суммы. Говорят, что ряд $\ddsum{n = 0}{\infty}a_n$ \uwave{суммируем по Чезаро} к $A$, если:
+	$$
+		\lim\limits_{N \to \infty}\dfrac{S_1 + \dotsc + S_N}{N} = A
+	$$
+\end{defn}
+Есть некоторая последовательность $\{S_N\}$ и теперь вместо предела последовательности стали смотреть на предел средних арифметических. Это вполне естественная вещь, поскольку если есть какие-то наблюдения из жизни, но собранные с погрешностями (а это почти всегда так). 
+
+Ясно что желательно, чтобы на ответ эти погрешности не влияли, но также понятно, что если они возникают, то они в сумме могут собраться во что-то плохое, могут последовательность сделать несходящейся: $S_n + (-1)^n \VE$ и даже если $S_n$ сходилось, то полученное уже сходиться не будет, предела уже нет. Также ясно, что эта проблема не последовательности, а наших измерений. 
+
+Как с ними побороться? Давайте смотреть на средние арифметические, это будет убирать осциляцию вокруг последовательности.
+
+\begin{prop}
+	Метод Чезаро линеен и регулярен.
+\end{prop}
+\begin{proof} Проверим свойства:\\
+	\textbf{1) Линейность}: Возьмем два ряда $\ddsum{n = 0}{\infty}a_n$ и $\ddsum{n = 0}{\infty}b_n$ с частичными суммами $S_N^a$ и $S_N^b$. Тогда:
+	$$
+		\ddsum{n = 1}{N}\left(\alpha a_n + \beta b_n\right) = \alpha \ddsum{n = 1}{N}a_n + \beta \ddsum{n = 1}{N} b_n = \alpha S_N^a + \beta S_N^b
+	$$
+	Рассмотрим средние арифметические этого ряда:
+	$$
+		\dfrac{(\alpha S_1^a + \beta S_1^b) + \dotsc + (\alpha S_N^a + \beta S_N^b)}{N} = \alpha \dfrac{S_1^a + \dotsc S_N^a}{N} + \beta \dfrac{S_1^b + \dotsc S_N^b}{N} \to \alpha A + \beta B
+	$$
+	
+	\textbf{2) Регулярность}: Пусть $\ddsum{n = 0}{\infty}a_n = A$, то есть $S_N \to A$. Обозначим $\wte{S}_N = S_N - A \to 0$. Тогда:
+	$$
+		\dfrac{S_1 + \dotsc + S_N}{N} - A = \dfrac{\wte{S}_1 + \dotsc + \wte{S}_N}{N}
+	$$
+	Хотим показать, что такое среднее арифметическое будет стремиться к нулю:
+	$$
+		\forall \VE > 0, \, \exists \, M \colon \forall N > M, \, \left|\wte{S}_N\right| < \VE
+	$$
+	$$
+		\dfrac{\wte{S}_1 + \dotsc + \wte{S}_N}{N} = \dfrac{\wte{S}_1 + \dotsc + \wte{S}_M}{N} + \dfrac{\wte{S}_{M+1} + \dotsc + \wte{S}_N}{N}
+	$$
+	Выберем $N$ таким большим, чтобы:
+	$$
+		\left|\dfrac{\wte{S}_{M+1} + \dotsc + \wte{S}_N}{N}\right| < \dfrac{(N - M - 1)\VE}{N} < \VE, \, \dfrac{\wte{S}_1 + \dotsc + \wte{S}_M}{N} \xrightarrow[N \to \infty]{} 0 \Rightarrow \left|\dfrac{\wte{S}_1 + \dotsc + \wte{S}_M}{N}\right| < \VE
+	$$
+	где предпоследнее верно в силу того, что $M$ - фиксированное. Тогда:
+	$$
+		\left|\dfrac{S_1 + \dotsc + S_N}{N}\right| < 2\VE
+	$$
+\end{proof}
+
+\textbf{Пример}: Рассмотрим ряд: $\ddsum{n = 0}{\infty}(-1)^n$. Поймем как устроена последовательность частичных сумм:
+$$
+	S_N = 
+	\begin{cases}
+		1, & N = 2k\\
+		0, & N = 2k + 1
+	\end{cases} \Rightarrow 
+	\dfrac{S_1 + \dotsc S_N}{N} = 
+	\begin{cases}
+		\dfrac{m}{2m} = \dfrac{1}{2}, & N = 2m\\[15pt]
+		\dfrac{m}{2m + 1}, & N = 2m + 1
+	\end{cases} \xrightarrow[N \to \infty]{} \dfrac{1}{2}
+$$
+
+\begin{prop}
+	Если ряд $\ddsum{n = 0}{\infty}a_n$ суммируем по Чезаро, то $a_n = \overline{o}(n)$.	 
+\end{prop}
+\begin{proof}
+	Пусть $A_n = \dfrac{S_1 + \dotsc + S_n}{n}$ и $\lim\limits_{n \to \infty}A_n = A$, тогда: 
+	$$
+		S_n = n{\cdot}A_n - (n-1){\cdot}A_{n-1} = n {\cdot}\left(A_n -\left(1 - \dfrac{1}{n}\right)A_{n-1}\right) = n{\cdot}\overline{o}(1) = \overline{o}(n)
+	$$
+	Заметим, что $a_n = S_n - S_{n-1} = \overline{o}(n) - \overline{o}(n) = \overline{o}(n)$. Или ещё это можно увидеть так:
+	$$
+		\dfrac{a_n}{n} = \dfrac{S_n}{n} - \dfrac{S_{n-1}}{n} = \dfrac{A_n}{n} - \dfrac{A_{n-1}}{n} - \dfrac{A_{n-1}}{n} + \dfrac{A_{n-2}}{n} \xrightarrow[n \to \infty]{} 0
+	$$
+\end{proof}
+\textbf{Пример}: Рассмотрим ряд: $\ddsum{n = 0}{\infty}(-1)^n n$. Он не суммируется методом Чезаро, поскольку $a_n \neq \overline{o}(n)$:
+$$
+	\ddsum{n = 0}{\infty}(-1)^n n = -1 + 2 - 3 + 4 - \dotsc
+$$
+Но при этом он суммируется методом Абеля (см. выше).
+
+\begin{theorem}(\textbf{Фробениус})
+	Если ряд $\ddsum{n = 0}{\infty}a_n$ суммируем по Чезаро к $A$, то этот ряд суммируем по Пуассону-Абелю тоже к $A$.
+\end{theorem}
+\begin{proof}
+	Рассмотрим ряд $\ddsum{n = 1}{\infty}a_n x^n$, поскольку $a_n = \overline{o}(n)$, то при $0 < x < 1$ этот ряд сходится, поскольку 
+	$$
+		\ddsum{n = 1}{\infty} a_n x^n \leq \ddsum{n = 1}{\infty}cn x^n < \infty
+	$$
+	Будем считать, что $S_0 = 0, S_{-1} = 0, \dotsc$ - все отрицательные суммы будут равны $0$. Тогда:
+	$$
+		\ddsum{n = 1}{\infty} a_n x^n = \ddsum{n = 1}{\infty} (S_n - S_{n-1}) x^n = \ddsum{n = 1}{\infty} S_n x^n - \ddsum{n = 1}{\infty} S_{n-1} x^{n}=  \ddsum{n = 1}{\infty} S_n x^n - \ddsum{m = 0}{\infty} S_m x^{m +1} = 
+	$$
+	$$	
+		= \ddsum{n = 1}{\infty}S_n(x^n - x^{n + 1}) = (1 - x)\ddsum{n = 1}{\infty}S_n x^n = (1-x)\ddsum{n = 1}{\infty}\left(nA_n - (n-1)A_{n-1}\right)x^n = 
+	$$
+	$$
+		= (1-x)\ddsum{n = 1}{\infty}nA_n - (1-x)\ddsum{n = 0}{\infty}nA_{n}x^{n+1} = (1- x)\ddsum{n = 1}{\infty}n A_n (x^n - x^{n+1})= (1- x)^2\ddsum{n = 1}{\infty}n A_n x^n
+	$$
+	По сути, было произведено два преобразования Абеля. По суммированию Чезаро мы знаем, что:
+	$$
+		A_N = \dfrac{S_1 + \dotsc + S_N}{N} \to A
+	$$
+	Рассмотрим следующую сумму:
+	$$
+		\ddsum{n = 1}{\infty}n x^n = x {\cdot}\left(\ddsum{n = 1}{\infty}n x^{n-1}\right) = x{\cdot} \left(\ddsum{n = 1}{\infty} x^{n}\right)^\prime = x{\cdot}\left(\dfrac{-x}{1 - x}\right)^\prime = x{\cdot}\left(\dfrac{1}{1 -x} - 1\right)^\prime = \dfrac{x}{(1 - x)^2}
+	$$
+	Получаем, что $(1- x)^2\ddsum{n = 1}{\infty}nA x^n = Ax$, тогда:
+	$$
+		(1- x)^2\ddsum{n = 1}{\infty}n A_n x^n = (1- x)^2\ddsum{n = 1}{\infty}n (A_n -A) x^n + Ax
+	$$
+	Мы знаем, что $A_N \to A$, тогда:
+	$$
+		\forall \VE > 0, \, \exists \, N \colon \forall n > N, \, |A_n - A|< \VE
+	$$
+	Фиксируем $N$ и разобьем всю сумму на несколько частей:
+	$$
+		(1- x)^2\ddsum{n = 1}{\infty}n (A_n -A) x^n + Ax = (1- x)^2\ddsum{n = 1}{N}n (A_n -A) x^n + Ax + (1- x)^2\ddsum{n = {N+1}}{\infty}n (A_n -A) x^n
+	$$
+	Отсюда мы можем оценить слагаемые из такого разбиения:
+	$$
+		\left|\ddsum{n = {N+1}}{\infty}n (A_n -A) x^n\right| \leq \ddsum{n = N + 1}{\infty}n\VE x^n = \VE \ddsum{n = N + 1}{\infty}n x^n \leq \VE \ddsum{n = 1}{\infty}nx ^n = \dfrac{\VE x }{(1 -x)^2}
+	$$
+	Тогда, вычитая из преобразованного ряда $A$ мы получим:
+	$$
+		\exists \, \delta > 0 \colon \forall x \in (1- \delta, 1), \, \left|(1- x)^2\ddsum{n = 1}{\infty}n A_n x^n - A \right| \leq \left| (1- x)^2\ddsum{n = 1}{N}n (A_n -A) x^n \right| + |A|{\cdot}|x - 1| + \VE x < 3\VE
+	$$
+\end{proof}
+
+Пусть ряд суммируем по Пуассону-Абелю, можно ли в каких-то ситуациях сказать, что исходный ряд имеет сумму, что-то потребовать от коэффициентов дополнительного, чтобы из суммируемости по Абелю следовала обычная суммируемость. Оказывается что можно: есть теоремы Таубера (см. задачи в листочках).
+
+Всегда ли работает метод Пуассона-Абеля? Нет, не всегда. Рассмотрим следующий пример.
+
+\textbf{Пример}: Рассмотрим ряд: $\ddsum{n = 1}{\infty}n$. Известно, что он расходится. Рассмотрим следующую сумму:
+$$
+	\ddsum{n = 1}{\infty}nx^{n-1} = \dfrac{1}{(1 - x)^2}\xrightarrow[x \to 1-]{} \infty
+$$
+Таким образом, просуммировать ряд методом Пуассона-Абеля нельзя. 
+
+\subsection*{Дзета-регуляция}
+Ряд из натуральных чисел разошелся, но тем не менее, попробуем просуммировать этот ряд, пользуясь дзета-регуляризацией (см. Стивена Хокинга).
+
+\begin{defn}
+	\uwave{Дзета-функцией} называется функция следующего вида: $\zeta(s) = \ddsum{n =1}{\infty}\dfrac{1}{n^s}, \, s > 1$.
+\end{defn}
+Можно ли что-то сделать с этой функцией, чтобы присваивать выражению разумные значения не только при $s > 1$? Вспомним формулу Эйлера:
+$$
+	\ddsum{n =1}{N - 1} f(n) = \ddint{1}{N}f(x)dx + \ddint{1}{N}\{x\}f^\prime(x)dx
+$$
+Если мы знаем, что всё сходится, то можно её записать следующим образом:
+$$
+	\ddsum{n =1}{\infty} f(n) = \ddint{1}{\infty}f(x)dx + \ddint{1}{\infty}\{x\}f^\prime(x)dx
+$$
+У этой формулы есть обобщение (без доказательства):
+$$
+	\ddsum{n =1}{+\infty} f(n) = \ddint{1}{+\infty}f(x)dx + \ddsum{k = 1}{m}\dfrac{B_k}{k!}f^{(k-1)}(x)\bigg|_1^{+\infty} + (-1)^{m+1}\ddint{1}{+\infty}\dfrac{B_m(\{x\})f^{(m)}(x)dx}{m!}
+$$
+где $B_k$ - числа Бернулли, которые определяются следующим образом:
+$$
+	0^m + 1^m + \dotsc + (n-1)^m = \dfrac{1}{m+1}\ddsum{k = 0}{m}C_{m + 1}^k B_k n^{m+1 - k}
+$$
+Следующее соотношение позволяет вычислять эти числа (взяли в формуле $m = 1$):
+$$
+	\ddsum{j = 0}{m}C_{m+1}^jB_j = 0, \, B_0 = 1
+$$
+Найдем $B_1$: $C_2^0 B_0 + C_2^1 B_1 = 0 \Rightarrow 1 + 2 B_1 = 0 \Rightarrow B_1 = -\dfrac{1}{2}$. Аналогично: $B_2 = \dfrac{1}{6}, \, B_3 = 0$. 
+\begin{defn}
+	\uwave{Многочленами Бернулли} называются многочлены следующего вида: 
+	$$
+		B_m(t) = \ddsum{j = 0}{m}C_m^j B_j t^{m - j}
+	$$
+\end{defn}
+Нам интересно применить обобщение формулы Эйлера к дзета-функции Римана: $f(x) = \dfrac{1}{x^s}$, когда  $s > 1$ и для простоты возьмем $m = 3$. Тогда:
+$$
+	\ddint{1}{+\infty}\dfrac{dx}{x^s} = \dfrac{1}{s - 1}
+$$
+$$
+	f^{(k-1)}(x) = \dfrac{(-1)^{k-1} s(s + 1){\cdot}\dotsc {\cdot}(s + k -2 )}{x^{s + k - 1}} \Rightarrow f^{(0)}(x) = \dfrac{1}{x^s}
+$$
+в бесконечности производная уйдет в ноль, в единице будет коэффициент из числителя:
+$$
+	\ddsum{k = 1}{m}\dfrac{B_k}{k!}f^{(k-1)}(x)\bigg|_1^{+\infty} = \dfrac{B_1}{1!}{\cdot}(-1) + \dfrac{B_2}{2!}{\cdot}s + (\dotsc) {\cdot}(s + 1)
+$$
+нам будет не важно, что в скобках при $(s+1)$, поскольку далее мы будем подставлять $s = -1$. И последнее слагаемое будет равно:
+$$
+	(-1)^{m+1}\ddint{1}{+\infty}\dfrac{B_m(\{x\})f^{(m)}(x)dx}{m!} = (-1)^{m+k}\ddint{1}{+\infty}\dfrac{B_m(\{x\}){\cdot}(s(s+1){\cdot}{\dotsc}{\cdot}(s + k -2))dx}{x^{s + m}{\cdot}m!}
+$$
+где многочлен Бернулли будет ограничен в силу того, что подставляется дробная часть. Интеграл сходится при достаточно больших $s$: $s + m > 1$. Таким образом, если мы возьмем $s = -1$, то интеграл занулится. Тогда:
+$$
+	\ddsum{n = 1}{\infty}n = -\dfrac{1}{2} + \dfrac{1}{2} + \dfrac{1}{12}{\cdot}(-1) = -\dfrac{1}{12} 
+$$
+\begin{rem}
+	Заметим, что $\zeta(s)$ единственным образом продолжается со значений $s > 1$ на остальные, то есть, в некоторым смысле, мы находим это значение используя единственное возможное продолжение.
+\end{rem}
+\begin{rem}
+	С такой ситуацией уже сталкивались при анализе многочленов Чебышева: $\cos{(n \arccos{x})}$. Если раскрыть, то получим многочлен при $|x| \leq 1$, поскольку $\arccos{x}$ определен от $-1$ до $1$. И получается, что формула имеет смысл только при $|x| \leq 1$, но если её ``расписать'' правильно, то она имеет смысл при всех $x$.
+\end{rem}
+То что здесь произошлно: была взята не очень удобная форма дзета-функции и преобразована в более удобную форму и оказалось, что там мы можем вычислять значения не только при $s > 1$, но и при других $s$, в частности при $s = -1$ и следовательно ``посчитать'' сумму натуральных чисел. В кавычках, само собой, потому что эту сумму мы просто проинтерпретировали.
+\end{document}

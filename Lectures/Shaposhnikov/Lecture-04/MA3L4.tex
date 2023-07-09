@@ -1,0 +1,391 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 4}
+
+\section*{Теорема Муавра-Лапласа}
+Бросаем $n$ раз правильную монету. Вероятность, что было $k$ орлов:
+$$
+	\mathbb{P}(S_n = k) = \dfrac{C_n^k}{2^n}
+$$
+\begin{theorem}(\textbf{Локальная теорема Муавра-Лапласа})
+	Рассмотрим $x_k = \dfrac{k - \tfrac{n}{2}}{\sqrt{\tfrac{n}{4}}}$ и предположим, что эта величина находится в отрезке $a \leq x_k \leq b$. Тогда:
+	$$
+		\mathbb{P}(S_n = k) \sim \dfrac{2}{\sqrt{n}}{\cdot}\varphi(x_k), \, \varphi(x) = \dfrac{1}{\sqrt{2\pi}}e^{-\tfrac{x^2}{2}}
+	$$
+\end{theorem}
+Рассмотрим следующую вероятность: $\mathbb{P}\left(a \leq \dfrac{S_n - \tfrac{n}{2}}{\sqrt{\tfrac{n}{4}}} \leq b\right)$. Она равна сумме всех вероятностей того, что $S_n = k, \, k \colon a \leq x_k \leq b$. Или по-другому:
+$$
+	\mathbb{P}\left(a \leq \dfrac{S_n - \tfrac{n}{2}}{\sqrt{\tfrac{n}{4}}} \leq b\right) = \sum\limits_{k \colon a \leq x_k \leq b}\mathbb{P}(S_n = k) \sim \sum\limits_{a \leq x_k \leq b}\dfrac{1}{\sqrt{\tfrac{n}{4}}}\varphi(x_k) = \sum\limits_{a \leq x_k \leq b}(x_k - x_{k-1}){\cdot}\varphi(x_k) \sim \ddint{a}{b} \varphi(x)dx
+$$
+В прошлый раз мы использовали приблизительную оценку формулы Стирлинга: $n! \sim \sqrt{2\pi n} n^n e^{-n + \varepsilon_n}$, где рассматривали $\varepsilon_n  = o(1)$, когда на самом деле $\varepsilon_n = O\left(\tfrac{1}{n}\right)$. Если использовать точную формулу, то можно найти оценку разности между вероятностью и её приближением и следовательно точно доказать сходимость вероятности к интегралу выше. 
+
+Теперь, если взять $a$ и $b$ равными $-\infty$ и $\infty$, то можно угадать, чему будет равен интеграл от $e^{-x^2}$:
+$$
+	1 = \mathbb{P}\left(-\infty \leq S_n \leq +\infty\right) \to \ddint{-\infty}{+\infty}\dfrac{1}{\sqrt{2\pi}}e^{-\tfrac{x^2}{2}}dx
+$$
+\newpage
+\section*{Не знакопостоянные ряды}
+Мы уже рассматривали признак Лейбница ранее:
+\begin{theorem}(\textbf{Признак Лейбница})
+	Пусть $a_n$ не возрастают и $a_n \to 0$, тогда ряд $\displaystyle \sum\limits_{n = 1}^{\infty}(-1)^n{\cdot}a_n$ сходится.
+\end{theorem}
+
+Пусть $\displaystyle \sum\limits_n b_n$ - сходится, для любого ли $a_n$ ряд $ \displaystyle \sum\limits_n a_nb_n$ также сходится? Конечно нет, например, если взять последовательность: 
+$$
+	a_n = \dfrac{1}{b_n} 
+$$ 
+тогда ряд произведения будет расходиться. Если $a_n$ будет ограниченной, то тоже нет, например, если мы возьмем  последовательности:
+$$
+	b_n = \dfrac{(-1)^n}{n}, \, a_n = (-1)^n \Rightarrow a_n b_n = \dfrac{1}{n}
+$$
+Но если $\displaystyle \sum\limits_n |b_n| < \infty$ и $\{a_n\}$ - ограниченная, то $\displaystyle \sum\limits_n a_n b_n$ - будет сходиться. Поэтому хотелось бы превратить ``какие-то ряды'' в абсолютно сходящиеся.
+
+\subsection*{Преобразование Абеля}
+Будем рассматривать ряды произведений $\displaystyle \sum\limits_{n}a_nb_n$. Пусть $c \in \MR$, положим $B_N = c + b_1 + b_2 + \dotsc + b_N, \, B_0 = c$. Если $c = 0$, то $B_N$ будут частичными суммами ряда $\displaystyle \sum\limits_n b_n$.
+
+\begin{prop}(\textbf{Преобразование Абеля})
+	Для всяких $1 \leq n \leq m$ справедливо равенство:
+	$$
+		\sum\limits_{k = n}^m a_k b_k = a_m B_m - a_n B_{n-1} - \sum\limits_{k = n}^{m-1} (a_{k+1} - a_k)B_k
+	$$
+\end{prop}
+\begin{proof}
+	Рассмотрим ряд произведения последовательностей $\{a_n\}$ и $\{b_n\}$:
+	$$
+		\sum\limits_{k = n}^m a_k b_k = \sum\limits_{k = n}^m a_k (B_k - B_{k-1}) = \sum\limits_{k = n}^m a_k B_k- \sum\limits_{k = n}^m a_k B_{k-1} = \sum\limits_{k = n}^m a_k B_k- \sum\limits_{k = n-1}^{m-1} a_{k+1} B_{k} = 
+	$$
+	$$
+		= a_m B_m - a_n B_{n-1} + \sum\limits_{k = n}^{m-1} a_k B_k - \sum\limits_{k = n}^{m-1} a_{k+1} B_k = a_m B_m - a_n B_{n-1} - \sum\limits_{k = n}^{m-1} (a_{k+1} - a_k)B_k
+	$$
+\end{proof}
+
+Заметим, что $B_k - B_{k-1}$ и $a_{k+1} - a_k$ - это аналоги производных в дискретном случае. Вспомним формулу интегрирования по частям:
+$$
+	\ddint{a}{b}f(x)g^\prime(x)dx = f(b)g(b) - f(a)g(a) - \ddint{a}{b}g(x)f^\prime(x)dx		
+$$
+Видим, что преобразование Абеля это дискретный аналог этой формулы, где $a_n$ это аналог $f$, а $B_n$ это аналог $g$ и ``производные'' $B_n$ это $b_n$.
+
+\begin{corollary}
+	Пусть $\exists \, \lim\limits_{n\to \infty} a_n B_n$, тогда ряды $\displaystyle \sum\limits_{n = 1}^{\infty} a_n b_n$ и $\displaystyle \sum\limits_{n = 1}^{\infty} (a_{n+1} - a_n)B_n$ сходятся и расходятся одновременно.
+\end{corollary}
+\begin{proof}
+	Возьмем частичную сумму ряда $\displaystyle \sum\limits_{n}a_nb_n$ и применим преобразование Абеля:
+	$$
+		\sum\limits_{k = 1}^n a_k b_k = B_n a_n - a_1 B_0 - \sum\limits_{k = 1}^{n-1} (a_{k+1} - a_k)B_k 
+	$$
+	Поскольку $\exists \, \lim\limits_{n\to \infty} a_n B_n = T$, то:
+	$$
+		\sum\limits_{n = 1}^{\infty} a_n b_n = T - a_1 B_0 - \sum\limits_{n = 1}^{\infty} (a_{n+1} - a_n)B_n
+	$$
+	Следовательно, сходимость ряда $\displaystyle \sum\limits_n a_n b_n$ будет совпадать со сходимостью ряда $\displaystyle \sum\limits_{n = 1}^{\infty} (a_{n+1} - a_n)B_n$.
+\end{proof}
+\begin{theorem}(\textbf{Признак Дирихле-Абеля})
+	\begin{enumerate}[label ={\Roman*.}]
+		\item Пусть последовательность $\{a_n\}$ - монотонна и $\lim\limits_{n \to \infty}a_n = 0$, а последовательность $B_n$ - ограничена; 
+		\item Пусть последовательность $\{a_n\}$ - монотонна и ограничена, а ряд $\displaystyle\sum\limits_n b_n$ - сходится;
+	\end{enumerate}
+	Тогда ряд $\displaystyle\sum\limits_n a_n b_n$ - сходится;
+\end{theorem}
+\begin{proof}\hfill
+	\begin{enumerate}[label ={\Roman*.}]
+		\item Поскольку $B_n$ ограничена, то $\lim\limits_{n \to \infty}a_nB_n = 0$. Проверим сходимость ряда $\displaystyle \sum\limits_n (a_{n+1} - a_n)B_n$. \\
+		Поскольку $B_n$ ограничена, надо проверить абсолютную сходимость ряда $\displaystyle \sum\limits_n (a_{n+1} - a_n)$. Без потери общности предположим, что $\{a_n\}$ - убывает. Тогда:
+		$$
+			\sum\limits_{n = 1}^N |a_n - a_{n+1}| = \sum\limits_{n = 1}^N a_n - a_{n+1} = a_1 - a_{N+1} \Rightarrow 
+		$$
+		$$
+			\Rightarrow \lim\limits_{N \to \infty}\sum\limits_{n = 1}^N |a_n - a_{n+1}| =  \lim\limits_{N \to \infty}(a_1 - a_{N+1}) = a_1 < \infty
+		$$
+		Следовательно ряд абсолютно сходится и сходится ряд $\displaystyle \sum\limits_n (a_{n+1} - a_n)B_n$, применяем следствие и получаем требуемое;
+		\item Поскольку $\{a_n\}$ - монотонна и ограничена, то $\exists \, \lim\limits_{n \to \infty}a_n = a \Rightarrow \{a_n - a\}$ - монотонна, ограничена и её предел $\lim\limits_{n \to \infty}(a_n - a) = 0$. Ряд $\displaystyle\sum\limits_n b_n$ - сходится $\Rightarrow B_n$, как частичные суммы плюс константа, ограничены $\Rightarrow$ по $\RN{1}$ ряд $\displaystyle\sum\limits_n (a_n - a) b_n$ - сходится. Поскольку верно, что 
+		$$
+			\sum\limits_n (a_n - a) b_n = \sum\limits_n a_n b_n + a\sum\limits_n  b_n
+		$$
+		то ряд $\sum\limits_n a_n b_n$ - сходится;
+	\end{enumerate}
+\end{proof}
+\begin{corollary}(\textbf{Признак Лейбница})
+	Пусть $a_n$ не возрастают и $a_n \to 0$, тогда ряд $\displaystyle \sum\limits_{n = 1}^{\infty}(-1)^n{\cdot}a_n$ сходится.
+\end{corollary}
+\begin{proof}
+	В рамках первой части признакак Дирихле-Абеля, мы имеем $b_n = (-1)^n$, тогда: $\left|\displaystyle\sum\limits_{n = 1}^N b_n \right| \leq 1$ и таким образом $B_n$ - ограничена $\Rightarrow$ требуемый ряд сходится.
+\end{proof}
+
+\textbf{Пример}: $\displaystyle \sum\limits_{n = 1}^{\infty} \dfrac{\sin{nx}}{n}, \, x \neq 2\pi k$. $a_n = \dfrac{1}{n}$ - монотонно стремится к нулю, значит $b_n = \sin{nx}$. Докажем, что частичные суммы синусов $\displaystyle \sum\limits_{n = 1}^{N} \sin{nx}$ - ограничены.
+$$
+	\left(\sum\limits_{n = 1}^{N} \sin{nx}\right)\sin{\tfrac{x}{2}} = \dfrac{1}{2} \sum\limits_{n = 1}^{N} \left(\cos\left(n - \tfrac{1}{2}\right)x - \cos\left(n + \tfrac{1}{2}\right)x \right) = \dfrac{1}{2}\left(\cos{\tfrac{x}{2}} - \cos{\left(N + \tfrac{1}{2}\right)x}\right)
+$$
+Поскольку $x \neq 2 \pi k$, то: 
+$$
+	\displaystyle \left|\left(\sum\limits_{n = 1}^{N} \sin{nx}\right)\sin{\tfrac{x}{2}}\right| \leq \dfrac{1}{2}(1+ 1) = 1 \Rightarrow \left|\sum\limits_{n = 1}^{N} \sin{nx}\right| \leq \dfrac{1}{\left|\sin{\tfrac{x}{2}}\right|} 
+$$ 
+Таким образом, $B_n$ - ограничена и по признаку $(\RN{1})$ Дирихле-Абеля - сходится. С косинусами - аналогично.
+\begin{rem}
+	Отметим, что сходимость здесь только условная.
+\end{rem}
+Проверим абсолютную сходимость этого же ряда: $\displaystyle \sum\limits_{n = 1}^{\infty} \left|\dfrac{\sin{nx}}{n}\right|, \, x \neq 2\pi k$. В данном случае, нам хочется как-то оценить $|\sin{nx}|$:
+$$
+	|\sin{nx}| \geq \sin^2{nx} \Rightarrow \sum\limits_{n = 1}^{N} \left|\dfrac{\sin{nx}}{n}\right| \geq \sum\limits_{n = 1}^{N}\dfrac{\sin^2{nx}}{n} = \sum\limits_{n = 1}^{N}\dfrac{1 - \cos{2nx}}{n} = \sum\limits_{n = 1}^{N}\dfrac{1}{n} - \sum\limits_{n = 1}^{N}\dfrac{\cos{2nx}}{n}
+$$
+где мы воспользовались формулой двойного угла. Второй ряд сходится по рассуждениям аналогичным для синуса, а первый ряд - расходится. Значит и исходный ряд сходится не может $\Rightarrow$ нет абсолютной сходимости.
+
+\newpage
+\section*{Перестановки рядов}
+\begin{defn}
+	Пусть у нас есть ряд $\displaystyle \sum\limits_{n = 1 }^{\infty} a_n$ и биекция $\varphi \colon \MN \to \MN$, тогда ряд $\displaystyle \sum\limits_{n = 1 }^{\infty} a_{\varphi(n)}$ называется \uwave{перестановкой} исходного ряда.
+\end{defn}
+Очевидно, что если переставлять слагаемые в конечной сумме, то значения суммы не изменятся. Но будет ли то же самое в бесконечной сумме? 
+
+Оказывается, если ряд не сходится абсолютно, то можно добиться любого значения.
+
+\begin{theorem}(\textbf{Римана})
+	Если ряд $\displaystyle \sum\limits_{n = 1 }^{\infty} a_n$ условно сходящийся (абсолютно не сходится), то: 
+	$$
+		\forall a \in [-\infty,+\infty], \, \exists \, \varphi \colon \sum\limits_{n = 1 }^{\infty} a_{\varphi(n)} = a
+	$$ 
+	где бесконечность берется включительно.
+\end{theorem}
+\begin{proof}
+	Пусть $\{p_n\}$ - все положительные члены $\{a_n\}$, а $\{q_n\}$ - все отрицательные члены $\{a_n\}$. Тогда если хотя бы один из рядов $\displaystyle \sum\limits_{n = 1}^{\infty}p_n, \, \displaystyle \sum\limits_{n = 1}^{\infty}q_n$ сходится к конечному числу (а значит ряд сходится абсолютно), то зная, что исходный ряд сходится и верно:
+	$$
+		\displaystyle \sum\limits_{n = 1}^{N}a_n = S_N^a = S_{N_1}^p + S_{N_2}^q = \displaystyle \sum\limits_{n = 1}^{N_1}p_n + \displaystyle \sum\limits_{n = 1}^{N_2}q_n
+	$$
+	Тогда второй ряд тоже будет сходится к конечному числу, и следовательно мы получим абсолютную сходимость исходного ряда, что противоречит условию. Таким образом:
+	$$
+		\displaystyle \sum\limits_{n = 1}^{\infty}p_n = +\infty, \, \displaystyle \sum\limits_{n = 1}^{\infty}q_n = -\infty
+	$$
+	По необходимому условию сходимости исходного ряда верно, что: 
+	$$
+		\lim\limits_{n \to \infty} p_n = 0, \, \lim\limits_{n \to \infty}q_n = 0
+	$$
+	Зафиксируем число $a > 0$. На первом шаге возьмем $n_1$ положительных членов таких, что верно:
+	$$
+		p_1 + \dotsc + p_{n_1} > a
+	$$
+	$$	
+		p_1 + \dotsc + p_{n_1 - 1} \leq a
+	$$
+	то есть сумма $n_1$-ых членов больше $a$, но сумма $(n_1 - 1)$-ых членов - меньше, либо равна. На следующем шаге возьмем $m_1$ отрицательных членов таких, что:
+	$$
+		p_1 + \dotsc + p_{n_1} + q_1 + \dotsc + q_{m_1} < a
+	$$
+	$$	
+		p_1 + \dotsc + p_{n_1} + q_1 + \dotsc + q_{m_1 -1} \geq a
+	$$
+	\newpage
+	Далее снова берем $n_2$ положительных членов так, чтобы было верно:
+	$$
+		p_1 + \dotsc + p_{n_1} + q_1 + \dotsc + q_{m_1} + p_{n_1 + 1} + \dotsc + p_{n_1 + n_2} > a
+	$$
+	$$
+		p_1 + \dotsc + p_{n_1} + q_1 + \dotsc + q_{m_1} + p_{n_1 + 1} + \dotsc + p_{n_1 + n_2 - 1} \leq a
+	$$
+	И так далее. Таким образом, все члены ряда задействованы, так как на каждом шаге мы берём хотя бы одно слагаемое. Осталось понять, почему предел это $a$. 
+	
+	В зависимости от того, на каком шаге мы остановимся, возможно два типа частичных сумм: когда не хватает членов $p_n$ в конце суммы и когда не хватает членов $q_n$. Рассмотрим первый тип:
+	$$
+		S_n^{+} = p_1 + \dotsc + p_{n_1} + q_1 + \dotsc + q_{m_1} + \dotsc + q_{m_1 + \dotsc + m_{k} + 1} + \dotsc + q_{m_1 + \dotsc + m_{k + 1} - 1} + 
+	$$
+	$$
+		+ q_{m_1 + \dotsc + m_{k + 1} } + p_{n_1 + \dotsc + n_{k+1} + 1} + \dotsc + p_{n_1 + \dotsc + n_{k+1} + j}, \, j \in [1,n_{k+2})
+	$$
+	Очевидно, что $S_n^{+} \leq a$ и  $ p_1 + \dotsc + p_{n_1} + q_1 + \dotsc + q_{m_1} + \dotsc + q_{m_1 + \dotsc + m_{k} + 1} + \dotsc + q_{m_1 + \dotsc + m_{k + 1} - 1} \geq a$. Тогда:
+	$$
+		a + q_{m_1 + \dotsc + m_{k + 1} } \leq S_n^{+} \leq a \Rightarrow \left|S_n^{+} -a\right| < q_{m_1 + \dotsc + m_{k + 1} } = q_k
+	$$
+	Аналогичным образом, для второго типа также получим:
+	$$
+		a \leq S_n^{-} \leq a + p_j \Rightarrow \left|S_n^{-} - a\right| < p_j
+	$$
+	Поскольку $p_j \to 0, \, q_k \to 0$, то мы получаем, что:
+	$$
+		\forall \VE > 0, \, \exists \, N \colon \forall n > N, \, \left|S_n^{+} - a\right| < \VE, \, \left|S_n^{-} - a\right| < \VE
+	$$
+	И таким образом: 
+	$$
+		\displaystyle \sum\limits_{n = 1 }^{\infty} a_{\varphi(n)} = a
+	$$
+	В случае, если $a = +\infty$, то возьмем $n_1$ положительных членов и один отрицательный член так, чтобы:
+	$$
+		p_1 + \dotsc + p_{n_1} > 1
+	$$
+	$$
+		p_1 + \dotsc + p_{n_1} + q_1
+	$$
+	Далее, возьмем $n_2$ положительных членов и один отрицательный так, чтобы:
+	$$
+		p_1 + \dotsc + p_{n_1} + q_1 + p_{n_1 + 1} + \dotsc + p_{n_1 + n_2} > 2
+	$$
+	$$
+		p_1 + \dotsc + p_{n_1} + q_1 + p_{n_1 + 1} + \dotsc + p_{n_1 + n_2}  + q_2
+	$$
+	И так далее. Тогда будет верно:
+	$$
+		\forall k \in \MN, \, S_{n_1 + \dotsc + n_k } \geq S_{n_1 + \dotsc + n_k} + q_k = S_{n_1 + \dotsc + n_k + 1} > k + q_k
+	$$
+	Поскольку $q_k \to 0$, то пусть $\VE < 1$, тогда:
+	$$
+		\exists \, N \in \MN \colon \forall p \geq N, \, S_{n_1 + \dotsc + n_p} + q_p > p - \VE > p - 1
+	$$
+	Таким образом, будет верно следующее:
+	$$
+		\forall A > 0, \, \exists \, N  \in \MN, N > A + 1 \colon \forall p \geq N, \, S_{n_1 + \dotsc + n_p} > p + q_p >  A + 1 - 1 > A
+	$$
+	И таким образом:
+	$$
+		\displaystyle \sum\limits_{n = 1 }^{\infty} a_{\varphi(n)} = +\infty
+	$$
+	Аналогичные рассуждения используются для $- \infty$.
+\end{proof}
+\newpage
+
+\begin{theorem}(\textbf{Коши})
+	Пусть $\displaystyle \sum\limits_{n = 1 }^{\infty} a_n$ - абсолютно сходящийся ряд, тогда ряд $\displaystyle \sum\limits_{n = 1 }^{\infty} a_{\varphi(n)}$ - также абсолютно сходится и их суммы равны:
+	$$
+		\sum\limits_{n = 1 }^{\infty} a_n = \sum\limits_{n = 1 }^{\infty} a_{\varphi(n)}
+	$$	
+\end{theorem}
+\begin{proof}
+	Докажем абсолютную сходимость:
+	$$
+		\sum\limits_{n = 1}^{N} \left|a_{\varphi(n)} \right| \leq \sum\limits_{k = 1}^{\max\{\varphi(1),\dotsc, \varphi(N)\}} \left| a_k \right| < \sum\limits_{k = 1}^{\infty}\left| a_k \right|
+	$$
+	Получаем, что частичные суммы ограничены $\Rightarrow$ ряд сходится абсолютно. Рассмотрим следующую разность сумм:
+	$$
+		\left| \sum\limits_{k = 1}^{\infty} a_k - \sum\limits_{n = 1}^{N} a_{\varphi(n)} \right|
+	$$
+	Используя абсолютную сходимость ряда, выберем $J$ так, чтобы:
+	$$
+		\forall \VE > 0, \, \exists \, J \colon  \sum\limits_{k = J + 1}^{\infty} \left| a_k \right| < \VE
+	$$
+	Выберем $N_1$ таким большим, чтобы: 
+	$$
+		\{1, \dotsc, J\} \subset \{\varphi(1), \dotsc, \varphi(N_1)\}
+	$$ 
+	тогда $\forall N > N_1$ это же включение будет также верно: 
+	$$
+		\{1, \dotsc, J\} \subset \{\varphi(1), \dotsc, \varphi(N)\}
+	$$
+	Следовательно, мы получим оценку разности сумм сверху:
+	$$
+		\left| \sum\limits_{k = 1}^{\infty} a_k - \sum\limits_{n = 1}^{N} a_{\varphi(n)} \right| \leq  \sum\limits_{k = J + 1}^{\infty} \left| a_k \right| < \VE
+	$$
+\end{proof}
+\end{document}

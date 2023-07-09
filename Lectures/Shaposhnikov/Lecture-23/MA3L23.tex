@@ -1,0 +1,662 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MTI}{\mathbb{I}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+%%Функция для обозначения равномерной сходимости по множеству
+\newcommand{\uconv}[1]{\overset{#1}{\rightrightarrows}}
+\newcommand{\uconvm}[2]{\overset{#1}{\underset{#2}{\rightrightarrows}}}
+
+
+%%Функция для обозначения нижнего и верхнего интегралов
+\def\upint{\mathchoice%
+	{\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	\int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 23}
+
+\section*{Свойства несобственного интеграла с параметром}
+Аналогично собственным интегралам, для несобственных всё делится на $3$ вида утверждений.
+\begin{enumerate}[label=\arabic*)]
+	\item \textbf{Непрерывность и переход к пределу};
+	\item \textbf{Дифференцируемость};
+	\item \textbf{Интегрируемость};
+\end{enumerate}
+Но прежде чем переходить к разбору свойств надо понять общее правило работы с такими интегралами. Несобственный интеграл определяется как предел в некоторой особенности $\Rightarrow$ всё что можно сказать про него строится следующим образом: \uline{мы говорим, что нечто известно до предельного перехода, а дальше объясняем почему это нечто сохраняется после предельного перехода}.
+
+\begin{defn}
+	Пусть $f\colon [a,b) \times Y^\prime \to \MR(\MC)$, где $Y$ - метрическое пространство, $y_0$ - предельная точка, \\ $Y^\prime = Y \setminus \{y_0\}$, тогда выражение вида:
+	$$
+		F(y) = \ddint{a}{b}f(x,y)dx
+	$$
+	будем называть \uwave{несобственным интегралом, зависящим от параметра}.
+\end{defn}
+
+\subsection*{Непрерывность и переход к пределу}
+\begin{theorem}(\textbf{О переходе к пределу под несобственным интегралом})
+	Пусть $Y$ - метрическое пространство, $y_0$ - предельная точка, $Y^\prime = Y \setminus \{y_0\}$. Пусть $f\colon [a,b) \times Y^\prime \to \MR(\MC), \, \varphi \colon [a,b) \to \MR (\MC)$. Предположим, что $x \mapsto f(x,y)$, $x \mapsto \varphi(x)$ - интегрируемы по Риману на $[a,u], \, \forall u \in [a,b)$. 
+	\begin{enumerate}[label=(\Roman*)]
+		\item Предположим, что $\forall u \in [a,b)$ верно следующее: $\lim\limits_{y \to y_0}\ddint{a}{u}f(x,y)dx = \ddint{a}{u}\varphi(x)dx$;
+		\item $\ddint{a}{b}f(x,y)dx$ - сходится равномерно на $Y^\prime$;
+	\end{enumerate}
+	Тогда $\ddint{a}{b}\varphi(x)dx$ - сходится и верно: $\lim\limits_{y \to y_0}\ddint{a}{b}f(x,y)dx = \ddint{a}{b}\varphi(x)dx$.
+\end{theorem}
+\begin{proof}
+	Введем функцию $\Phi(u,y) = \ddint{a}{u}f(x,y)dx$. Дано следующее: 
+	$$
+		\forall u \in [a,b), \, \Phi(u,y) \xrightarrow[y \to y_0]{}\ddint{a}{u}\varphi(x)dx
+	$$ 
+	и верна равномерная сходимость:
+	$$	
+		\Phi(u,y) \uconvm{Y^\prime}{u \to b-}\ddint{a}{b}f(x,y)dx
+	$$
+	Применяем теорему о перестановке пределов, тогда: $\exists \, \lim\limits_{y \to y_0}\ddint{a}{b}f(x,y)dx, \, \exists \, \lim\limits_{u \to b}\ddint{a}{u}\varphi(x)dx$, и они равны:
+	$$
+		\lim\limits_{y \to y_0}\ddint{a}{b}f(x,y)dx = \lim\limits_{y \to y_0}\lim\limits_{u \to b-}\ddint{a}{u}f(x,y)dx= \lim\limits_{u \to b}\lim\limits_{y \to y_0}\ddint{a}{u}f(x,y)dx=   \lim\limits_{u \to b}\ddint{a}{u}\varphi(x)dx  = \ddint{a}{b}\varphi(x)dx
+	$$
+\end{proof}
+
+\begin{corollary}
+	Пусть $Y$ - метрическое пространство, $y_0$ - предельная точка, $Y^\prime = Y \setminus \{y_0\}$. Пусть имеются функции $f\colon [a,b) \times Y \to \MR(\MC), \, \varphi \colon [a,b) \to \MR (\MC)$. Предположим, что $x \mapsto f(x,y)$, $x \mapsto \varphi(x)$ - интегрируемы по Риману на $[a,u], \, \forall u \in [a,b)$.
+	\begin{enumerate}[label=(\Roman*)]
+		\item Предположим, что $\forall x \in [a,b), \, \lim\limits_{y\to y_0}f(x,y) =\varphi(x)$;
+		\item Пусть $\exists \, \psi(x)$ на $[a,b) \colon |f(x,y)| \leq \psi(x),\, \forall x \in [a,b), \forall y \in Y^\prime$ и $\ddint{a}{b}\psi(x)dx$ - сходится (что в частности подразумевает, что $\psi(x)$ интегрируема на каждом $[a, u]$);
+	\end{enumerate}
+	Тогда $\ddint{a}{b}\varphi(x)dx$ - сходится, $\ddint{a}{b}f(x,y)dx$ - сходится и верно: $\lim\limits_{y \to y_0}\ddint{a}{b}f(x,y)dx = \ddint{a}{b}\varphi(x)dx$.
+\end{corollary}
+\begin{rem}
+	Данное следствие очень сильно напоминает теорему Лебега о мажорируемой сходимости.
+\end{rem}
+\begin{proof}
+	Проверяем условия предыдущей теоремы: $\ddint{a}{b}f(x,y)dx$ сходится равномерно по признаку Вейерштрасса из-за пункта $(\RN{2})$ (см. лекцию $21$). Теперь нужно объяснить почему верно следующее условие:
+	$$
+		\forall u \in [a,b), \, \lim\limits_{y \to y_0}\ddint{a}{u}f(x,y)dx = \ddint{a}{u}\varphi(x)dx
+	$$
+	Функция $\varphi(x)$ - интегрируема, $f(x,y)$ при каждом $y$ - интегрируема, есть поточечная сходимость $\Rightarrow$ проверим теорему Арцела, для этого нужна оценка на функцию $f(x,y)$. Поскольку $\psi(x)$ интегрируема на каждом $[a,u], \, \forall u \in [a,b)$, тогда она не превосходит некоторой константы:
+	$$
+		\forall x \in [a,u], \, \forall y \in Y^\prime, \, |f(x,y)| \leq \psi(x) \leq \sup\limits_{[a,u]}\psi(x) = C
+	$$
+	Следовательно, применима теорема Арцела. После чего применяем предыдущую теорему.
+\end{proof}
+\newpage
+
+\begin{theorem}(\textbf{непрерывность})
+	Пусть $f \in C([a,b)\times [c,d])$ и $\ddint{a}{b}f(x,y)dx$ - сходится равномерно на $[c,d]$. Тогда функция $F(y) = \ddint{a}{b}f(x,y)dx$ непрерывна на $[c,d]$.
+\end{theorem}
+\begin{proof}
+	Нужно доказать, что $\lim\limits_{y \to y_0}\ddint{a}{b}f(x,y)dx = \ddint{a}{b}f(x,y_0)dx$ (по определению непрерывности). Проверяем условия $1$ теоремы:
+	\begin{enumerate}[label=(\Roman*)]
+		\item $a \leq u < b$, $\lim\limits_{y \to y_0}\ddint{a}{u}f(x,y)dx = \ddint{a}{u}f(x,y_0)dx$ - непрерывность собственного интеграла по параметру. Данное условие выполнено, так как $f \in C([a,b)\times [c,d])$;
+		\item $\ddint{a}{b}f(x,y)dx$ - сходится равномерно на $Y^\prime$ по условию;
+	\end{enumerate}
+	Следовательно, требуемое выполняется по $1$ теореме.
+\end{proof}
+
+Надо иметь в виду, что убрать условия равномерной сходимости интеграла - нельзя. Для этого есть достаточно простой и показательный пример.
+
+\textbf{Пример}: Рассмотрим интеграл: $F(y) =\ddint{0}{+\infty}ye^{-xy}dx$, где $f(x,y) = ye^{-xy} \colon [0,+\infty) \times [0,1]$. Эта ``отличная'' функция: на заданном множестве она ограничена и непрерывна. Равномерной сходимости у этой функции нет. Как обычно, если под интегралом нет ничего осцилирующего, то мы будем проверять хвост интеграла:
+$$
+	\ddint{c}{+\infty}ye^{-xy}dx = \ddint{c}{+\infty}e^{-xy}d(yx) = \ddint{cy}{+\infty}e^{-u}du \Rightarrow y = \dfrac{1}{c} \Rightarrow \ddint{1}{+\infty}e^{-u}du = \dfrac{1}{e} \nrightarrow 0
+$$
+Рассмотрим $F(y)$:
+$$
+	F(y) = \ddint{0}{+\infty}ye^{-xy}dx = 
+	\left\{
+		\begin{array}{ll}
+			0, & y = 0 \\[4pt]
+			1, & y > 0
+		\end{array}
+	\right.
+$$
+Следовательно, мы получили разрывную функцию. Заметим также, что предыдущее следствие здесь нельзя применить в силу следующего:
+$$
+	\forall y \in [0,1],\, \forall x \in [0,+\infty), \, e^{xy} \geq 1 \Rightarrow e^{-xy} \leq 1 \Rightarrow \nexists \, g(x) \colon |f(x,y)| \leq g(x) \wedge \ddint{0}{+\infty}g(x)dx < \infty
+$$
+Если же взять $f(x,y) = ye^{-xy^2}$, то мы вообще получим неограниченную функцию:
+$$
+	\ddint{0}{+\infty}ye^{-xy^2}dx = 
+	\left\{
+		\begin{array}{ll}
+			0, & y = 0 \\[4pt]
+			\dfrac{1}{y}, & y > 0
+		\end{array}
+	\right.
+$$
+Таким образом, только лишь непрерывность $f(x,y)$ и сходимость интеграла при каждом $y$ ничего не говорит про непрерывность получившегося несобственного интеграла, более того, ничего не говорит даже об ограниченности.
+
+\begin{exrc}
+	Существует ли $f \in C([0,+\infty) \times [0,1]) \colon F(y) = \ddint{0}{+\infty}f(x,y)dx$ - ограниченная, но не интегрируемая на отрезке $[0,1]$ по Риману. Сразу заметим, что $F(y)$ не может быть всюду разрывной $\Rightarrow$ задача состоит в том, чтобы понять: возможно ли, чтобы точек разрыва было не меры ноль.
+\end{exrc}
+\begin{proof}
+	См., например, контрпримеры в анализе Гелбаум.
+\end{proof}
+
+\subsection*{Дифференцируемость несобственного интеграла с параметром}
+\begin{theorem}
+	Пусть $f \in C([a,b)\times[c,d])$, при каждом $x$ существует $\dfrac{\partial f}{\partial y}(x,y)$ и $\dfrac{\partial f}{\partial y}(x,y) \in C([a,b)\times[c,d])$.
+	\begin{enumerate}[label=(\Roman*)]
+		\item $\exists \, y_0 \in [c,d] \colon \ddint{a}{b}f(x,y_0)dx$ - сходится, то есть: $\exists \, \lim\limits_{u \to b}\ddint{a}{u}f(x,y_0)dx$;
+		\item $\ddint{a}{b}\dfrac{\partial f}{\partial y}(x,y)dx$ - сходится равномерно, то есть: $\ddint{a}{u}\dfrac{\partial f}{\partial y}(x,y)dx \uconvm{[c,d]}{u \to b}\ddint{a}{b}\dfrac{\partial f}{\partial y}(x,y)dx$;
+	\end{enumerate}	
+	Тогда $\ddint{a}{b}f(x,y)dx$ - сходится равномерно на $[c,d]$, непрерывно дифференцируема по $y$ и верно следующее:
+	$$
+		\dfrac{d}{dy}\left(\ddint{a}{b}f(x,y)dx\right) = \ddint{a}{b}\dfrac{\partial f}{\partial y}(x,y)dx
+	$$
+\end{theorem}
+\begin{proof}
+	Проверям условия теоремы о дифференцируемости предела семейства функций. Пусть верно:
+	$$
+		a \leq u <b, \, \Phi(u,y) = \ddint{a}{u}f(x,y)dx \Rightarrow \exists \, y_0 \colon \Phi(u,y_0) \xrightarrow[u \to b]{}\ddint{a}{b}f(x,y_0)dx < \infty
+	$$
+	где последнее верно по $(\RN{1})$. По теореме о дифференцируемости собственного интеграла с параметром, мы получаем следующее:
+	$$
+		\dfrac{\partial \Phi}{\partial y}(u,y) = \ddint{a}{u}\dfrac{\partial f}{\partial y}(x,y)dx \Rightarrow \dfrac{\partial \Phi}{\partial y}(u,y) \uconvm{[c,d]}{u \to b} \ddint{a}{b}\dfrac{\partial f}{\partial y}(x,y)dx
+	$$
+	где последнее верно по условию $(\RN{2})$. Таким образом, условия теоремы о дифференцировании предела семейства функций выполнены и мы получим: 
+	$$
+		\Phi(u,y)\uconvm{[c.d]}{u \to b}\ddint{a}{b}f(x,y)dx
+	$$ 
+	Функция $y \mapsto \ddint{a}{b}f(x,y)dx$ - дифференцируема и по использованной теореме её производная равна: 
+	$$
+				\dfrac{d}{dy}\left(\ddint{a}{b}f(x,y)dx\right) = \lim\limits_{u \to b}\ddint{a}{u}\dfrac{\partial f}{\partial y}(x,y)dx = \ddint{a}{b}\dfrac{\partial f}{\partial y}(x,y)dx
+	$$
+	Непрерывность производной следует из теоремы $2$ о непрерывности.
+\end{proof}
+\begin{rem}
+	Поскольку теория получается достаточно загроможденной ссылками на более ранние теоремы, попробуем разобраться с несобственным интегралом, не сводя это к науке про семейства функций.
+\end{rem}
+\begin{theorem}
+	Пусть $f(x,y)$, $\dfrac{\partial f}{\partial y}$ - непрерывные на $[a,b)\times [c,d]$ функции. Пусть также выполнены условия:
+	\begin{enumerate}[label=(\Roman*)]
+		\item $F(y) = \ddint{a}{b}f(x,y)dx$ - сходится $\forall y \in [c,d]$;
+		\item $\exists \, \psi(x) \colon \left|\dfrac{\partial f}{\partial y}(x,y)\right|\leq \psi(x)$ и $\ddint{a}{b}\psi(x) dx$ - сходится;
+	\end{enumerate}
+	Тогда функция $F(y)$ - дифференцируема и $F^\prime(y) = \ddint{a}{b}\dfrac{\partial f}{\partial y}(x,y)dx$.
+\end{theorem}
+\begin{proof}
+	Используя определение производной, рассмотрим следующее отношение:
+	$$
+		\dfrac{F(y) - F(y_0)}{y - y_0} = \ddint{a}{b}\dfrac{f(x,y) - f(x,y_0)}{y - y_0}dx
+	$$
+	Таким образом, задача свелась к перестановке пределов. По следствию из теоремы о пределе под несобственным интегралом, необходимо проверить:
+	\begin{enumerate}[label=(\Roman*)]
+		\item $\forall x \in [a,b), \, \exists \, \lim\limits_{y \to y_0}\dfrac{f(x,y) - f(x,y_0)}{y - y_0} = \dfrac{\partial f}{\partial y}(x,y_0)$ - производная есть по условию и на каждом отрезке эта функция интегрируема, то есть у нас есть поточечный предел;
+		\item В силу теоремы Лагранжа мы получим: $\left|\dfrac{f(x,y) - f(x,y_0)}{y - y_0}\right| \leq \psi(x)$, где $\ddint{a}{b}\psi(x) dx < \infty$;
+	\end{enumerate}	
+	Таким образом, по следствию $1$ мы получаем:
+	$$
+		\lim\limits_{y\to y_0}\dfrac{F(y) - F(y_0)}{y - y_0} = \lim\limits_{y\to y_0}\ddint{a}{b}\dfrac{f(x,y) - f(x,y_0)}{y - y_0}dx = \ddint{a}{b}\lim\limits_{y\to y_0}\left(\dfrac{f(x,y) - f(x,y_0)}{y - y_0}\right)dx = \ddint{a}{b}\dfrac{\partial f}{\partial y}(x,y)dx
+	$$
+\end{proof}
+
+\newpage
+\subsection*{Пример: Интеграл Дирихле}
+Вычислим \textbf{интеграл Дирихле}, используя инструментарий несобственных интегралов. Мы уже делали это упражнение. Хотим найти следующий интеграл:
+$$
+	\ddint{0}{+\infty}\dfrac{\sin{x}}{x}dx
+$$
+Рассмотрим следующий интеграл с параметром: 
+$$
+	F(y) = \ddint{0}{+\infty}f(x,y)dx = \ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-xy}dx, \, y \geq 0
+$$ 
+Сходится ли он равномерно (в нуле доопределена как $1$)? Особенность только в $+\infty$, интеграл Дирихле сходится равномерно (параметра нет), $e^{-xy}$ - равномерно ограниченная, монотонная функция, тогда по признаку Абеля интеграл $F(y)$ будет сходиться равномерно по $y$. Теперь хотим понять, что это за функция $F(y)$:
+\begin{enumerate}[label=(\arabic*)]
+	\item Так как $f(x,y)$ непрерывна по $y$ и интеграл сходится равномерно, то $F(y)$ - непрерывная функция. Заметим, что здесь оценить сверху $|f(x,y)| \leq \psi(x)$ не получится, поскольку: 
+	$$
+		\left|\dfrac{\sin{x}}{x}\right|e^{-xy} \leq \psi(x) \Rightarrow y =0, \, 
+		\left|\dfrac{\sin{x}}{x}\right| \leq \psi(x) \Rightarrow \ddint{0}{+\infty}	\left|\dfrac{\sin{x}}{x}\right|dx \not< \infty \Rightarrow \ddint{0}{+\infty}\psi(x)dx \not< \infty
+	$$
+	то есть получилось бы противоречие со сходимостью интеграла от $\psi(x)$;
+	\item Пусть $y > 0$, тогда нас будет интересовать дифференцируемость $F(y)$. Когда мы рассматриваем дифференцируемость в точке $y_0$, нам она не нужна на всём промежутке для  $y$. Если продифференцировать под интегралом по $y$, то мы получим:
+	$$
+		\ddint{0}{+\infty}\dfrac{\partial}{\partial y}\left(\dfrac{\sin{x}}{x}e^{-xy}\right)dx = -\ddint{0}{+\infty}\sin{x}e^{-xy}dx
+	$$
+	Если допустить чтобы $y$ подходила к $0$, то интеграл выше не будет сходиться равномерно (по методу граничной точки: при $y = 0$ интеграл от синуса на $+\infty$ не сходится $\Rightarrow$ интеграл не сходится равномерно на $[0, +\infty)$). Рассмотрим равномерную сходимость на отрезке $[c,d] \colon y_0 \in [c,d]$, тогда интеграл выше будет сходиться равномерно, поскольку:
+	$$
+		|\sin{x}|e^{-xy}\leq e^{-cx} = \psi(x), \, \ddint{0}{+\infty}\psi(x)dx = \dfrac{1}{c} < \infty	
+	$$
+	Следовательно, по признаку Вейерштрасса интеграл от $\dfrac{\partial f}{\partial y}(x,y)$ сходится равномерно на $[c,d]$;
+\end{enumerate}
+Таким образом, мы можем применить теорему $3$ и у нас получится:
+$$
+	y > 0, \, F^\prime(y) = -\ddint{0}{+\infty}\sin{x}e^{-xy}dx
+$$
+Этот интеграл мы можем посчитать решив следующее дифференциальное уравнение с квазимногочленом в правой части:
+$$
+	u^\prime = e^{-xy}\sin{x}
+$$
+Для таких ДУ известна общая форма, которую надо подбирать для решения:
+$$
+	u = C_1 e^{-xy}\sin{x} + C_2 e^{-xy}\cos{x} \Rightarrow u^\prime = -ye^{-xy}\left(C_1 \sin{x} + C_2 \cos{x}\right) + e^{-xy}\left(C_1 \cos{x} - C_2 \sin{x}\right) \Rightarrow
+$$
+$$
+	\Rightarrow -yC_1 -C_2 = 1, \, -yC_2 + C_1 = 0 \Rightarrow C_1 = yC_2 \Rightarrow C_2 = -\dfrac{1}{1 + y^2}, \, C_1 = - \dfrac{y}{1 + y^2} \Rightarrow
+$$
+$$
+	\Rightarrow F^\prime(y) = - e^{-xy}{\cdot}\left.\left(-\dfrac{y}{1+y^2}\sin{x} - \dfrac{1}{1+ y^2}\cos{x}\right)\right|_{x = 0}^{+\infty} = 0 + 1{\cdot}\left(0 -\dfrac{1}{1+y^2}\right) = -\dfrac{1}{1+y^2} \Rightarrow
+$$
+$$
+	\Rightarrow F(y) = \ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-xy}dx =  -\arctg{y} + C, \, y > 0
+$$
+Чтобы вычислить константу, устремим $y$ в бесконечность. Можем ли мы перейти к пределу под интегралом? Поскольку на $+\infty$ интеграл сходится равномерно (при $y > 0$) как мы установили выше, то вопрос перехода к пределу это вопрос возможности перейти к пределу в интеграле:
+$$
+	\forall u \in [0, +\infty), \, \ddint{0}{u}\dfrac{\sin{x}}{x}e^{-xy}dx
+$$
+Подинтегральная функция - ограниченна, поточечно подинтегральная функция сходится так:
+$$
+	\dfrac{\sin{x}}{x}e^{-xy} \xrightarrow[y \to +\infty]{} \left\{
+	\begin{array}{ll}
+		0, 	& x >0 \\
+		1, & x = 0
+	\end{array}\right. = g(x)
+$$
+Предельная функция $g(x)$ интегрируема, тогда по теореме Арцела можно переходить к пределу (см. лекция $20$, теорема $5$):
+$$
+	\forall u \in [0, +\infty), \, \ddint{0}{u}f(x,y)dx = \ddint{0}{u}\dfrac{\sin{x}}{x}e^{-xy}dx \xrightarrow[y \to +\infty]{}\ddint{0}{u}g(x)dx = 0
+$$
+Пользуясь равномерной сходимостью $F(y)$ можем перейти к пределу при $u \to \infty$ по теореме $1$: 
+$$
+	F(y) = \ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-xy}dx \to 0 \Rightarrow 0 = -\arctg{\dfrac{\pi}{2}} + C \Rightarrow C = \dfrac{\pi}{2}
+$$
+Поскольку функция $F(y)$ - непрерывная, то мы получаем интеграл Дирихле:
+$$
+	\ddint{0}{+\infty}\dfrac{\sin{x}}{x} = \dfrac{\pi}{2}
+$$
+Заметим также, что теорема Арцела здесь заметно упрощает разбор, поскольку $f(x,y)$ не сходится равномерно к $0$ или к функции $g(x)$, когда $x \to 0$, так как она должна была бы остаться непрерывной, в силу непрерывности $f(x,y)$.
+\newpage
+\subsection*{Интегрируемость несобственных интегралов с параметром}
+\begin{theorem}
+	Пусть $f \in C([a,b)\times[c,d])$ и $\ddint{a}{b}f(x,y)dx$ сходится равномерно на $[c,d]$.  Тогда функция $F(y) = \ddint{a}{b}f(x,y)dx$ интегрируема на $[c,d]$, функция $G(x) = \ddint{c}{d}f(x,y)dy$ интегрируема в несобственном смысле на $[a,b)$ и верно следующее равенство:
+	$$
+		\ddint{a}{b}\left(\ddint{c}{d}f(x,y)dy\right)dx = \ddint{c}{d}\left(\ddint{a}{b}f(x,y)dx\right)dy
+	$$
+\end{theorem}
+\begin{proof}
+	Поскольку $f(x,y)$ - непрерывна и $\ddint{a}{b}f(x,y)dx$ - сходится равномерно на $[c,d]$, то по теореме $2$ мы сразу получаем непрерывность $F(y)$ на $[c,d] \Rightarrow F(y)$ будет интегрируема на $[c,d]$ по $y$. Пусть $a \leq u < b$, тогда для собственных интегралов с параметром (см. лекцию $22$, теорему $3$) будет верно:
+	$$
+		\ddint{a}{u}\left(\ddint{c}{d}f(x,y)dy\right)dx = \ddint{c}{d}\left(\ddint{a}{u}f(x,y)dx\right)dy
+	$$
+	Теперь нужно доказать, что мы можем перейти к пределу при $u \to b$ в этом равенстве, то есть, что мы можем перейти к пределу под интегралом:
+	$$
+		\ddint{a}{b}\left(\ddint{c}{d}f(x,y)dy\right)dx = \lim\limits_{u \to b-}\ddint{a}{u}\left(\ddint{c}{d}f(x,y)dy\right)dx = \lim\limits_{u \to b-}\ddint{c}{d}\left(\ddint{a}{u}f(x,y)dx\right)dy = \lim\limits_{u \to b-}\ddint{c}{d}\Phi(u,y)dy
+	$$
+	Таким образом, нам нужно доказать следующее:
+	$$
+		\lim\limits_{u \to b-}\ddint{c}{d}\Phi(u,y)dy = \ddint{c}{d}\lim\limits_{u \to b-}\Phi(u,y)dy = \ddint{c}{d}F(y)dy
+	$$
+	По условию: $\Phi(u,y) = \ddint{a}{u}f(x,y)dx \uconvm{[c,d]}{u \to b-} \ddint{a}{b}f(x,y)dx$, одновременно с этим функция $\Phi(u,y)$ - непрерывна по $y$ на $[c,d]$ $\Rightarrow$ интегрируема на $[c,d]$ (лекция $22$, теорема $1$), тогда по теореме о перестановке предела и интеграла для семейств функций с параметром (см. лекцию $20$, теорему $4$) мы сразу получаем требуемое. В результате:
+	$$
+		\exists \, \ddint{c}{d}\lim\limits_{u \to b-}\Phi(u,y)dy = \ddint{c}{d}\left(\lim\limits_{u\to b-}\ddint{a}{u}f(x,y)dx\right)dy = \ddint{c}{d}\left(\ddint{a}{b}f(x,y)dx\right)dy = \lim\limits_{u \to b-}\ddint{a}{u}\left(\ddint{c}{d}f(x,y)dy\right)dx
+	$$
+	Следовательно, мы одновременно получаем выполнение искомого равенства и интегрируемость $G(x)$ в несобственном смысле на $[a,b)$.
+\end{proof}
+\begin{rem}
+	Заметим, что мы сделали принципиально два шага: $(1)$ отступили от особенностей, переставили интегралы и $(2)$ перешли к пределу. В данном случае, мы воспользовались равномерной сходимостью. Аналогично, можем получить такой же результат, используя теорему Арцела.
+\end{rem}
+\begin{theorem}
+	Пусть $f \in C([a,b)\times[c,d])$ и выполнены следующие условия:
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\forall y, \, \exists \, \ddint{a}{b}f(x,y)dx$ (существует поточечный предел);
+		\item функция: $F(y) = \ddint{a}{b}f(x,y)dx$ - интегрируема на $[c,d]$ (предел функции интегрируем);
+		\item функция: $y \mapsto \ddint{a}{b}|f(x,y)|dx$ - интегрируема на $[c,d]$ (аналог ограниченности);
+	\end{enumerate}  
+	Тогда функция $G(x) = \ddint{c}{d}f(x,y)dy$ интегрируема в несобственном смысле на $[a,b)$ и верно равенство:
+	$$
+		\ddint{a}{b}\left(\ddint{c}{d}f(x,y)dy\right)dx = \ddint{c}{d}\left(\ddint{a}{b}f(x,y)dx\right)dy
+	$$
+\end{theorem}
+\begin{proof}
+	Пусть $a \leq u < b$, тогда будет верно (см. лекцию $22$, теорему $3$):
+	$$
+		\ddint{a}{u}\left(\ddint{c}{d}f(x,y)dy\right)dx = \ddint{c}{d}\left(\ddint{a}{u}f(x,y)dx\right)dy = \ddint{c}{d}\Phi(u,y)dy
+	$$
+	Проверяем условия теоремы Арцела (см. лекцию $20$, теорему $5$):
+	$$
+		\forall y \in [c,d], \, \lim\limits_{u \to b-}\Phi(u,y) = \ddint{a}{b}f(x,y)dx = F(y)
+	$$
+	По условию $F(y)$ - интегрируема на $[c,d]$, функции $\Phi(u,y)$ - интегрируемы на $[c,d]$ из-за непрерывности функции $f(x,y)$. Таким образом, выполнены пункты $(1)$-$(3)$ теоремы Арцела. Найдем оценку $|\Phi(u,y)|$. Если функция интегрируема по Риману, то она ограничена $\Rightarrow$ по условию:
+	$$
+		\exists \, C > 0\colon	\left|\Phi(u,y)\right| = \left|\ddint{a}{u}f(x,y)dx\right| \leq \ddint{a}{u}|f(x,y)|dx \leq \ddint{a}{b}|f(x,y)|dx \leq C
+	$$
+	Следовательно, все пункты теоремы Арцела выполнены и мы получаем:
+	$$
+		\lim\limits_{u \to b-}\ddint{c}{d}\Phi(u,y)dy = \ddint{c}{d}\lim\limits_{u \to b-}\Phi(u,y)dy = \ddint{c}{d}F(y)dy
+	$$
+	Далее рассуждения аналогичны предыдущей теореме и мы получаем требуемое.
+\end{proof}
+\begin{rem}
+	Также заметим, что если $f(x,y) \leq 0$, то можно отказаться от условия на $|f(x,y)|$.
+\end{rem}
+Часто возникает потребность в перестановке двух несобственных интегралов, поэтому рассмотрим следующую теорему.
+\begin{theorem}
+	Пусть $f \in C([a,b)\times [c,d))$ и выполнены следующие условия:
+	\begin{enumerate}[label=(\arabic*)]
+		\item $x \mapsto \ddint{c}{d}f(x,y)dy$, $x \mapsto \ddint{c}{d}|f(x,y)|dy$ - интегрируемы на $[a,u], \, \forall u \in [a,b)$;
+		\item $y \mapsto \ddint{a}{b}f(x,y)dx$, $y \mapsto \ddint{a}{b}|f(x,y)|dx$ - интегрируемы на $[c,v], \, \forall v \in [c,d)$;
+		\item $\ddint{c}{d}\left(\ddint{a}{b}|f(x,y)|dx\right)dy$ - сходится;
+	\end{enumerate}
+	где условия $(1)$ и $(2)$ подразумевают существование интегралов $\forall x\in [a,b)$ в $(1)$ и $\forall y \in [c,d)$ в $(2)$. Тогда можно переставлять интегралы местами:
+	$$
+		\ddint{a}{b}\left(\ddint{c}{d}f(x,y)dy\right)dx = \ddint{c}{d}\left(\ddint{a}{b}f(x,y)dx\right)dy
+	$$
+\end{theorem}
+\begin{rem}
+	В результате теоремы, в частности, включено существование несобственных интегралов у \\ функции: $G(x) = \ddint{c}{d}f(x,y)dy$ на $[a,b)$ и функции: $F(y) = \ddint{a}{b}f(x,y)dx$ на $[c,d)$, аналогично тому, как это было в предыдущих теоремах.
+\end{rem}
+\begin{rem}
+	Также заметим, что последнее условие в теореме не симметричное, поэтому и доказательство будет не симметричным. Но в условии порядок интегрирования всегда можно заменить на другой.
+\end{rem}
+\begin{proof}
+	Пусть $a < u < b$, тогда отступим от особенности и применим теореме $6$, тогда:
+	$$
+		\ddint{c}{d}\left(\ddint{a}{u}f(x,y)dx\right)dy = \ddint{a}{u}\left(\ddint{c}{d}f(x,y)dy\right)dx
+	$$
+	Обозначим: $\Phi(u,y) = \ddint{a}{u}f(x,y)dx$, снова хотим понять, можно ли перейти в ней к пределу по $y$. Мы знаем из условия $(2)$, что: 
+	$$
+		\forall y \in [c,d), \, \lim\limits_{u \to b-}\Phi(u,y) = \ddint{a}{b}f(x,y)dx
+	$$ 
+	Эта функция интегрируема на $[c,v], \, \forall v \in [c,d)$ по условию. Также, можем утверждать, что: 
+	$$
+		|\Phi(u,y)|= \left|\ddint{a}{u}f(x,y)dx\right| \leq \ddint{a}{u}|f(x,y)|dx \leq \ddint{a}{b}|f(x,y)|dx = \psi(y)
+	$$
+	По условию пункта $(3)$ функция $\psi(y)$ - интегрируема на промежутке $[c,d)$, тогда: $\ddint{c}{d}\psi(y)dy$ - сходится. Таким образом, по следствию $1$ мы получаем:
+	$$
+		\exists \, \lim\limits_{u \to b-}\ddint{c}{d}\Phi(u,y)dy = \ddint{c}{d}\left(\lim\limits_{u \to b-}\Phi(u,y)\right)dy = \ddint{c}{d}\left(\ddint{a}{b}f(x,y)dx\right)dy
+	$$
+	Далее рассуждения аналогичны теореме $5$.
+\end{proof}
+Рассмотрим теорему с перестановкой двух несобственных интегралов при наличии равномерной сходимости (аналогично теореме $5$).
+\begin{theorem}
+	Пусть $f \in C([a,b)\times [c,d))$ и выполнены следующие условия:
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\ddint{a}{b}f(x,y)dx$ - сходится равномерно на $[c,v], \, \forall v \in [c,d)$;
+		\item $\ddint{c}{d}f(x,y)dy$ - сходится равномерно на $[a,u], \, \forall u \in [a,b)$;
+		\item $\ddint{c}{d}\left(\ddint{a}{b}|f(x,y)|dx\right)dy$ - сходится;
+	\end{enumerate}
+	где условия $(1)$ и $(2)$ подразумевают существование интегралов $\forall y \in [c,d)$ в $(1)$ и $\forall x\in [a,b)$ в $(2)$. Тогда можно переставлять интегралы местами:
+	$$
+		\ddint{a}{b}\left(\ddint{c}{d}f(x,y)dy\right)dx = \ddint{c}{d}\left(\ddint{a}{b}f(x,y)dx\right)dy
+	$$
+\end{theorem}
+\begin{proof}
+	Пусть $a < u < b$, тогда отступим от особенности и применим теорему $5$, тогда:
+	$$
+		\ddint{c}{d}\left(\ddint{a}{u}f(x,y)dx\right)dy = \ddint{a}{u}\left(\ddint{c}{d}f(x,y)dy\right)dx
+	$$
+	Обозначим функцию: $\Phi(u,y) = \ddint{a}{u}f(x,y)dx$, нам снова нужно показать переход предела по $y$ под интеграл. По условию пункта $(1)$ мы знаем, что:
+	$$
+		\forall y \in [c,d), \, \lim\limits_{u \to b-}\Phi(u,y) = \ddint{a}{b}f(x,y)dx
+	$$
+	Более того, это может следовать напрямую из равномерной сходимости:
+	$$
+		\forall y \in [c,d), \, \exists \, v \in [c,d) \colon y \in [c,v], \, \Phi(u,y)\uconvm{[c,v]}{u \to b-} \ddint{a}{b}f(x,y)dx \Rightarrow \Phi(u,y) \xrightarrow[u \to b-]{} \ddint{a}{b}f(x,y)dx
+	$$
+	Поскольку $f(x,y) \in C([a,b)\times[c,d))$, то $\forall u \in [a,b), \, \Phi(u,y)$ будет непрерывна на $[c,v], \, \forall v \in [c,d)$, как собственный интеграл с параметром $\Rightarrow$ будет интегрируема по Риману на $[c,v], \, \forall v \in [c,d)$. В силу равномерной сходимости интеграла $\ddint{a}{b}f(x,y)dx$ на $[c,v], \, \forall v \in [c,d)$, мы получим, что $\ddint{a}{b}f(x,y)dx$ интегрируема на $[c,v], \, \forall v \in [c,d)$ по теореме $2$. Аналогично предыдущей теореме:
+	$$
+		|\Phi(u,y)|= \left|\ddint{a}{u}f(x,y)dx\right| \leq \ddint{a}{u}|f(x,y)|dx \leq \ddint{a}{b}|f(x,y)|dx = \psi(y)
+	$$
+	По условию пункта $(3)$ функция $\psi(y)$ - интегрируема на промежутке $[c,d)$, тогда: $\ddint{c}{d}\psi(y)dy$ - сходится. Следовательно, по следствию $1$ мы получаем:
+	$$
+		\exists \, \lim\limits_{u \to b-}\ddint{c}{d}\Phi(u,y)dy = \ddint{c}{d}\left(\lim\limits_{u \to b-}\Phi(u,y)\right)dy = \ddint{c}{d}\left(\ddint{a}{b}f(x,y)dx\right)dy
+	$$
+	Далее рассуждения аналогичны теореме $5$.
+\end{proof}
+
+Рассмотрим пример, который показывает, что просто так переставлять пределы нельзя.
+
+\textbf{Пример}: Пусть $f(x,y)$ определена на множестве $[1, +\infty)\times [1,+\infty)$ так, что:
+$$
+	f(x,y) = \dfrac{x^2 - y^2}{(x^2 + y^2)^2}\Rightarrow f(x,y) = \dfrac{\partial}{\partial y}\left(\dfrac{y}{x^2 + y^2}\right), \, f(x,y) = - \dfrac{\partial}{\partial  x}\left(\dfrac{x}{x^2 + y^2}\right)
+$$
+Посчитаем следующие интегралы, используя формулу Ньютона-Лейбница:
+$$
+	\ddint{1}{+\infty}f(x,y)dy = \left.\dfrac{y}{x^2 + y^2}\right|_{y= 1}^{+\infty} = -\dfrac{1}{1 + y^2} \Rightarrow \ddint{1}{+\infty}\left(\ddint{1}{+\infty}f(x,y)dy\right)dx = -\arctg{x}\Big|_{1}^{+\infty} = \dfrac{\pi}{4} - \dfrac{\pi}{2} = -\dfrac{\pi}{4}
+$$
+Если мы будем считать в обратном порядке, то получим:
+$$
+	\ddint{1}{+\infty}f(x,y)dx = -\left.\dfrac{x}{x^2 + y^2}\right|_{x= 1}^{+\infty} = \dfrac{1}{1 + x^2} \Rightarrow \ddint{1}{+\infty}\left(\ddint{1}{+\infty}f(x,y)dx\right)dy = \arctg{y}\Big|_{1}^{+\infty} = \dfrac{\pi}{2} - \dfrac{\pi}{4} = \dfrac{\pi}{4}
+$$
+
+\begin{exrc}
+	Почему не работает теорема? (см. например антидемидович 3, пример 50)
+\end{exrc}
+\newpage
+\section*{Преобразования Лапласа}
+Вспомним снова об интеграле Дирихле: $\ddint{0}{+\infty}\dfrac{\sin{x}}{x}dx$
+и об интеграле Лапласа: $\ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1 + x^2}dx$. В прошлый раз, когда мы их вычисляли, используя преобразование Лапласа, не всё было обоснованно. Попробуем вычислить эти интегралы максимально строго.
+\subsection*{Интеграл Дирихле}
+\begin{prop}
+	$$
+		\ddint{0}{+\infty}\dfrac{\sin{x}}{x}dx = \dfrac{\pi}{2}
+	$$
+\end{prop}
+\begin{proof}
+	Пусть $\lambda > 0$ и возьмем преобразование Лапласа для подинтегральной функции интеграла Дирихле:
+	$$
+		\ML\left(\dfrac{\sin{x}}{x}\right) \, (\lambda) = \ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx = \ddint{0}{+\infty}f(x,\lambda)dx
+	$$
+	Далее мы брали производную по $\lambda$:
+	$$
+		\ML\left(\dfrac{\sin{x}}{x}\right)' \, (\lambda) = - \ddint{0}{+\infty}\sin{x}e^{-\lambda x}dx
+	$$
+	Мы можем так сделать, поскольку $\ML(\lambda)$ - это несобственный интеграл, внутри функция $f(x,\lambda)$. Пусть мы возьмем $\lambda \in [\alpha, \beta] \subset (0, +\infty)$ - это стандартный прием, который позволяет избежать проблем с равномерной сходимостью при приближении к особым точкам поскольку дифференцируемость, непрерывность это всё вопросы локальные $\Rightarrow$ достаточно научиться доказывать и обосновывать дифференцируемость на любом локальном отрезке: 
+	\begin{enumerate}[label=(\arabic*)]\addtocounter{enumi}{-1}
+		\item Доопределив в точке $0$ подинтегральную функцию, получим гладкую функцию по $x$ и по $\lambda$;
+		\item $\ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx$ - сходится $\forall \lambda \in [\alpha, \beta]$, поскольку оценивается интегралом от $e^{-\lambda x}$;
+		\item $\ddint{0}{+\infty}\sin{x}e^{-\lambda x}dx$ - сходится равномерно $[\alpha,\beta]$ по признаку Вейерштрасса:
+		$$
+			|\sin{x}e^{-\lambda x}| \leq e^{-\alpha x}, \, \ddint{0}{+\infty}e^{-\alpha x}dx = \dfrac{1}{\alpha} < \infty
+		$$
+	\end{enumerate}
+	В результате, мы применяем теорему $3$ и получаем требуемое. Используя интеграл Лапласа, будет:
+	$$
+		\ML\left(\dfrac{\sin{x}}{x}\right)' \, (\lambda) = - \ddint{0}{+\infty}\sin{x}e^{-\lambda x}dx = - \dfrac{1}{1 + \lambda^2} \Rightarrow \ML\left(\dfrac{\sin{x}}{x}\right) \, (\lambda) = C - \arctg{\lambda}
+	$$
+	Чтобы найти константу $C$ мы устремляли $\lambda \to +\infty$:
+	$$
+		\lim\limits_{\lambda \to 0}\ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx = C - \dfrac{\pi}{2}
+	$$
+	Теперь мы хотим поменять местами предел и интеграл:
+	\begin{enumerate}[label=(\arabic*)]
+		\item Проверим поточечную сходимость: $
+			\dfrac{\sin{x}}{x}e^{-\lambda x} \xrightarrow[\lambda \to +\infty]{} \left\{
+			\begin{array}{ll}
+				1, & x = 0 \\
+				0,& x > 0
+			\end{array}
+			\right.$, таким образом, поточечный предел есть и получающаяся функция - интегрируема;
+		\item Будем считать, что $\lambda \geq 1$, тогда: $\left|\dfrac{\sin{x}}{x}e^{-\lambda x}\right| \leq e^{-x}, \, \ddint{0}{+\infty}e^{-x}dx = 1$;
+	\end{enumerate}
+	Следовательно, мы можем применить следствие $1$ и поменять предел и интеграл местами:
+	$$
+		\lim\limits_{\lambda \to 0}\ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx = \ddint{0}{+\infty}\lim\limits_{\lambda \to \infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx = \ddint{0}{+\infty}0dx = 0 = C - \dfrac{\pi}{2} \Rightarrow C = \dfrac{\pi}{2}
+	$$
+	Теперь мы хотим понять, почему будет верно следующее равенство:
+	$$
+		\ddint{0}{+\infty}\dfrac{\sin{x}}{x}dx = \lim\limits_{\lambda \to 0}\ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx
+	$$
+	\begin{enumerate}[label=(\arabic*)]
+		\item Проверим поточечную сходимость: $\forall x \geq 0, \,
+		\dfrac{\sin{x}}{x}e^{-\lambda x} \xrightarrow[\lambda \to 0]{} \dfrac{\sin{x}}{x}$. 
+		
+		Следовательно, будет верно: $\forall u < +\infty, \, \ddint{0}{u}\dfrac{\sin{x}}{x}e^{-\lambda x}dx \xrightarrow[\lambda \to 0]{}\ddint{0}{u}\dfrac{\sin{x}}{x}dx$ (по непрерывности собственного интеграла с параметром, можно по теореме Арцела);
+		
+		\item $\ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx$ - сходится равномерно на $\lambda > 0$ по признаку Абеля, поскольку $\ddint{0}{+\infty}\dfrac{\sin{x}}{x}dx$ - сходится равномерно, поскольку не зависит от $\lambda$ и $e^{-\lambda x}$ - равномерно ограниченна и $\forall \lambda$ она монотонна;
+	\end{enumerate}
+	Следовательно, мы можем воспользоваться теоремой $1$ и получить требуемое:
+	$$
+		\ddint{0}{+\infty}\dfrac{\sin{x}}{x}dx = \ddint{0}{+\infty} \lim\limits_{\lambda \to \infty}\left(\dfrac{\sin{x}}{x}e^{-\lambda x}\right)dx = \lim\limits_{\lambda \to 0}\ddint{0}{+\infty}\dfrac{\sin{x}}{x}e^{-\lambda x}dx = \dfrac{\pi}{2} - 0 = \dfrac{\pi}{2}
+	$$
+\end{proof}
+\newpage
+\subsection*{Интеграл Лапласа}
+\begin{prop}
+	$$
+		\forall a\geq 0 , \, \ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1 + x^2}dx = \dfrac{\pi}{2}e^{-a}
+	$$
+\end{prop}
+\begin{proof}
+	Аналогично тому, как мы это делали в лекции $8$. Возьмем преобразование Лапласа, чтобы посмотреть, может оно будет соответствовать каким-то знакомым функциям:
+	$$
+		\ML(f)\, (\lambda) = \ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1 + x^2}dx\right)e^{-\lambda a}da, \, \lambda > 0
+	$$
+	Ранее мы делали перестановку интегралов нестрого. Пусть мы рассматриваем функцию:
+	$$
+		f(x,a) \colon [0,+\infty)\times [0,+\infty) \to \MR, \, f(x,a) = \dfrac{\cos{ax}}{1+x^2}e^{-\lambda a}
+	$$
+	Все участвующие в $f(x,a)$ функции - непрерывные $\Rightarrow f(x,a) \in C([0,+\infty)\times [0,+\infty))$. Проверим условия теоремы $7$ о перестановке двух несобственных интегралов:
+	\begin{enumerate}[label=(\arabic*)]
+		\item $x \mapsto \ddint{0}{+\infty}\dfrac{\cos{ax}}{1 + x^2}e^{-\lambda a}da = \dfrac{1}{1 + x^2}\ddint{0}{+\infty}\cos{(ax)}{\cdot}e^{-\lambda a}da = \dfrac{\lambda}{(1+ x^2)(\lambda^2 + x^2)}$ - непрерывная функция, следовательно она интегрируема на любом конечном отрезке.
+		
+		$x \mapsto \ddint{0}{+\infty}\dfrac{|\cos{ax}|}{1 + x^2}e^{-\lambda a}da = \dfrac{1}{1 + x^2}\ddint{0}{+\infty}|\cos{(ax)}|{\cdot}e^{-\lambda a}da$ - подинтегральная функция непрерывна по $x$ и оценивается экспонентой $\Rightarrow$ интеграл сходится равномерно $\Rightarrow$ вся функция непрерывна по параметру, следовательно она интегрируема на любом конечном отрезке; 
+		\item $a \mapsto \ddint{0}{+\infty}\dfrac{|\cos{ax}|}{1 + x^2}e^{-\lambda a}dx = e^{-\lambda a}\ddint{0}{+\infty}\dfrac{|\cos{ax}|}{1 + x^2}dx$ - непрерывна по $a$, поскольку подинтегральная функция непрерывна по $a$ и оценивается интегралом от $\dfrac{1}{1+x^2} \Rightarrow$ получаем равномерную сходимость $\Rightarrow$ получаем непрерывность по параметру $a$, следовательно она интегрируема на любом конечном отрезке. Для случая без модуля - аналогично;
+		\item Рассмотрим следующий интеграл:
+		$$
+			\ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{|\cos{ax}|}{1 + x^2} e^{-\lambda a}da\right)dx \Rightarrow \ddint{0}{+\infty}\dfrac{|\cos{ax}|}{1 + x^2} e^{-\lambda a}da \leq \dfrac{1}{1 + x^2}\ddint{0}{+\infty}e^{-\lambda a}da = \dfrac{1}{\lambda(1+x^2)} 
+		$$
+		$$
+			\ddint{0}{+\infty}\dfrac{1}{\lambda(1+x^2)} dx = \dfrac{1}{\lambda}\left(\dfrac{\pi}{2} - 0\right) = \dfrac{\pi}{2\lambda} < \infty \Rightarrow \ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{|\cos{ax}|}{1 + x^2} e^{-\lambda a}da\right)dx < \infty
+		$$
+	\end{enumerate}	
+	Таким образом, все условия теоремы $7$ выполнены и мы можем переставить местами интегралы:
+	$$
+		\ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1 + x^2}dx\right)e^{-\lambda a}da = \ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{\cos{(ax)}e^{-\lambda a}}{1 + x^2}da\right)dx = \ddint{0}{+\infty}\dfrac{1}{1 + x^2}\ML(\cos{(ax)})dx = 
+	$$
+	$$	
+		= \ddint{0}{+\infty}\dfrac{1}{1+x^2}{\cdot}\dfrac{\lambda}{\lambda^2 + x^2}dx = \dfrac{\lambda}{\lambda^2 - 1} \ddint{0}{+\infty}\left(\dfrac{1}{1+ x^2} - \dfrac{1}{\lambda^2 + x^2}\right)dx = \dfrac{\lambda}{\lambda^2 - 1}\left(\dfrac{\pi}{2} - \dfrac{\pi}{2\lambda}\right) = \dfrac{\pi}{2}{\cdot}\dfrac{1}{\lambda + 1}
+	$$
+	Смотря на таблицы с примерами преобразований Лапласа, получаем:
+	$$
+		\ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1+ x^2}dx = \dfrac{\pi}{2}e^{-a}, \, \forall a \geq 0
+	$$
+\end{proof}
+\begin{exrc}
+	Доказать, что $\Gamma(x)$ и $\MB(x,y)$ - бесконечно гладки при $x > 0, \, y > 0$ (что они дифференцируемы сколь угодно раз и все их производные  - гладкие).
+\end{exrc}
+\end{document}

@@ -1,0 +1,676 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 8}
+\section*{Свойства функций Эйлера}
+\begin{defn}
+	\uwave{Гамма-функция Эйлера}: $\Gamma(x) = \ddint{0}{+\infty}t^{x-1}e^{-t}dt$, $x > 0$.
+\end{defn}
+\begin{defn}
+	\uwave{Бета-функция Эйлера}: $\MB(x,y) = \ddint{0}{1}t^{x-1}(1-t)^{y-1}dt$, $x > 0$, $y > 0$.
+\end{defn}
+
+\subsection*{Свойства бета-функции}
+\textbf{$1)$ Формула понижения}:
+$$
+	\MB(x, y+1) = \dfrac{y}{x + y}\MB(x,y)
+$$
+
+$$
+	\MB(m,n) = \dfrac{(n-1)!}{m{\cdot}(m+1){\cdot} \dotsc {\cdot}(m + n -1)} = \dfrac{(n-1)!(m-1)!}{(n + m -1)!}= \dfrac{1}{n + m - 1}{\cdot}\dfrac{1}{C_{n + m - 2}^{n - 1}}
+$$
+
+\textbf{$2)$ Симметричность}: 
+$$
+	\MB(x,y) = \MB(y,x)
+$$
+
+\textbf{$3)$ Замена границ интегрирования}: 
+$$
+	\MB(x,y) =  \ddint{0}{+\infty}\dfrac{s^{x-1}}{(1 + s)^{x+y}}ds
+$$
+
+\subsection*{Свойства гамма-функции}
+
+\textbf{$1)$ Формула понижения}: 
+$$
+	\Gamma(x+1) = x\Gamma(x)
+$$
+
+\textbf{$2)$ Формула Эйлера-Гаусса}: 
+$$
+	\Gamma(x) = \lim\limits_{n \to \infty}n^x{\cdot}B(x,y+n)
+$$
+
+\textbf{$3)$ Формула дополнения}:
+$$
+	\Gamma(x){\cdot}\Gamma(1 - x) = \dfrac{\pi}{\sin{(\pi x)}}, \, 0 < x < 1
+$$
+\begin{proof}
+	Рассмотрим произведение гамма-функций и воспользуемся формулой Эйлера-Гаусса:
+	$$
+		\Gamma(x){\cdot}\Gamma(1 - x) = \lim\limits_{n \to \infty}\left(n^x\MB(x,n){\cdot}n^{1-x}\MB(1-x,n)\right)
+	$$
+	Распишем формулу под пределом, используя формулу понижения:
+	$$
+		n^x\MB(x,n){\cdot}n^{1-x}\MB(1-x,n) = \dfrac{n{\cdot}(n-1)!}{x(x+1){\cdot}\dotsc{\cdot}(x + (n-1))}{\cdot}\dfrac{(n-1)!}{(1-x){\cdot}(1- x+1){\cdot}\dotsc{\cdot}(1- x + (n-1))} =
+	$$
+	$$
+		= \dfrac{n{\cdot}(n-1)!}{x(x+1){\cdot}\dotsc{\cdot}(x + (n-1))}{\cdot}\dfrac{(n-1)!}{(1-x){\cdot}(2 - x){\cdot}\dotsc{\cdot}(n- x )} =
+	$$ 
+	$$
+		= \dfrac{n}{(n-x)}{\cdot}\dfrac{1}{x}{\cdot}\dfrac{((n-1)!)^2}{(1 -x^2){\cdot}(4 - x^2){\cdot}\dotsc{\cdot}((n-1)^2 - x^2)} \Rightarrow
+	$$
+	$$
+		\Rightarrow \lim\limits_{n \to \infty}\left(n^x\MB(x,n){\cdot}n^{1-x}\MB(1-x,n)\right) = \lim\limits_{n \to \infty}\dfrac{n}{(n-x)}{\cdot}\dfrac{\pi}{\pi x}{\cdot}\dfrac{((n-1)!)^2}{(1 -x^2){\cdot}(4 - x^2){\cdot}\dotsc{\cdot}((n-1)^2 - x^2)} =
+	$$
+	$$
+		= \lim\limits_{n \to \infty}\dfrac{n}{n-x}{\cdot}\dfrac{\pi}{\pi x}{\cdot}\prod\limits_{k = 1}^{n - 1}\dfrac{1}{\left(1 - \tfrac{x^2}{k^2}\right)} = \pi{\cdot}\dfrac{1}{\pi x\prod\limits_{k = 1}^{\infty}\left(1 - \tfrac{x^2}{k^2}\right)} = \dfrac{\pi}{\sin{(\pi x)}}
+	$$
+	где последнее равенство верно в силу теоремы Эйлера (см. лекцию 2 текущего семестра).
+\end{proof}
+\subsection*{Интеграл Пуассона}
+
+\begin{defn}
+	Интеграл $\ddint{0}{+\infty}e^{-x^2}dx$ называется \uwave{интегралом Пуассона}.
+\end{defn}
+\begin{prop}
+	$$
+		\ddint{0}{+\infty}e^{-x^2}dx = \dfrac{\sqrt{\pi}}{2}, \; \ddint{-\infty}{+\infty}e^{-x^2}dx = \sqrt{\pi}
+	$$
+\end{prop}
+\begin{proof}
+	Рассмотрим следующий интеграл:
+	$$
+		\ddint{0}{+\infty}e^{-x^2}dx = \left|x^2 = t\right| = \dfrac{1}{2}\ddint{0}{+\infty}\dfrac{1}{\sqrt{t}}e^{-t}dt = \dfrac{1}{2}\Gamma\left(\tfrac{1}{2}\right)
+	$$
+	Воспользуемся формулой дополнения:
+	$$
+		\Gamma\left(\tfrac{1}{2}\right)^2 = \pi \Rightarrow \Gamma\left(\tfrac{1}{2}\right) = \sqrt{\pi} \Rightarrow \ddint{0}{+\infty}e^{-x^2}dx = \dfrac{\sqrt{\pi}}{2} \Rightarrow \ddint{-\infty}{+\infty}e^{-x^2}dx = \sqrt{\pi}
+	$$
+\end{proof}
+Полезно помнить, теорема Муавра-Лапласа утверждала, что броски правильной монеты имеют правильно сдвинутую (на $\tfrac{n}{2}$) плотность, подобную $\tfrac{1}{\sqrt{2\pi}}e^{-\tfrac{x^2}{2}}$. Следовательно, взяв интеграл:
+$$
+	\ddint{-\infty}{+\infty}\dfrac{1}{\sqrt{2\pi}}e^{-\tfrac{x^2}{2}} = 1
+$$
+Это есть плотность стандартного нормального распределения.
+
+\textbf{$4)$ Формула бета-функции через гамма-функцию}:
+$$
+	\MB(x,y) = \dfrac{\Gamma(x)\Gamma(y)}{\Gamma(x + y)}
+$$
+\begin{proof}
+	$$
+		\MB(x, y + n) = \dfrac{(y + (n - 1))}{(x + y + (n-1))}{\cdot}\dotsc{\cdot}\dfrac{(y+1)}{(x + (y+1))}{\cdot}\dfrac{y}{(x+y)}{\cdot}\MB(x,y) \Rightarrow
+	$$
+	$$
+		\MB(x,y) = \dfrac{\dfrac{(x + y){\cdot}\dotsc{\cdot}(x + y + (n-1)){\cdot}n^y{\cdot}n^x}{(n-1)!}}{\dfrac{n^{x+y}{\cdot}y{\cdot}(y+1){\cdot}\dotsc{\cdot}(y + (n-1))}{(n-1)!}}{\cdot}\MB(x, y + n) = \dfrac{n^y\MB(y,n){\cdot}n^x\MB(x,y + n)}{n^{x+y}{\cdot}\MB(x + y, n)}
+	$$
+	Воспользуемся формулой Эйлера-Гаусса:
+	$$
+		\lim\limits_{n \to \infty}\MB(x,y) = \MB(x,y) = \lim\limits_{n \to \infty} \dfrac{n^y\MB(y,n){\cdot}n^x\MB(x,y + n)}{n^{x+y}{\cdot}\MB(x + y, n)} = \dfrac{\Gamma(x)\Gamma(y)}{\Gamma(x + y)}
+	$$
+\end{proof}
+
+\subsection*{Дробное дифференцирование}
+Пусть $m \leq n$, найдем производную $(x^n)^{(m)}$:
+$$
+	(x^n)^{(m)} = n(n-1){\cdot}\dotsc{\cdot}(n - m + 1)x^{n - m} = \dfrac{n!}{(n-m)!}x^{n-m} = \dfrac{\Gamma(n+1)}{\Gamma(n - m + 1)}x^{n - m}
+$$
+Теперь можем считать, что $m$ не обязательно целое и заменить на $\alpha$.
+$$
+	(x^n)^{(\alpha)} = \dfrac{\Gamma(n+1)}{\Gamma(n - \alpha + 1)}x^{n - \alpha}
+$$
+\begin{exrc}
+	Найти $\left((x^n)^{\left(\tfrac{1}{2}\right)}\right)^{\left(\tfrac{1}{2}\right)}$.
+\end{exrc}
+\begin{proof}
+	$$
+		(x^n)^{\left(\tfrac{1}{2}\right)} = \dfrac{\Gamma(n + 1)}{\Gamma(n + \tfrac{1}{2})}x^{\left(n - \tfrac{1}{2}\right)} \Rightarrow \left((x^n)^{\left(\tfrac{1}{2}\right)}\right)^{\left(\tfrac{1}{2}\right)} = \dfrac{\Gamma(n + 1)}{\Gamma(n + \tfrac{1}{2})}{\cdot}\dfrac{\Gamma\left(n - \tfrac{1}{2} + 1\right)}{\Gamma\left(n - \tfrac{1}{2} - \tfrac{1}{2} + 1\right)}x^{n - 1} = \dfrac{\Gamma(n+1)}{\Gamma(n)}x^{n-1}
+	$$
+\end{proof}
+\newpage
+\section*{Преобразование Лапаласа}
+
+\begin{defn}
+	\uwave{Интегралом Лапласа} в общем случае называется следующий интеграл:
+	$$
+		\ddint{a}{b}f(x)e^{\lambda g(x)}dx, \, \forall \lambda \geq 0
+	$$
+	где интеграл воспринимается, как несобственный на промежутке $\{a,b\}$.
+\end{defn}
+\begin{rem}
+	Интегралы Лапласа это интегралы, которые сами являются функциями от $\lambda$.
+\end{rem}
+
+Предположим, что $f \in C[0, +\infty)$, иначе будем это отдельно обговаривать. Также будем допускать функции, которые растут не быстрее экспоненты, то есть выполняется условие: 
+$$
+	|f(x)| \leq C_f e^{\lambda_f x}
+$$
+\begin{defn}
+	\uwave{Преобразованием Лапласа} функции $f$ называется следующее выражение:
+	$$
+		\ML(f)\,(\lambda) = \ddint{0}{+\infty}f(x)e^{-\lambda x}dx
+	$$
+\end{defn}
+
+\begin{prop}
+	Преобразование Лапласа $\ML(f)$ определено при $\lambda > \lambda_f$.
+\end{prop}
+\begin{proof}
+	По условияю $\lambda - \lambda_f >0$, тогда рассмотрим следующий интеграл:
+	$$
+		\ddint{0}{+\infty}f(x)e^{-\lambda x}dx = \ddint{0}{+\infty}f(x)e^{-\lambda_f x}{\cdot}e^{-(\lambda - \lambda_f)x}dx \Rightarrow
+	$$
+	$$
+		\Rightarrow \ddint{0}{+\infty}\left|f(x)\right|e^{-\lambda_f x}{\cdot}e^{-(\lambda - \lambda_f)x}dx \leq \ddint{0}{+\infty}C_f e^{-(\lambda - \lambda_f)x}dx = \dfrac{C_f}{\lambda - \lambda_f} < \infty
+	$$
+\end{proof}
+
+\begin{theorem}\textbf{(Свойства преобразования Лапласа)}
+	\begin{enumerate}[label ={(\arabic*)}]
+		\item{\textbf{Линейность}:} 
+		$$
+			\ML(\alpha f + \beta g) = \alpha\ML(f) + \beta\ML(g), \,\forall \lambda > \max\{\lambda_f, \lambda_g\}
+		$$
+		
+		\item{\textbf{Сдвиг преобразования}:} 
+		$$
+			\ML(e^{ax}f(x))\,(\lambda) = \ML(f)\, (\lambda - a), \, \forall	\lambda > a + \lambda_f
+		$$
+	
+		\item{\textbf{Перевод дифференцирования в умножение}:} Пусть $f$ - непрерывно дифференцируема на полуинтервале $[0, +\infty)$ и $|f^\prime(x)| \leq C_{f^\prime}e^{\lambda_f x}$, тогда: 
+		$$
+			\ML(f^\prime)\, (\lambda) = - f(0) + \lambda \ML(f)\, (\lambda)
+		$$
+		
+		\item{\textbf{Дифференцируемость}:} $\forall \lambda > \lambda_f$ функция $\ML(f)\,(\lambda)$ дифференцируема и верно следующее:
+		$$
+			\dfrac{\partial}{\partial \lambda}\ML(f)\,(\lambda) = - \ML(x {\cdot} f(x))
+		$$
+	\end{enumerate}
+\end{theorem}
+\newpage
+\begin{proof}\hfill
+	\begin{enumerate}[label ={(\arabic*)}]
+		\item Распишем интеграл:
+		$$
+			\ML(\alpha f + \beta g) = \ddint{0}{+\infty}\left(\alpha f(x) + \beta g(x)\right)e^{-\lambda x}dx = \alpha\ddint{0}{+\infty}f(x) e^{-\lambda x}dx + \beta\ddint{0}{+\infty} g(x)e^{-\lambda x}dx = \alpha\ML(f) + \beta\ML(g) 
+		$$
+		
+		\item Распишем преобразование Лапласа от функции $e^{ax}f(x)$:
+		$$
+			\ML(e^{ax}f(x))\,(\lambda) = \ddint{0}{+\infty}e^{ax}f(x)e^{-\lambda x}dx= \ddint{0}{+\infty}f(x)e^{-(\lambda - a)x}dx = \ML(f)\, (\lambda - a)
+		$$
+		
+		\item Воспользуемся интегрированием по частям:
+		$$
+			\ML(f^\prime) \, (\lambda) = \ddint{0}{+\infty}f^\prime(x)e^{-\lambda x}dx = \left.f(x)e^{-\lambda x}\right|_{x = 0}^{+\infty} + \lambda \ddint{0}{+\infty}f(x)e^{-\lambda x}dx
+		$$
+		В силу начальных условий, верно: 
+		$$
+			\left|f(x)e^{-\lambda x}\right| \leq C_f e^{- (\lambda -\lambda_f)x }, \, \lambda > \lambda_f \Rightarrow \lim\limits_{x \to +\infty} C_f e^{- (\lambda -\lambda_f)x} = 0 \Rightarrow \lim\limits_{x \to +\infty}f(x)e^{-\lambda x} = 0
+		$$ 
+		Таким образом, мы получаем:
+		$$
+			\ML(f^\prime) \, (\lambda) = -f(0) + \lambda \ML(f)\, (\lambda)
+		$$
+		
+		\item Учитывая, что $\lambda > \lambda_f$, эвристически продифференцируем функцию Лапласа (от лямбды зависит только экспонента, интеграл линейный $\Rightarrow$ линейное дифференцирование оно перестановочное):
+		$$
+			\dfrac{\partial}{\partial \lambda}\ddint{0}{+\infty}f(x)e^{-\lambda x} dx = -\ddint{0}{+\infty}f(x)xe^{-\lambda x}dx
+		$$
+		Проверим строго по определению:
+		$$
+			\dfrac{\ML(f)\, (\lambda + \Delta) - \ML(f)\, (\lambda)}{\Delta} = \ddint{0}{+\infty}f(x)\left(\dfrac{e^{-(\lambda + \Delta)x} - e^{-\lambda x}}{\Delta}\right)dx \Rightarrow
+		$$
+		$$
+			\Rightarrow \dfrac{\ML(f)\, (\lambda + \Delta) - \ML(f)\, (\lambda)}{\Delta} - \left(-\ddint{0}{+\infty}f(x)xe^{-\lambda x}dx\right) = \ddint{0}{+\infty}f(x)e^{-\lambda x}\left(\dfrac{e^{-\Delta x} - 1 + \Delta x}{\Delta}\right)dx =(*)
+		$$
+		Необходимо показать, что правая часть стремится к нулю. Научимся оценивать для всех $t$ функцию $e^t - 1 - t = g(t)$, показав, что $g(t) \leq t^2 e^{|t|}$. Рассмотрим $g(t)$ подробнее:
+		$$
+			g(0) = 0, \, g^\prime(t) = e^t - 1, \, g^\prime(0) = 0, \, g^{\prime\prime}(t) = e^t 
+		$$
+		Оценим $g^\prime(t)$ через первообразную:		
+		$$
+			\left|g^\prime(t)\right| = \left|\ddint{0}{t}g^{\prime\prime}(s)ds\right| =  \left|\ddint{0}{t}e^sds\right| \leq \left|\ddint{0}{t}e^{|t|}ds\right| = |t|e^{|t|}
+		$$
+		Оценим $g(t)$, использую полученную выше оценку для $g^\prime(t)$:
+		$$
+			|g(t)| = \left|\ddint{0}{t}g^\prime(s)ds\right|  \leq \left|\ddint{0}{t}|s|e^{|s|}ds\right| \leq \left|\ddint{0}{t}|t|e^{|t|}ds\right| = t^2 e^{|t|}
+		$$
+		Таким образом, мы получаем следующую оценку:
+		$$
+			(*) \leq \ddint{0}{+\infty}|f(x)|{\cdot}e^{-\lambda x}{\cdot}|\Delta|{\cdot}x^2{\cdot}e^{|\Delta|x}dx \leq |\Delta|\ddint{0}{+\infty}C_f e^{-(\lambda - \lambda_f - |\Delta|)x}x^2dx =(**)
+		$$
+		Пусть $|\Delta| < \dfrac{\lambda - \lambda_f}{2}$, тогда:
+		$$
+			(**) \leq |\Delta|C_f \ddint{0}{+\infty}e^{-\left(\tfrac{\lambda - \lambda_f}{2}\right)x}x^2dx \xrightarrow[\Delta \to 0]{} 0
+		$$
+	\end{enumerate}
+\end{proof}
+
+\begin{theorem}(\textbf{Вейерштрасса})
+	Если $f$ непрерывна на $[0,1]$, то: 
+	$$
+		\forall \VE > 0, \, \exists \, P_\VE \text{ - многочлен:} \,  \max\limits_{[0,1]}\left|f - P_\VE\right| < \VE
+	$$
+\end{theorem}
+\begin{rem}
+	Пока без доказательства, необходима для теоремы о единственности.
+\end{rem}
+\begin{theorem}(\textbf{единственность})
+	Если $\ML(f) \, (\lambda) =\ML(g) \, (\lambda), \, \forall \lambda \geq \lambda_1$, то $f = g$ на $[0, +\infty)$.
+\end{theorem}
+\begin{proof}
+	В силу линейности достаточно доказать, что:
+	$$
+		\ML(f)\, (\lambda) = 0, \, \forall \lambda \geq \lambda_1 \Rightarrow f = 0
+	$$
+	то есть, хотим показать, что ядро нулевое. По условию $ \lambda_f \leq \lambda_1$. Пусть $\lambda_f < \lambda_1$. Рассмотрим подробнее:
+	$$
+		\forall \lambda \geq \lambda_1, \, \ML(f)\, (\lambda) = \ddint{0}{+\infty}f(x)e^{-\lambda x}dx = \ddint{0}{+\infty}f(x)e^{-\lambda_1 x}e^{-(\lambda - \lambda_1)x}dx = 0
+	$$
+	Обозначим $g(x) = f(x)e^{-\lambda_1 x}$, это непрерывная функция предел которой на бесконечности равен $0$:
+	$$
+		g \in C[0, +\infty), \, \lim\limits_{x \to +\infty}g(x) = 0
+	$$
+	по аналогии со свойством $(3)$ и из-за $\lambda_f < \lambda_1$. Таким образом, мы свели пришли к задаче вида:
+	$$
+		\ddint{0}{+\infty}g(x)e^{-\lambda x}dx = 0, \, \forall \lambda \geq 0 \Rightarrow g(x) = 0
+	$$
+	Пусть $\lambda \geq 1$, тогда:
+	$$
+		\ddint{0}{+\infty}g(x)e^{-\lambda x}dx = - \ddint{0}{+\infty}g(x) e^{-(\lambda - 1)x}de^{-x} = \left|e^{-x} = t\right| = \ddint{0}{1}g(-\ln{(t)})t^{\lambda - 1}dt = \ddint{0}{1}h(t)t^{\lambda - 1}dt
+	$$
+	Обозначим $h(t) = g(-\ln{(t)})$, будем считать, что $h(0) = 0 \Rightarrow h(t)$ - непрерывна на $[0,1]$, поскольку:
+	$$
+		\lim\limits_{t \to 0}h(t) = \lim\limits_{t \to 0} g(-\ln{(t)}) = 0 = h(0)
+	$$
+	Будем придавать $\lambda$ значения $1, 2, 3, \dotsc$ и мы получим, что:
+	$$
+		\ddint{0}{1}h(t)t^m dt = 0, \, \forall m = 0,1,2, \dotsc
+	$$
+	Получили, что $h(t)$ на отрезке $[0,1]$ стала ортогональной всем степеням $t \Rightarrow$ стала ортогональной любому многочлену. Поскольку многочленами можно приближать непрерывные функции $\Rightarrow$ можно как-то извлечь, что $h = 0$ (ортогональна тем, кем приближается, значит ортогональна самой себе). Рассмотрим следующий интеграл:
+	$$
+		\ddint{0}{1}h^2(t)dt = \ddint{0}{1}h(t){\cdot}\left(h(t) - P_\VE(t)\right)dt
+	$$
+ 	равенство верно, поскольку $h(t) \perp P_\VE(t)$, где $P_\VE(t)$ - многочлен. Поскольку $h(t)$ - непрерывная, воспользуемся теоремой Вейерштрасса:
+ 	$$
+ 		\ddint{0}{1}h^2(t)dt = \ddint{0}{1}h(t){\cdot}\left(h(t) - P_\VE(t)\right)dt \leq \VE\max\limits_{t \in [0,1]}|h(t)| \Rightarrow \VE \to 0 \Rightarrow \ddint{0}{1}h^2(t)dt = 0
+ 	$$
+ 	Поскольку $h^2(t)$ - непрерывная, неотрицательная функция, то $h(t) = 0$.
+\end{proof}
+\begin{rem}
+	Доказательство напоминает задачу из линейной алгебры: $\langle x,y \rangle = 0$, то есть вектор $x$ ортогонален некоему набору векторов $y$. Или по-другому:
+	$$
+		\langle f, g \rangle = \ddint{a}{b}f(x)g(x)dx
+	$$
+	И в контексте теоремы, наша задача будет выглядеть так: 
+	$$
+		g \perp e^{-\lambda x}, \, \forall \lambda \geq 0 \Rightarrow g(x) = 0
+	$$
+\end{rem}
+\newpage
+\subsection*{Примеры преобразования Лапласа}
+\begin{enumerate}[label ={\textbf{\arabic*)}}]
+	\item $\ML(1) = \ddint{0}{+\infty}e^{-\lambda t}dt = \dfrac{1}{\lambda}, \, \forall \lambda > 0$;
+	
+	\item $\ML(e^{at}) = \dfrac{1}{\lambda - a}, \, \forall \lambda > a$ по свойству сдвига преобразования;
+	
+	\item $\ML(t^\alpha) = \ddint{0}{+\infty}t^{\alpha}e^{-\lambda t}dt, \, \alpha > -1 \Rightarrow \ML(t^\alpha) = \dfrac{\Gamma(\alpha + 1)}{\lambda^{\alpha + 1}}, \, \forall \lambda > 0$;
+	
+	\item $\ML(t^\alpha e^{at}) = \dfrac{\Gamma(\alpha + 1)}{(\lambda - a)^{\alpha + 1}}, \, \forall \lambda > a$;
+	
+	\item $\ML(\cos{(at)}) = \ddint{0}{+\infty}\cos{(at)}e^{-\lambda t}dt = \dfrac{\lambda}{a^2 + \lambda^2}, \, \forall \lambda > 0$;
+	\begin{proof}
+		$$
+			\ddint{0}{+\infty}\cos{(at)}e^{-\lambda t}dt = \dfrac{1}{\lambda} - \dfrac{a}{\lambda}\ddint{0}{+\infty}\sin{(at)}e^{-\lambda t}dt = \dfrac{1}{\lambda} - \dfrac{a}{\lambda}\left(-\dfrac{1}{\lambda}\left.\sin{(at)}e^{-\lambda t}\right|_{t = 0}^{+\infty} + \dfrac{a}{\lambda} \ddint{0}{+\infty}\cos{(at)}e^{-\lambda t}dt\right) =
+		$$
+		$$
+			= \dfrac{1}{\lambda} - \dfrac{a^2}{\lambda^2} \ddint{0}{+\infty}\cos{(at)}e^{-\lambda t}dt \Rightarrow \left(1 + \dfrac{a^2}{\lambda^2}\right)\ddint{0}{+\infty}\cos{(at)}e^{-\lambda t}dt = \dfrac{1}{\lambda} \Rightarrow \ddint{0}{+\infty}\cos{(at)}e^{-\lambda t}dt = \dfrac{\lambda}{a^2 + \lambda^2}
+		$$
+	\end{proof}
+	
+	\item $\ML(\sin{(at)})= \dfrac{a}{a^2 + \lambda^2}, \, \forall \lambda > 0$;
+	\begin{proof}
+		Из доказательства выше мы получаем: 
+		$$
+			\ML(\cos{(at)}) = \dfrac{\lambda}{a^2 + \lambda^2} = \dfrac{1}{\lambda} - \dfrac{a}{\lambda}\ML(\sin{(at)}) \Rightarrow \dfrac{\lambda^2 - a^2 - \lambda^2}{\lambda^2 + a^2} = -a \ML(\sin{(at)}) \Rightarrow \ML(\sin{(a)}) = \dfrac{a}{\lambda^2 + a^2}
+		$$
+	\end{proof}
+\end{enumerate}
+
+\begin{exrc}
+	Найти $\ML(t^\alpha e^{\beta t} \cos{(at)})$.
+\end{exrc}
+\begin{proof}
+	Предположим, что мы знаем разложение косинуса: $\cos{(ax)} = \dfrac{e^{iax} + e^{-iax}}{2}$, тогда:
+	$$
+		\ML(t^\alpha e^{\beta t} \cos{(at)}) = \dfrac{1}{2}\ddint{0}{+\infty}t^{\alpha}\left(e^{(\beta + ia - \lambda)t} + e^{(\beta - ia - \lambda)t}\right)dt = \dfrac{1}{2}\ddint{0}{+\infty}t^{\alpha}e^{-(\lambda -\beta - ia)t}dt + \dfrac{1}{2}\ddint{0}{+\infty}t^{\alpha}e^{-(\lambda -\beta + ia)t}dt
+	$$
+	Рассмотрим для начала $\alpha = n \in \MN$ и посчитаем первый интеграл:
+	$$
+		\ddint{0}{+\infty}t^{n}e^{-( \lambda -\beta - ia)t}dt = \dfrac{\partial^n}{\partial \lambda^n} \left(\ddint{0}{+\infty}e^{-(\lambda - \beta - ia)t}dt\right) = \dfrac{\partial^n}{\partial \lambda^n} \left(\dfrac{-1}{\lambda - \beta - ia}{\cdot}\left.e^{-(\lambda - \beta - ia)t} \right|_{t = 0}^{+\infty}\right) =
+	$$
+	$$
+		= \dfrac{\partial^n}{\partial \lambda^n} \left(\dfrac{1}{\lambda - \beta - ia}\right) = \dfrac{n!}{(\lambda - \beta - ia)^{n+1}} = \dfrac{\Gamma(n+1)}{(\lambda - \beta - ia)^{n+1}} \Rightarrow \ddint{0}{+\infty}t^{n}e^{-( \lambda -\beta + ia)t}dt = \dfrac{\Gamma(n+1)}{(\lambda - \beta + ia)^{n+1}} \Rightarrow
+	$$
+	$$
+		 \Rightarrow \ML(t^n e^{\beta t} \cos{(at)}) = \dfrac{\Gamma(n+1)}{2}{\cdot}\left(\dfrac{1}{(\lambda - \beta - ia)^{n+1}} + \dfrac{1}{(\lambda - \beta + ia)^{n+1}}\right) = 
+	$$
+	$$
+		= \dfrac{\Gamma(n+1)}{2}{\cdot}\left(\dfrac{(\lambda - \beta + ia)^{n+1} + (\lambda - \beta - ia)^{n+1}}{\left((\lambda - \beta)^2 - (ia)^2\right)^{n+1}} \right) = \dfrac{\Gamma(n+1)}{2}{\cdot}\left(\dfrac{((\lambda - \beta) + ia)^{n+1} + ((\lambda - \beta) - ia)^{n+1}}{\left((\lambda - \beta)^2 + a^2\right)^{n+1}} \right)
+	$$
+	Если, эвристически перейдем от $n$ к $\alpha$, то мы получим следующий результат:
+	$$
+		\ML(t^\alpha e^{\beta t} \cos{(at)}) = \dfrac{\Gamma(\alpha + 1)}{2}{\cdot}\left(\dfrac{((\lambda - \beta) + ia)^{\alpha+1} + ((\lambda - \beta) - ia)^{\alpha+1}}{\left((\lambda - \beta)^2 + a^2\right)^{\alpha+1}} \right)
+	$$
+	Проверим, что это действительно так. Проверим значения при $\alpha = 0, 1,2$, пусть $\beta = 0$:
+	$$
+		\alpha = 0 \Rightarrow \ML(\cos{(at)}) = \dfrac{\Gamma(1)}{2}{\cdot}\left(\dfrac{\lambda + ia + \lambda - ia}{\lambda^2 + a^2} \right) = \dfrac{0!}{2}{\cdot}\dfrac{2\lambda}{\lambda^2 + a^2} = \dfrac{\lambda}{\lambda^2 + a^2}
+	$$
+	$$
+		\alpha = 1 \Rightarrow \ML(t\cos{(at)}) = \dfrac{1}{2}{\cdot}\dfrac{(\lambda + ia)^2 + (\lambda - ia)^2}{(\lambda^2 + a^2)^2} = \dfrac{1}{2}{\cdot}\dfrac{\lambda^2 + 2ia \lambda - a^2 + \lambda^2 - 2ia \lambda - a^2}{(\lambda^2 + a^2)^2} = \dfrac{\lambda^2 - a^2}{(\lambda^2 + a^2)^2}
+	$$
+	$$
+		\alpha = 2 \Rightarrow \ML(t^2\cos{(at)}) = \dfrac{2!}{2}{\cdot}\dfrac{(\lambda + ia)^3 + (\lambda - ia)^3}{(\lambda^2 + a^2)^3} = \dfrac{2\lambda^3 - 6 \lambda a^2}{(\lambda^2 + a^2)^3} = \dfrac{2\lambda(\lambda^2 - 3a^2)}{(\lambda^2 + a^2)^3}
+	$$
+\end{proof}
+\begin{rem}
+	Отметим, что здесь мы пользовались следующим: $\ddint{0}{+\infty}e^{-st}dt =\dfrac{-1}{s}, \, s \in \MC, \, \Re(s) > 0$.
+\end{rem}
+
+\newpage
+\subsection*{Примеры применения преобразования Лапласа: вычисление интегралов}
+\textbf{Пример}: Рассмотрим интеграл следующего вида:
+$$
+	f(a) = \ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1+ x^2}dx, \, \forall a > 0
+$$
+Считать данный интеграл напрямую достаточно затруднительно, возьмем его преобразование Лапласа, чтобы посмотреть, может оно будет соответствовать каким-то знакомым функциям:
+$$
+	\ML(f)\, (\lambda) = \ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1 + x^2}dx\right)e^{-\lambda a}da, \, \lambda > 0
+$$
+Интеграл это сумма, суммы можно переставлять (об этом будет идти речь в дальнейших лекциях), соответственно для интегралов это тоже верно (будет доказано потом):
+$$
+	\ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1 + x^2}dx\right)e^{-\lambda a}da = \ddint{0}{+\infty}\left(\ddint{0}{+\infty}\dfrac{\cos{(ax)}e^{-\lambda a}}{1 + x^2}da\right)dx = \ddint{0}{+\infty}\dfrac{1}{1 + x^2}\ML(\cos{(ax)})dx = 
+$$
+$$	
+	= \ddint{0}{+\infty}\dfrac{1}{1+x^2}{\cdot}\dfrac{\lambda}{\lambda^2 + x^2}dx = \dfrac{\lambda}{\lambda^2 - 1} \ddint{0}{+\infty}\left(\dfrac{1}{1+ x^2} - \dfrac{1}{\lambda^2 + x^2}\right)dx = \dfrac{\lambda}{\lambda^2 - 1}\left(\dfrac{\pi}{2} - \dfrac{\pi}{2\lambda}\right) = \dfrac{\pi}{2}{\cdot}\dfrac{1}{\lambda + 1}
+$$
+Таким образом, смотря на таблицы с примерами преобразований Лапласа, получаем:
+$$
+	\ddint{0}{+\infty}\dfrac{\cos{(ax)}}{1+ x^2}dx = \dfrac{\pi}{2}e^{-|a|}, \, \forall a 
+$$
+
+\textbf{Пример}: Рассмотрим следующий интеграл (\uwave{интеграл Дирихле}):
+$$
+	\ddint{0}{+\infty}\dfrac{\sin{(x)}}{x}dx
+$$
+Возьмем преобразование Лапласа в нуле:
+$$
+	\ddint{0}{+\infty}\dfrac{\sin{(x)}}{x}dx = \ML\left(\dfrac{\sin{(x)}}{x}\right)\, (0) \Rightarrow \ML\left(\dfrac{\sin{(x)}}{x}\right)\, (\lambda) = \ddint{0}{+\infty}\dfrac{\sin{(x)}}{x}e^{-\lambda x}dx, \, \forall \lambda >0
+$$
+Возьмем производную преобразования Лапласа по $\lambda$:
+$$
+	\dfrac{\partial \ML}{\partial \lambda} = -\ddint{0}{+\infty}\sin{(x)}e^{-\lambda x}dx = - \dfrac{1}{\lambda^2 + 1} \Rightarrow \ML\left(\dfrac{\sin{(x)}}{x}\right)\, (\lambda) = - \arctg{(\lambda)} + C
+$$
+Чтобы найти константу устремляем $\lambda$ к бесконечности:
+$$
+	\lim\limits_{\lambda \to +\infty}\ddint{0}{+\infty}\dfrac{\sin{(x)}}{x}e^{-\lambda x}dx = 0 = -\dfrac{\pi}{2} + C \Rightarrow C = \dfrac{\pi}{2} \Rightarrow
+$$
+$$
+	\Rightarrow \ML\left(\dfrac{\sin{(x)}}{x}\right)\, (\lambda) = \dfrac{\pi}{2} - \arctg{(\lambda)} \Rightarrow  \ddint{0}{+\infty}\dfrac{\sin{(x)}}{x}dx = \dfrac{\pi}{2}
+$$
+Остается вопрос, мы установили выражение $\ML(\lambda)$ для $\lambda > 0$, почему по непрерывности можно считать, что мы знаем $\ML(0)$. Сможем ответить на этот вопрос, изучив равномерную сходимость интегралов.
+
+\subsection*{Примеры применения преобразования Лапласа: решение диф.уравнений}
+\textbf{Пример}: Рассмотрим следующее дифференциальное уравнение с начальными условиями:
+$$
+	y^{\prime\prime} - 3y^\prime + 2y = e^x, \, y(0) = y^\prime(0) = 0, \, x > 0
+$$
+Делаем преобразование  Лапласа, чтобы побыстрее избавится от производных, получим:
+$$
+	\ML(y^{\prime\prime} - 3y^\prime + 2y)\, (\lambda) = \lambda^2 \ML(y)\, (\lambda) - 3\lambda\ML(y)\, (\lambda) + 2 \ML(y)\, (\lambda) = \dfrac{1}{\lambda - 1} \Rightarrow 
+$$
+$$
+	\Rightarrow
+	\ML(y)\, (\lambda) = \dfrac{1}{(\lambda - 1)(\lambda^2 - 3\lambda + 2)} = \dfrac{1}{(\lambda - 1)^2(\lambda - 2)}
+$$
+Таким образом, найти преобразование Лапласа будет равнятся нахождению решения уравнения. Получим:
+$$
+	\ML(y)\,(\lambda) =\dfrac{1}{\lambda - 2} - \dfrac{1}{\lambda - 1} - \dfrac{1}{(\lambda-1)^2} \Rightarrow \ML(y)\,(\lambda) = \ML\left(e^{2x} - e^x - xe^{x}\right)\, (\lambda)
+$$
+Таким образом, получили решение:
+$$
+	y(x) = e^{2x} - e^x - xe^{x}
+$$
+
+\begin{rem}
+	Пример выше - достаточно простое уравнение, но есть примеры, где преобразования Лапласа помогают решать уравнения, которые обычными способами разобрать гораздо труднее.
+\end{rem}
+\textbf{Пример}: Уравнение запаздывания:
+$$
+	y^\prime(x) = y(x - 1) + 1, \, y(x) = 0, \, \forall x \leq 0
+$$
+Возьмем преобразование Лапласа от этого уравнения:
+$$
+	\lambda\ML(y)\, (\lambda) = \ddint{0}{+\infty}y(x-1)e^{-\lambda x}dx + \dfrac{1}{\lambda} = e^{-\lambda} \ddint{-1}{+\infty}y(t)e^{-\lambda t}dt + \dfrac{1}{\lambda} =  e^{-\lambda} \ddint{0}{+\infty}y(t)e^{-\lambda t}dt + \dfrac{1}{\lambda}
+$$
+где последнее равенство верно в силу $y(x) = 0, \, \forall x \leq 0$. Тогда:
+$$
+	\lambda\ML(y)\, (\lambda) = e^{-\lambda}\ML(y)\, (\lambda) + \dfrac{1}{\lambda} \Rightarrow \ML(y)\, (\lambda) = \dfrac{1}{\lambda^2\left(1 - \tfrac{e^{-\lambda}}{\lambda}\right)}
+$$
+Таких функций в наших примерах нет. Надо перейти к чему-то более простому, например, разложив в ряд:
+$$
+	\ML(y)\, (\lambda) = \dfrac{1}{\lambda^2\left(1 - \tfrac{e^{-\lambda}}{\lambda}\right)} = \sum\limits_{n = 0}^{\infty}\dfrac{e^{-n\lambda}}{\lambda^{n + 2}}
+$$
+При $\lambda > 1$ этот ряд сходится. Теперь нужно угадать преобразование Лапласа у слагаемых этого ряда. Для $\tfrac{1}{\lambda^{n+2}}$ это будут функции $\tfrac{x^{n+1}}{\Gamma(n+2)}$. Попробуем разобраться с $e^{- n\lambda}$, для этого рассмотрим следующее преобразование Лапласа:
+$$
+	\ddint{0}{+\infty}(x-a)^k_{+}e^{-\lambda x}dx 
+$$
+где $(x-a)^k_{+} = \max\{0, (x-a)^k\}$. Избавимся от сдвига:
+$$
+	\ddint{0}{+\infty}(x-a)^k_{+}e^{-\lambda x}dx = |x-a = t| = e^{-\lambda a}\ddint{-a}{+\infty}t^k_{+}e^{-\lambda t}dt = e^{-\lambda a}\ddint{0}{+\infty}t^ke^{-\lambda t}dt = e^{-\lambda a}\dfrac{\Gamma(k+1)}{\lambda^{k+1}}
+$$
+И таким образом, требуемая исходная функция для слагаемых будет иметь вид: 
+$$
+	\dfrac{(x - n)_{+}^{n+1}}{\Gamma(n+2)} = \dfrac{(x - n)_{+}^{n+1}}{(n+1)!} \Rightarrow \ML(y)\, (\lambda) = \sum\limits_{n = 0}^{\infty}\ML\left(\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right)\, (\lambda)
+$$
+Пользуясь (нестрого, из-за суммирования на бесконечности) линейностью, мы получим:
+$$
+	y(x) = \sum\limits_{n = 0}^{\infty}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}
+$$
+Конечная ли это сумма? Да, так как на интервале $\forall x \in (a,b)$ мы будем получать конечную сумму, поскольку $\exists \, n\in \MN \colon n > x$ и соответственно все слагаемые ряда после этого $n$ будут нулевыми $\Rightarrow$ получается отличная дифференцируемая функция.
+\begin{exrc}
+	Понять, что $y(x) \leq e^x$. Сумма монотонна $\Rightarrow$ все частичные суммы также оцениваются $e^x$.
+\end{exrc}
+\begin{proof}
+	Из разложения Тейлора, известно что: $e^x = \ddsum{n = 0}{\infty}\dfrac{x^n}{n!} = 1 + \ddsum{n = 0}{\infty}\dfrac{x^{n+1}}{(n+1)!}$, тогда:
+	$$
+		\forall x > 0, \, \forall n \in \MN, \, \dfrac{(x - n)_{+}^{n+1}}{(n+1)!} \leq \dfrac{x^{n+1}}{(n+1)!} \Rightarrow \sum\limits_{n = 0}^{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!} \leq 1 + \ddsum{n = 0}{N}\dfrac{x^{n+1}}{(n+1)!} \Rightarrow
+	$$
+	$$
+		\Rightarrow \lim\limits_{N \to \infty}\ddsum{n = 0}{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!} \leq \lim\limits_{N \to \infty} \left(1 + \ddsum{n = 0}{N}\dfrac{x^{n+1}}{(n+1)!}\right)   \Rightarrow y(x) \leq e^x
+	$$
+	Или же, это можно показать через преобразование Лапласа. Рассмотрим его для обеих функций:
+	$$
+		\ML(y)\,(\lambda) = \ddint{0}{+\infty}y(x)e^{-\lambda x}dx =  \dfrac{1}{\lambda(\lambda - e^{-\lambda})}, \, \ML(e^x)\,(\lambda) = \ddint{0}{+\infty}e^x e^{-\lambda x}dx = \dfrac{1}{\lambda - 1}
+	$$
+	$$
+		\lambda > 1 \Rightarrow \dfrac{1}{e^{\lambda}} < 1\Rightarrow \lambda - e^{-\lambda} > \lambda - 1 \Rightarrow \dfrac{1}{\lambda(\lambda -e^{-\lambda})} < \dfrac{1}{\lambda - 1} \Rightarrow y(x) \leq e^x
+	$$
+\end{proof}
+\begin{exrc}
+	Доказать, что:
+	$$
+		\lim\limits_{N \to \infty}\ddint{0}{+\infty}\left|y(x) - \sum\limits_{n = 0}^{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx = 0
+	$$
+	Указание: разбить интеграл от $0$ до $a$ плюс интеграл от $a$ до $+\infty$. И оценить второй интеграл через $2e^x$.
+\end{exrc}
+\begin{proof}
+	Воспользуемся указанием:
+	$$
+		\ddint{0}{+\infty}\left|y(x) - \ddsum{n = 0}{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx = \ddint{0}{a}\left|y(x) - \sum\limits_{n = 0}^{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx + \ddint{a}{+\infty}\left|y(x) - \ddsum{n = 0}{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx
+	$$
+	Рассмотрим предел первого интеграла при $N \to \infty$:
+	$$
+		\lim\limits_{N\to \infty}\ddint{0}{a}\left|y(x) - \sum\limits_{n = 0}^{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx = \ddint{0}{a}|y(x) - y(x)|e^{-\lambda x}dx = 0
+	$$
+	Рассмотрим второй интеграл и, согласно указанию, оценим его сверху:
+	$$
+		\ddint{a}{+\infty}\left|y(x) - \ddsum{n = 0}{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx \leq \ddint{a}{+\infty}2e^x e^{-\lambda x}dx = 2\ddint{a}{+\infty}e^{-(\lambda - 1)x}dx = \dfrac{2}{\lambda - 1}e^{-(\lambda-1)a}
+	$$
+	Таким образом, мы можем  установить следующее неравенство $\forall a \in [0,+\infty)$:
+	$$
+		0 \leq \lim\limits_{N \to \infty}\ddint{0}{+\infty}\left|y(x) - \sum\limits_{n = 0}^{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx \leq \dfrac{2}{\lambda - 1}e^{-(\lambda-1)a}
+	$$
+	Следовательно, предел существует, неравенство выполняется для всех $a$, первое и второе слагаемые не зависят от него, устремим $a$ к бесконечности, тогда:
+	$$
+		0 \leq \lim\limits_{N \to \infty}\ddint{0}{+\infty}\left|y(x) - \sum\limits_{n = 0}^{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx \leq 0 \Rightarrow \lim\limits_{N \to \infty}\ddint{0}{+\infty}\left|y(x) - \sum\limits_{n = 0}^{N}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x} dx= 0
+	$$
+\end{proof}
+\begin{exrc}
+	Из предыдущего упражнения доказать, что:
+	$$
+		\ML\left(\sum\limits_{n = 0}^{\infty}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right)\, (\lambda) = \sum\limits_{n = 0}^{\infty}\ML\left(\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}\right)\, (\lambda)
+	$$
+\end{exrc}
+\begin{proof}
+	По определению преобразования Лапласа нам необходимо доказать:
+	$$
+		\ddint{0}{+\infty}y(x)e^{-\lambda x}dx = \ddint{0}{+\infty}\ddsum{n = 0}{\infty}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}e^{-\lambda x}dx = \ddsum{n = 0}{\infty}\ddint{0}{+\infty}\dfrac{(x-n)_{+}^{n+1}}{(n+1)!}e^{-\lambda x}dx 
+	$$
+	Оценим следующую разность:
+	$$
+		\left|\ddint{0}{+\infty}y(x)e^{-\lambda x}dx - \ddsum{n = 0}{N}\ddint{0}{+\infty}\dfrac{(x - n)_{+}^{n+1}}{(n+1)!}e^{-\lambda x}dx \right|	= \left|  \ddint{0}{+\infty}\left(y(x) - \ddsum{n = 0}{N}\dfrac{(x-n)_{+}^{n+1}}{(n+1)!}\right)e^{-\lambda x}dx \right| \leq
+	$$
+	$$
+		\leq \ddint{0}{+\infty}\left|y(x) - \ddsum{n = 0}{N}\dfrac{(x-n)_{+}^{n+1}}{(n+1)!}\right|e^{-\lambda x}dx \xrightarrow[N \to \infty]{} 0
+	$$
+\end{proof}
+Эти действия оправдывают, почему можно было использовать линейность, а теорема единственности указывает, что решение может быть только одно.
+
+\end{document}

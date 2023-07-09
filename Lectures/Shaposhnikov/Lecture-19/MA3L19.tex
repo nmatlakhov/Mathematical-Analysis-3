@@ -1,0 +1,446 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MTI}{\mathbb{I}}
+\newcommand{\MTP}{\mathbb{P}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+%%Функция для обозначения равномерной сходимости по множеству
+\newcommand{\uconv}[1]{\overset{#1}{\rightrightarrows}}
+\newcommand{\uconvm}[2]{\overset{#1}{\underset{#2}{\rightrightarrows}}}
+
+%%Функция для обозначения нижнего и верхнего интегралов
+\def\upint{\mathchoice%
+	{\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	\int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 19}
+\section*{Применение производящих функций}
+\subsection*{$(\RN{4})$ Игра Пенни}
+Бросается правильная монета бесконечное число раз. Будем считать орёл за $1$ и решку за $0$. Если совершенно $n$ бросков, то всего возможных комбинаций нулей и едениц может быть $2^n \Rightarrow$ вероятность реализации конкретного сценария будет равна: 
+$$
+	A \in \Omega, \, A = \{\underbrace{0110 \dotsc 1}_{n}\}, \, \MTP(A) = \underbrace{\dfrac{1}{2}{\cdot}\dfrac{1}{2}{\cdot}\dotsc{\cdot}\dfrac{1}{2}}_{n} =  \dfrac{1}{2^n}
+$$ 
+В такой последовательности нас будет интересовать  комбинация $110$: мы бросаем монетку до тех пор, пока не появится такая комбинация. Пусть мы бросили монетку $n$ раз, какова вероятность, что на $n$-ом бросании впервые возникла комбинация $110$? Обозначим эту вероятность как $p_n$, тогда заметим: 
+$$
+	p_0 = 0, \, p_1 = 0, \, p_2 = 0, \, p_3 = \dfrac{1}{8}, \, \dotsc
+$$
+В контексте темы, нас будет интересовать производящая функция $P(z)$ для этой последовательности вероятностей. Одновременно с этим, обозначим через $q_n$ - вероятность того, что в первых $n$ бросаниях комбинация $110$ не появилась:
+$$
+	q_0 = 1, \, q_1 = 1, \, q_2 = 1, \, q_3 = \dfrac{7}{8}, \, \dotsc
+$$
+Тогда производящие функции будут иметь следующий вид:
+$$
+	P(z) = \ddsum{n = 0}{\infty}p_n z^n, \, Q(z) = \ddsum{n = 0}{\infty}q_n z^n
+$$
+Рассмотрим комбинацию длины $n$ , где нет $110$, затем бросаем монетку и получаем её $\Rightarrow$ получаем все комбинации, где первый раз встречается $110$. Вероятность  таких последовательностей будет равна:
+$$
+	B \in \Omega, \, B = \{\underbrace{\text{ нет комбинации $110$ }}_{n} 110\} \Rightarrow \MTP(B) = q_n{\cdot}\dfrac{1}{8} = p_{n + 3} \Rightarrow \dfrac{1}{8}z^3 Q(z) = P(z)
+$$
+Рассмотрим ещё следующие комбинации: пусть сколько-то бросков ничего не было, затем бросили монетку ещё раз, где может выпасть либо орёл, либо решка. Объединяя эти наборы мы получаем комбинации, где может появится нужная последовательность, а может не появится. Добавляя к этим событиям случай, когда ничего не бросали мы сможем представить это так:
+$$
+	\{ \VN \} + \{\text{ нет $110$ } \, |0\} + \{\text{ нет $110$ } \, |1\} = 	\{\text{ нет $110$ } \} + 	\{\text{ есть $110$ } \}
+$$
+Случай, когда не бросали монетку слева перейдет в случай справа, когда монетка была брошена ровно один раз (у $Q(z)$ потеряно нулевое слагаемое). Запишем это в терминах производящих функций:
+$$
+	1 + \dfrac{1}{2}zQ(z) + \dfrac{1}{2}zQ(z) = Q(z) + P(z) \Rightarrow (z-1)Q(z) = P(z) - 1
+$$
+Получили два уравнения, хотелось бы получить $P(z)$:
+$$
+	Q(z) = \dfrac{8}{z^3}P(z) \Rightarrow \dfrac{8(z-1)}{z^3}P(z) = P(z) - 1\Rightarrow z^3 = P(z){\cdot}(z^3 - 8(z-1)) \Rightarrow P(z) = \dfrac{z^3}{z^3 - 8(z-1)}
+$$
+Мы получили рациональную дробь, значит последовательность будет удовлетворять реккурентному соотношению. Можем их посчитать приравняв коэффициенты к нулю, начиная с некоторого номера: 
+$$
+	z^3 = z^3 P(z) - 8z P(z) + 8 P(z) \Rightarrow z_n \colon 8p_n - 8 p_{n-1} + p_{n-3} = 0 \Rightarrow p_n = p_{n-1} - \dfrac{1}{8}p_{n-3}, \, n > 3
+$$
+Можно разложить это в ряд при $z$ маленьких. Но сделаем ещё одно замечание, пусть $z = 1 \Rightarrow$ получим вероятность того, что искомая комбинация вообще встретится:
+$$
+	P(1) = p_0 + p_1 + p_2 + \dotsc = \dfrac{1}{1 -8{\cdot}0} = 1
+$$
+Таким образом, мы видим, что с вероятностью $1$ появляется такая комбинация.
+
+\subsection*{Игра с двумя участниками} 
+Пусть теперь у нас будет два участника Алиса и Боб, Алиса загадала комбинацию $110$, а Боб загадал комбинацию $100$. Дальше начинается бросание монетки и выигрывает тот, чья комбинация появляется первой. На самом деле, один из участников выигрывает с большей вероятностью. Интересный факт, что какую бы комбинацию мы не придумали длины $3$ всегда можно указать комбинацию, которая у неё выигрывает. Это называется \uwave{парадоксом Пенни}.
+
+Обозначим через $S_A$ сумму вероятностей тех комбинаций, когда выигрывает Алиса и через $S_B$ сумму вероятностей тех комбинаций, когда выигрывает Боб:
+$$
+	S_A = \ddsum{n = 0}{\infty}p_n^A, \, S_B = \ddsum{n = 0}{\infty}p_n^B
+$$
+где $p_n^A$ - вероятность, что на $n$-ом шаге появилась комбинация Алиса, а до этого не было не только её комбинации, но и комбинации Боба. Обозначим через $Q$ - сумма $q_n$ вероятностей, что на шаге $n$ нет нужных комбинаций. Аналогично прошлому разу, рассмотрим комбинации, когда не было ничего ни для Алисы, ни для Боба, а затем бросили монетку ещё раз. Мы получаем следующий набор:
+$$
+	\{\VN\} + \{\text{ нет A, нет B } \, |0\} + \{\text{ нет A, нет B } \, |1\} = 	\{\text{ нет A, нет B } \} + 	\{\text{ есть A } \} + \{\text{ есть B }\}
+$$
+Предположив, что $z =1$ (здесь уже не работаем с производящими функциями), мы получим:
+$$
+	1 + \dfrac{1}{2}Q + \dfrac{1}{2} Q = Q + S_A + S_B \Rightarrow S_A + S_B = 1
+$$
+Это означает, что хотя бы один из них на каком-то шаге выиграет. Рассмотрим случай, когда сначала ничего не было, а затем получили комбинацию $100$ и аналогично, когда получили $110$:
+$$
+	\{\text{ нет A, нет B } \, |100\}  = 	\{\text{ есть A }\, |0 \} + \{\text{ есть B }\} \Rightarrow \dfrac{1}{8}Q = \dfrac{1}{2}S_A + S_B
+$$
+$$
+	\{\text{ нет A, нет B } \, |110\}  = 	\{\text{ есть A } \} \Rightarrow \dfrac{1}{8}Q = S_A \Rightarrow S_A = 2S_B \Rightarrow S_A = \dfrac{2}{3}, \, S_B = \dfrac{1}{3}
+$$
+\begin{rem}
+	Есть замечательная книга про похожие задачи: Кнут, Поташник и Грэхам, ``конкретная математика''. В этой книге есть очень много красивых наблюдений и методов, которые используются и в комбинаторике, и в программировании.
+\end{rem}
+\newpage
+\section*{Решение дифф. уравнений с помощью степенных рядов} 
+\subsection*{Задача Коши}
+\textbf{Пример}: Рассмотрим задачу Коши: $\left\{
+\begin{array}{lcl}
+		y^\prime &=& y \\
+		y(0) &=& 1
+\end{array}\right.$ и будем искать решение в виде $y(x) = \ddsum{n = 0}{\infty}c_n x^n$.
+
+Априори неизвестно, есть ли решение в виде степенного ряда или получится ли вообще что-то разумное. Подставим в систему и проверим:
+$$
+	\ddsum{n = 1}{\infty}nc_nx^{n-1} = \ddsum{n = 0}{\infty}c_n x^n
+$$
+По теореме о единственности мы знаем, что если степенные ряды совпали, то совпали и их коэффициенты при их соответствующих степенях. Тогда, воспользовавшись начальным условием, мы получим:
+$$
+	x^0 \colon y(0) = c_0 = 1, \, x^1 \colon 1{\cdot}c_1 = c_0, \, x^n \colon (n+1) c_{n+1} = c_n \Rightarrow 
+$$
+$$	
+	\Rightarrow c_{n+1} = \dfrac{c_n}{n+1} = \dfrac{c_{n-1}}{(n+1)n} = \dotsc = \dfrac{1}{(n+1)!} \Rightarrow y(x) = \ddsum{n = 0}{\infty}\dfrac{x^n}{n!} = e^x
+$$
+Возникает вопрос, зачем так решать дифференциальные уравнения? Иногда степенными рядами можно решить то, что обычными методами так просто не решить.
+
+\subsection*{Уравнение Лапласа}
+\textbf{Пример}: Рассмотрим следующее уравнение: $\Delta u = u_{xx} + u_{yy} + u_{zz} = 0$. 
+
+\begin{rem}
+	Для большого числа задач бывает важно находить решения такого уравнения. Например, если вы решаете задачу о том, как распределена температура в аудитории (или в какой-то области): если температура больше не меняется и больше нет других источников изменения, то распределение температуры будет удовлетворять такому уравнению. Другой пример: надули мыльный пузырь или натянули мыльную плёнку на какую-то рамку, как будет устроен профиль этой плёнки? Если она не сильно изгибается, очень хорошим приближением опять будет задаваться решением этого уравнения.
+\end{rem} 
+
+\begin{defn}
+	Это уравнение называется \uwave{уравнением Лапласа}, функция удовлетворяющая этому уравнению называется \uwave{гармонической}.
+\end{defn}
+Пусть мы изучаем эту задачу в каком-либо цилиндре, тогда естественно будет перейти от обычной Евклидовой системы координат в цилиндрическую. Тогда:
+$$
+	\left\{
+	\begin{array}{lcl}
+		x &=& r \cos{\varphi} \\
+		y &=& r \sin{\varphi}\\
+		z &=& z
+	\end{array}
+	\right. \Rightarrow \Delta u = u_{rr} + \dfrac{1}{r}u_r + \dfrac{1}{r^2}u_{\varphi\varphi} + u_{zz}
+$$
+Одним из важных методов в дифф. уравнениях является разделение переменных $\Rightarrow$ сделаем догадку, что надо искать решение в некотором специальном виде:
+$$
+	u(r,\varphi, z) = R(r)\Phi(\varphi)Z(z)
+$$
+За догадкой лежит уверенность в том, что все сложные процессы распадаются в линейные комбинации простых и чтобы научиться любую ситуацию моделировать надо иметь большой запас решений, не надо пытаться найти сразу все, достаточно бывает найти большой класс, а дальше через него, с помощью линейных комбинаций (возможно бесконечных), выразить то, что нам нужно. Это так называемый \uwave{принцип суперпозиции}. Подставим выражение в уравнение Лапласа:
+$$
+	R^{\prime\prime}\Phi Z + \dfrac{1}{r} R^\prime \Phi Z + \dfrac{1}{r^2}R \Phi^{\prime\prime} Z + R \Phi Z^{\prime\prime} = 0 \Rightarrow \dfrac{R^{\prime\prime}}{R} +  \dfrac{1}{r}{\cdot} \dfrac{R^\prime}{R} + \dfrac{1}{r^2}{\cdot}\dfrac{\Phi^{\prime}}{\Phi} + \dfrac{Z^{\prime\prime}}{Z} = 0
+$$
+Когда делят, обычно рассуждают исходя из того, что пытаются найти не всё, а достаточно много. Заметим, что первое и второе слагаемые зависят только от $r$, третье от $r$ и $\varphi$ и последнее зависит только от $z$. Поскольку это всё равно нулю, то последнее слагаемое равно функции, которая от $z$ не зависит $\Rightarrow$ это константа (поскольку слагаемое зависит только от $z$). Тогда: 
+$$
+	Z^{\prime \prime} = \lambda^2 Z
+$$
+где $\lambda$ в квадрате, поскольку по некоторым причинам удобно считать, что это положительная константа. По аналогичным причинам, мы получаем, что:
+$$
+	\Phi^{\prime\prime} + n^2 \Phi = 0
+$$
+где отрицательный коэффициент берется в силу того, что все решения в таком случае будут косинусами и синусами, в противном случае будут экспоненты $\Rightarrow$ поскольку $\varphi$ это полярный угол, то естественным будет ожидание, что для хороших функций должна получаться функция периодическая. Подставим эти выражения и посмотрим, какое уравнение получается на $r$:
+$$
+	\dfrac{R''}{R} + \dfrac{1}{r}{\cdot}\dfrac{R'}{R} - \dfrac{n^2}{r^2} + \lambda^2 = 0 \Rightarrow r^2 R''(r) + r R'(r) + (\lambda^2 r^2  - n^2)R(r) = 0
+$$
+Масштабированием в $\lambda$ раз можно добиться равенства $\lambda = 1$, пусть это уже будет так. Перепишем это уравнение в привычных переменных:
+$$
+	x^2 y'' + x y' + (x^2 - n^2)y = 0, \, (*)
+$$
+Возьмем у этого уравнения решение $y(0) = \dfrac{1}{2^n n!}$, тогда решение этого уравнения $y(x)$ будет называться \uwave{функцией Бесселя порядка} $n$.
+\begin{rem}
+	Обратим внимание, что в этом примере из начальных решений получится только одно. Это необычно, поскольку при уравнениях со вторыми производными обычно ставится два условия: на начальное положение и производную. Тут это не так, поскольку при $y''$ находится $x^2$ и при разрешении такого уравнения относительно $y''$ мы получим особенность $\tfrac{1}{x^2}$ в правой части. Поэтому для класса решений в виде степенных рядов здесь будет достаточно только одного условия. 
+\end{rem}
+
+Если захотим искать множество решений $(*)$, а затем их линейными комбинациями построить любое другое, то потребуется найти все функции Бесселя. Рассмотрим для этого случай с $n = 0$:
+$$
+	y(x) = \ddsum{n = 0}{\infty}c_n x^n \Rightarrow x^2 \ddsum{n = 2}{\infty}n(n-1)c_n x^{n-2} + x \ddsum{n = 1}{\infty} n c_nx^{n-1} + x^2 \ddsum{n = 0}{\infty}c_n x^n = 0 \Rightarrow
+$$
+$$
+	\Rightarrow y(0) = 1 = c_0, \, c_1 =  0, \, x^n \colon n(n-1)c_n + n c_n + c_{n-2} = 0 \Rightarrow c_n = -\dfrac{c_{n - 2}}{n^2} 
+$$
+где $c_0$ получается из начального условия, а $c_1$ из приравнивания слагаемых. Поскольку $c_1 = 0$, то всё нечётные слагаемые равны $0$:
+$$
+	c_1 = 0 \Rightarrow c_3 = -\dfrac{0}{3^2} = 0 \Rightarrow c_{2k+1} = 0
+$$
+с другой стороны, всё четные слагаемые будут иметь вид:
+$$
+	c_{2k} = - \dfrac{c_{2k - 2}}{(2k)^2} = \dfrac{c_{2k -4}}{(2k(2k-2))^2} = \dotsc = \dfrac{(-1)^k}{((2k)!!)^2} \Rightarrow y(x) = \ddsum{k = 0}{\infty}\dfrac{(-1)^k x^{2k}}{((2k)!!)^2}
+$$
+
+\newpage
+\section*{Определение тригонометр. функций через степенные ряды}
+Мы уже определяли тригонометрические функции в $1$-ом семестре, но там определение синуса было тавтологическим. Возникает вопрос, нельзя ли его определить как-то по-строгому. Теперь мы это можем сделать. Мы знаем разложение для  экспоненты:
+$$
+	e^z = \ddsum{n = 0}{\infty}\dfrac{z^n}{n!}, \, z \in \MC
+$$
+\begin{exrc}
+	Доказать, что $\lim\limits_{n \to \infty}\left(1 + \dfrac{z}{n}\right)^n = e^z, \, z \in \MC$.
+\end{exrc}
+\begin{proof}
+	$$
+		\left| \left(1 + \dfrac{z}{n}\right)^n - e^z \right| = \left|\ddsum{k =0}{n}C_n^k \dfrac{z^k}{n^k} - \ddsum{k = 0}{\infty}\dfrac{z^k}{k!}\right| \leq \left|\ddsum{k = 0}{n}z^k\left(\dfrac{C_n^k}{n^k} - \dfrac{1}{k!}\right)\right| + \ddsum{k = n + 1}{\infty}\left|\dfrac{z^k}{k!}\right|
+	$$
+	Поскольку ряд $e^z$ сходится, то его хвост будет стремиться к нулю $\Rightarrow$ возьмем $\VE > 0$, тогда:
+	$$
+		\exists \, N \colon \forall m > N, \, \ddsum{k = m }{\infty}\left|\dfrac{z^k}{k!}\right| < \VE \Rightarrow \forall n \geq m, \, \ddsum{k = m }{n}\left|\dfrac{z^k}{k!}\right| \leq \ddsum{k = m }{\infty}\left|\dfrac{z^k}{k!}\right|< \VE
+	$$
+	Таким образом, нам необходимо оценить первое слагаемое. Рассмотрим следующую сумму $\forall n > N$:
+	$$
+		\left|\ddsum{k = 0}{N}z^k\left(\dfrac{C_n^k}{n^k} - \dfrac{1}{k!}\right)\right| \leq \ddsum{k = 0}{N}|z^k|{\cdot}\dfrac{1}{k!}{\cdot}\left|\dfrac{n{\cdot}(n-1){\cdot}\dotsc{\cdot}(n - (k-1))}{n^k} - 1\right| = \ddsum{k = 1}{N}\left|\dfrac{z^k}{k!}\right|{\cdot}\left|\prod\limits_{j = 1}^{k-1}\left(1-\dfrac{j}{n}\right) -1 \right|
+	$$
+	Каждое из слагаемых этой суммы стремится к нулю, при $n \to \infty$, тогда:
+	$$
+		\forall k = \overline{0,N}, \, \exists \, N_k \colon \forall n > N_k, \, \left|\dfrac{z^k}{k!}\right|{\cdot}\left|\prod\limits_{j = 1}^{k-1}\left(1-\dfrac{j}{n}\right) -1 \right| < \dfrac{\VE}{N}
+	$$
+	Оценим оставшееся слагаемое суммы, пусть $n > \max\{N, N_0, \dotsc, N_k\}$ достаточно большое, тогда:
+	$$
+		\forall j = \overline{0,n}, \, 0 \leq \left(1-\dfrac{j}{n}\right) \leq 1 \Rightarrow \forall k \leq n, \, 0 \leq \prod\limits_{j = 1}^{k-1}\left(1-\dfrac{j}{n}\right) \leq 1 \Rightarrow \left|\prod\limits_{j = 1}^{k-1}\left(1-\dfrac{j}{n}\right) -1 \right| \leq 1 \Rightarrow
+	$$
+	$$	
+		\Rightarrow \ddsum{k = N+1}{n}\left|\dfrac{z^k}{k!}\right|{\cdot}\left|\prod\limits_{j = 1}^{k-1}\left(1-\dfrac{j}{n}\right) -1 \right| \leq \ddsum{k = N+1}{n}\left|\dfrac{z^k}{k!}\right| \leq \ddsum{k = N+1}{\infty}\left|\dfrac{z^k}{k!}\right| < \VE
+	$$
+	Таким образом, мы получаем следующие неравенства:
+	$$
+		\left| \left(1 + \dfrac{z}{n}\right)^n - e^z \right| \leq \ddsum{k = 1}{N}\left|\dfrac{z^k}{k!}\right|{\cdot}\left|\prod\limits_{j = 1}^{k-1}\left(1-\dfrac{j}{n}\right) -1 \right| + \ddsum{k = N+1}{\infty}\left|\dfrac{z^k}{k!}\right| + \ddsum{k = n + 1}{\infty}\left|\dfrac{z^k}{k!}\right| < N{\cdot}\dfrac{\VE}{N} + \VE + \VE = 3 \VE \Rightarrow
+	$$
+	$$
+		\Rightarrow  \lim\limits_{n\to \infty}\left| \left(1 + \dfrac{z}{n}\right)^n - e^z \right| = 0
+	$$
+\end{proof}
+\begin{exrc}
+	Проверить по определению, что $e^{x+y} = e^x{\cdot}e^y$.
+\end{exrc}
+\begin{proof}
+	Переменожим ряды экспонент по теореме Коши:
+	$$
+		e^x{\cdot}e^y = \left(\ddsum{n = 0}{\infty}\dfrac{x^n}{n!}\right){\cdot}\left(\ddsum{n = 0}{\infty}\dfrac{y^n}{n!}\right) = \ddsum{t = 0}{\infty}\dfrac{x^{i(t)}{\cdot}y^{j(t)}}{i(t)!{\cdot}j(t)!}= \ddsum{n = 0}{\infty}\ddsum{k = 0}{n}\dfrac{x^k {\cdot}y^{n - k}}{k!{\cdot}(n-k)!} = \ddsum{n = 0}{\infty}\ddsum{k = 0}{n}C_n^k \dfrac{x^k{\cdot}y^{n-k}}{n!} =
+	$$
+	$$
+		=	\ddsum{ n = 0}{\infty}\dfrac{1}{n!}{\cdot}\ddsum{k = 0}{n}C_n^k x^k{\cdot}y^{n-k} = \ddsum{n = 0}{\infty}\dfrac{1}{n!}{\cdot}(x + y)^n  = e^{x + y} 
+	$$
+\end{proof}
+Определим тригонометрические функции следующим образом (из тождества Эйлера):
+$$
+	e^{ix} = \cos{x} + i \sin{x}, \, e^{-ix} = \cos{x} - i \sin{x}
+$$
+$$
+	\sin{x} = \dfrac{e^{ix} - e^{-ix}}{2i} = \ddsum{k = 0}{\infty}\dfrac{(-1)^kx^{2k+1}}{(2k+1)!} 
+$$
+$$
+	\cos{x} = \dfrac{e^{ix} + e^{-ix}}{2} = \ddsum{k = 0}{\infty}\dfrac{(-1)^k x^{2k}}{(2k)!}
+$$
+В чем состоит трудность? Можем ли мы, смотря на эти функции, понять что все операции будут правильными. Проверяются по определению, через экспоненты свойства:
+\begin{enumerate}[label=(\arabic*)]
+	\item $\sin^2{x} + \cos^2{x} = 1$;
+	\begin{proof}
+		$$
+			\sin^2{x} + \cos^2{x} = \dfrac{e^{2ix} - 2 + e^{-2ix}}{-4} + \dfrac{e^{2ix} + 2 + e^{-2ix}}{4} = \dfrac{4}{4} = 1
+		$$
+	\end{proof}
+	\item $\cos{(x + y)} = \cos{x}\cos{y}- \sin{x}\sin{y}$;
+	\begin{proof}
+		$$
+			\cos{x}\cos{y}- \sin{x}\sin{y} = \dfrac{e^{ix + iy} + e^{ix - iy} + e^{-ix + iy} + e^{-ix - iy} }{4} - \dfrac{e^{ix + iy} - e^{ix - iy} - e^{-ix + iy} + e^{-ix - iy}}{-4} =
+		$$
+		$$
+			=	\dfrac{2e^{i(x+y)} + 2e^{-i(x + y)}}{4} = \dfrac{e^{i(x+y)} + e^{-i(x + y)}}{2} = \cos{(x + y)}
+		$$
+	\end{proof}
+	\item $\sin{(x + y)} = \cos{x}\sin{y} + \sin{x} \cos{y}$;
+	\begin{proof}
+		$$
+			\cos{x}\sin{y} + \sin{x} \cos{y} = \dfrac{e^{ix + iy} - e^{ix - iy} + e^{-ix + iy} - e^{-ix - iy} }{4i} + \dfrac{e^{ix + iy} + e^{ix - iy} - e^{-ix + iy} - e^{-ix - iy}}{4i} =
+		$$
+		$$
+			=	\dfrac{2e^{i(x+y)} - 2e^{-i(x + y)}}{4} = \dfrac{e^{i(x+y)} - e^{-i(x + y)}}{2i} = \sin{(x + y)}
+		$$
+	\end{proof}
+	\item $\sin{(-x)} = - \sin{x}, \, \cos{(-x)} = \cos{x}$;
+	\begin{proof}
+		$$
+			\sin{(-x)} = \dfrac{e^{-ix} - e^{ix}}{2i} = -\sin{x}, \, \cos{(-x)} = \dfrac{e^{-ix} + e^{ix}}{2} = \cos{x}
+		$$
+	\end{proof}
+	\item $\cos{0} = 1, \, \sin{0} = 0$;
+	\begin{proof}
+		$$
+			\cos{0} = \dfrac{2}{2} = 1, \, \sin{0} = \dfrac{1 - 1}{1} = 0
+		$$		
+	\end{proof}
+\end{enumerate}
+Из этих свойств можно вывести большинство других тригонометрических формул, кроме связанных с формулами приведения, поскольку для этого нужно находить нули у $\sin{x}$ и $\cos{x}$.
+\begin{prop}
+	Существует наименьший положительный корень уравнения $\cos{x} = 0$, обозначение $\tfrac{p}{2}$. Более того, $\sin{x}$ на отрезке $\left[0,\tfrac{p}{2}\right]$ возрастает, $\cos{x}$ на $\left[0,\tfrac{p}{2}\right]$ убывает и $\sin{\left(\tfrac{p}{2}\right)} = 1$.
+\end{prop}
+\begin{proof}
+	Покажем, что $\cos{2} < 0$, этого будет достаточно, поскольку $\cos{x}$ - непрерывная функция, $\cos{0} = 1$ и тогда по теореме о промежуточном значении, где-то между на $[0,2]$ будет точно корень. Наименьший корень найдется: $\{0\}$ - замкнуто $\Rightarrow f^{-1}\left(\{0\}\right)$ - замкнуто, поскольку замкнутый прообраз непрерывной функции - замкнут (см. семестр $2$, лекцию $10$) $\Rightarrow$ содержит точную нижнюю грань. Рассмотрим:
+	$$
+		\cos{2} = 1 - \dfrac{2^2}{2!} + \dfrac{2^4}{4!} - \dfrac{2^6}{6!} + \dotsc = -\dfrac{1}{3} - \left(\left(\dfrac{2^6}{6!} - \dfrac{2^8}{8!}\right)  + \left(\dfrac{2^{10}}{10!} - \dfrac{2^{12}}{12!}\right) + \dotsc \right) < 0
+	$$
+	где неравенство верно, поскольку второе слагаемое - положительно. Покажем это:
+	$$
+		\dfrac{2^n}{n!} \vee \dfrac{2^{n+2}}{(n+2)!} \Leftrightarrow (n+2)(n+1) \vee  4 \Rightarrow \forall n > 6, \, (n+2)(n+1) > 4
+	$$
+	Таким образом, наименьший корень есть, обозначим его через $\frac{p}{2}$. Рассматривая степенные ряды, мы можем посчитать производные и увидеть, что $(\cos{x})^\prime = -\sin{x}$ и $(\sin{x})^\prime = \cos{x}$:
+	$$
+		(\cos{x})^\prime = \ddsum{k = 1}{\infty} \dfrac{(-1)^k{\cdot} 2k{\cdot} x^{2k - 1}}{(2k)!} = (-1){\cdot}\ddsum{k = 1}{\infty} \dfrac{(-1)^{k-1} x^{2k - 1}}{(2k -1 )!} \overset{m = k + 1}{=} - \ddsum{m = 0}{\infty}\dfrac{(-1)^{m} x^{2m + 1}}{(2m + 1)!} = - \sin{x}
+	$$
+	$$
+		(\sin{x})^\prime = \ddsum{k = 0}{\infty} \dfrac{(-1)^k {\cdot}(2k+1){\cdot}x^{2k}}{(2k+1)!} = \ddsum{ k = 0}{\infty}\dfrac{(-1)^k x^{2k}}{(2k)!} = \cos{x}
+	$$
+	Поскольку на отрезке $\left[0,\frac{p}{2}\right)$ функция $\cos{x} > 0 \Rightarrow (\sin{x})^\prime > 0 \Rightarrow \sin{x}$ будет возрастать. Аналогично, производная косинуса будет строго отрицательной на $\left(0, \frac{p}{2}\right] \Rightarrow \cos{x}$ будет убывать. Более того, поскольку синус возрастает начиная с $0$ , то в $\frac{p}{2}$ у него значение будет положительным, тогда:
+	$$
+		\cos^2{\left(\frac{p}{2}\right)} + \sin^2{\left(\frac{p}{2}\right)} = 1 \Rightarrow \sin^2{\left(\frac{p}{2}\right)} = 1, \,  \sin{\left(\frac{p}{2}\right)} > 0 \Rightarrow \sin{\left(\frac{p}{2}\right)} = 1
+	$$
+\end{proof}
+Отсюда сразу выводятся верны формулы приведения:
+$$
+	\sin{\left(x + \frac{p}{2}\right)} = \cos{x}\sin{\left(\frac{p}{2}\right)} + \sin{x} \cos{\left(\frac{p}{2}\right)} = \cos{x}
+$$
+$$
+	\cos{\left(x + \frac{p}{2}\right)} = \cos{x}\cos{\left(\frac{p}{2}\right)} - \sin{x} \sin{\left(\frac{p}{2}\right)} = -\sin{x}
+$$
+Теперь все соображения о положительности, строгой монотонности можно перенести с отрезка $\left[0,\frac{p}{2}\right]$ на отрезок $\left[\frac{p}{2},p\right]$, затем на $\left[p, \frac{3p}{2}\right]$ и финально на $\left[\frac{3p}{2}, 2p\right]$. В частности, можем показать периодичность функций:
+$$
+	\sin{\left(x + 2p\right)} = \cos{\left(x + \dfrac{3p}{2}\right)} = -\sin{\left(x  + p\right)} = -\cos{\left(x + \dfrac{p}{2}\right)} = \sin{x}
+$$
+$$
+	\cos{\left(x + 2p\right)} = -\sin{\left(x + \dfrac{3p}{2}\right)} = -\cos{\left(x  + p\right)} = \sin{\left(x + \dfrac{p}{2}\right)} = \cos{x}
+$$
+Таким образом, мы получили что $2p$ это период, а из соотношений монотонности сразу выводится, что меньшего периода нет: пусть  $T$ - другой период, тогда $\cos{0} = \cos{T} = 1$, но по монотонности положительное значение равное $1$ получается лишь в $2p \Rightarrow 2p = T$. Осталось понять, почему $p = \pi$.
+
+Рассмотрим отображение $t \colon [0,2p) \to \{(x,y) \colon x^2 + y^2 = 1\}, \, x = \cos{t}, y = \sin{t}$. Мы знаем, что это биекция на единичную окружность: рассмотрим отрезок $\left[0, \frac{p}{2}\right]$, он перейдет в правый верхний угол окружности, $\cos{x}$ пробегает все значения от $1$ до $0$, причем из-за строгой монотонности ровно один раз $\Rightarrow$ проходим все точки на этой дуге и ровно один раз. Остальные четверти получаются из формул привидения. Тогда мы можем посчитать длину окружности:
+$$
+	l(t) = \ddint{0}{2p}\sqrt{\dot{x}^2 + \dot{y}^2}dt = \ddint{0}{2p}\sqrt{\sin^2{x} + \cos^2{x}}dt = \ddint{0}{2p}dt = 2p = 2\pi \Rightarrow p = \pi
+$$
+где число $\pi$ мы определяем как длину половины единичной окружности.
+\end{document}

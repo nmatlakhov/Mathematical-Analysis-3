@@ -1,0 +1,390 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MTI}{\mathbb{I}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+%%Функция для обозначения равномерной сходимости по множеству
+\newcommand{\uconv}[1]{\overset{#1}{\rightrightarrows}}
+
+%%Функция для обозначения нижнего и верхнего интегралов
+\def\upint{\mathchoice%
+	{\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	\int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 14}
+\section*{Функциональные ряды}
+\begin{defn}
+	Ряд $\displaystyle \sum\limits_{n = 1}^{\infty}f_n(x)$ \uwave{сходится поточечно на} $X \Leftrightarrow \forall x \in X, \, \displaystyle \sum\limits_{n = 1}^{\infty}f_n(x)$ - сходится.
+\end{defn}
+\begin{defn}
+	Ряд $\displaystyle \sum\limits_{n = 1}^{\infty}f_n(x)$ \uwave{сходится равномерно на} $X \Leftrightarrow $ последовательность $S_N(x) = \displaystyle\sum\limits_{n = 1}^N f_n(x)$ частичных сумм этого ряда  сходится равномерно на $X$.
+\end{defn}
+\begin{prop}(\textbf{необходимое условие равномерной сходимости ряда})
+	Если ряд $\displaystyle \sum\limits_{n = 1}^{\infty}f_n(x)$ сходится равномерно на $X$, то его слагаемые равномерно стремятся к нулю: $f_n \uconv{X}0$.
+\end{prop}
+
+\begin{theorem}(\textbf{критерий Коши равномерной сходимости ряда})
+	Ряд $\displaystyle \sum\limits_{n = 1}^{\infty}f_n(x)$ сходится равномерно на $X$ тогда и только тогда, когда:
+	$$
+		\forall \VE > 0, \, \exists \, N \colon \forall n,m > N, \, \sup\limits_{X}\left| \sum\limits_{k = m}^{n} f_k(x)\right| < \VE
+	$$
+\end{theorem}
+\begin{theorem}(\textbf{признак Вейерштрасса})
+	Пусть $f_n \colon X \to \MR$ и $\exists \, a_n \geq 0 \colon \forall x \in X, \, |f_n(x)| \leq a_n$, тогда из сходимости ряда $\displaystyle \sum\limits_{n = 1}^{\infty}a_n$ следует равномерная сходимость ряда $\displaystyle \sum\limits_{n = 1}^{\infty}f_n(x)$.
+\end{theorem}
+
+\begin{theorem}(\textbf{обобщение признака Вейерштрасса})
+	Пусть $\ddsum{n = 1}{\infty}f_n(x)$, и $\ddsum{n=1}{\infty}g_n(x)$ - два функциональных ряда, где последний сходится равномерно на $X$. Пусть также справедливо следующее: 
+	$$
+		\forall x \in X,\, |f_n(x)| \leq g_n(x)
+	$$ 
+	тогда ряд $\ddsum{n = 1}{\infty}f_n(x)$ будет сходится равномерно.
+\end{theorem}
+\begin{proof}
+	Проверим критерий Коши:
+	$$
+		\forall x \in X, \, \left| \sum\limits_{k = m}^{n} f_k(x)\right| 	\leq \sum\limits_{k = m}^n g_k(x) \Rightarrow \sup\limits_{X}\left| \sum\limits_{k = m}^{n} f_k(x)\right| \leq \sup\limits_{X}\left(\sum\limits_{k = m}^n g_k(x)\right)
+	$$
+	Поскольку для ряда $\displaystyle \sum\limits_{n = 1}^{\infty}g_k(x)$ критерий Коши выполняется и оценка сверху не зависит от $x$, то критерий Коши для рассматриваемого функционального ряда сразу выполняется.
+\end{proof}
+
+\newpage
+\subsection*{Признак Дини}
+\begin{theorem}(\textbf{признак Дини})
+	Пусть $K$ - компакт в метрическом пространстве, $f_n, f \in C(K)$, числовая последовательность $|f_n(x) - f(x)|$ - невозрастает по $n$ и стремится к нулю $\forall x \in K$. Тогда $f_n \uconv{K} f$.
+\end{theorem}
+\begin{rem}
+	Таким образом, если мы взяли последовательность непрерывных функций, знаем, что они поточечно сходятся к непрерывной функции, то из этого не следует равномерная сходимость. Что нужно добавить для равномерной сходимости? Надо добавить монотонность (и компактность). Более того, достаточно добавить монотонность либо по $n$, либо по $x \Rightarrow$ любая монотонность, компактность и непрерывность будут вести к равномерной сходимости.	
+\end{rem}
+\begin{rem}
+	Данный признак неудобен тем, что необходимо точно знать что $f$ -  непрерывная функция, поэтому на практике его применяют не так часто. Но иногда применяется и этот признак.
+\end{rem}
+
+\textbf{Типичный пример}: Пусть есть ряд $\ddsum{ n = 1 }{\infty} g_n(x)  = S(x)$, знаем, что $g_n(x), S(x) \in C(K), \, g_n \geq 0$. Ряд из $g_n$ сходится, тогда:
+$$
+	\ddsum{ n = 1 }{N} g_n(x) \uconv{K} S(x)
+$$
+Также с помощью этого признака можно доказывать отсутствие непрерывности у предельной функции, если знаем, что нет равномерной сходимости, но при этом мы рассматриваем функции на компакте. Как показать, что $S$ не может быть непрерывной - от противного, пусть $S$ - непрерывная, тогда по признаку Дини ряд сойдется равномерно, но это не так $\Rightarrow$ функция не является непрерывной функцией.
+
+\begin{rem}
+	Отметим, что наличие равномерной сходимости это достаточное условие, но не необходимое.  
+\end{rem}
+\begin{proof}
+	Введем функции $h_n(x)$:
+	$$
+		h_n(x) = |f_n(x) - f(x)| \geq 0, \,  \forall x \in K, \, h_n(x) \xrightarrow[n \to \infty]{} 0, \, h_n(x) \geq h_{n+1}(x)
+	$$
+	надо доказать, что $h_n(x) \uconv{} 0$. Пусть $x \in K$, возьмем $\VE> 0$, поскольку $h_n(x) \xrightarrow[n \to \infty]{} 0$, то:
+	$$
+		\exists \, N_x \colon h_{N_x}(x) < \VE
+	$$
+	Так как, $h_{N_x}$ - непрерывна в точке $x$, то найдется окрестность $\MU(x)$, такая что $\forall y \in \MU(x), \, h_{N_x}(y) < 2\VE$:
+	$$
+		\forall x \in K, \, h_{N_x}(x) \in C(K) \Rightarrow \exists \, \MU(x) \subset K \colon \forall y \in \MU(x), \, |h_{N_x}(x) - h_{N_x}(y)| < \VE \Rightarrow h_{N_x}(y) < 2\VE
+	$$
+	Из-за монотонности, мы получим:
+	$$
+		\forall n \geq N_x, \, \forall y \in \MU(x), \, h_n(y) \leq h_{N_x}(y) < 2\VE 
+	$$
+	Поскольку $K$ - компакт, то объединение таких окрестностей по каждому $x \in K$ покроет $K$:
+	$$
+		K \subset \bigcup\limits_{x \in K} \MU(x) \Rightarrow \exists \, \MU(x_1), \dotsc, \MU(x_M) \colon K \subset \bigcup\limits_{k = 1}^M \MU(x_k)
+	$$
+	где последнее верно в силу компактности $K$: $\exists$ конечный набор окрестностей покрывающих $K$. На каждой из этих окрестностей есть свой номер $N_{x_1}, \dotsc, N_{x_M}$, начиная с которого все соответствующие функции $h_n(x)$ становятся меньше $2\VE$. Возьмем $N = \max\{N_{x_1}, \dotsc, N_{x_M}\}$, тогда:
+	$$
+		\forall n > N, \, \forall y \in K, \, h_n(y) < 2\VE
+	$$
+	поскольку $\exists \, j \colon y \in \MU(x_j) \wedge N \geq N_{x_j}$. Таким образом, требуемое доказано.
+\end{proof}
+\begin{rem}
+	От компактности в этой теореме отказаться невозможно, пример $x^n$.
+\end{rem}
+
+\newpage
+\subsection*{Равномерная сходимость рядов вида $\ddsum{n = 1}{\infty}a_n(x)b_n(x)$
+}
+Будем исследовать равномерную сходимость в рядах следующего вида:
+$$
+	\ddsum{n = 1}{\infty}a_n(x)b_n(x)
+$$
+Сразу заметим, что если мы знаем про равномерную сходимость одного из рядов $a_n$ или $b_n$, то интересно понять, какие нужны свойства для второго ряда, чтобы сходилось произведение $a_n b_n$.
+
+\begin{prop}
+	Пусть $\ddsum{n = 1}{\infty}|a_n(x)|$ сходится равномерно на $X$. Если $b_n(x)$ - равномерно ограничены на $X$:
+	$$
+		\exists \, C \colon \forall x \in X, \, \forall n, \, |b_n(x)| \leq C
+	$$
+	тогда ряд $\ddsum{n = 1}{\infty}a_n(x)b_n(x)$ сходится равномерно.
+\end{prop}
+\begin{proof}
+	Следует из обобщенного признакак Вейерштрасса, поскольку:
+	$$
+		\forall x \in X, \, |a_n(x) b_n(x)| \leq C|a_n(x)|
+	$$
+	Следовательно исходный ряд сходится равномерно.
+\end{proof}
+
+\begin{prop}
+	Пусть частичные суммы $\ddsum{n = 1}{N}|a_n(x)|$ - равномерно ограничены на $X$ и $b_n \uconv{X} 0$, тогда ряд произведения $\ddsum{n = 1}{\infty}a_n(x)b_n(x)$ сходится равномерно.
+\end{prop}
+\begin{proof}
+	Проверяем критерий Коши:
+	$$
+		\left|\sum\limits_{k = m+1}^{n}a_k(x)b_k(x)\right| \leq \sup\limits_{x \in X \wedge m + 1 \leq k < n} |b_k(x)|{\cdot} \!\!\sum\limits_{k = m+1}^{n}|a_k(x)| \leq \sup\limits_{x \in X \wedge m + 1 \leq k < n} |b_k(x)|{\cdot} C 
+	$$
+	Поскольку $b_k \uconv{X} 0$, то начиная с некоторого номера все точные верхние грани $b_k(x)$ будут меньше наперед заданного $\VE$, то есть:
+	$$
+		\forall \VE > 0, \, \exists \, N \colon \forall m > N, \, \sup\limits_{x \in X}|b_m(x)| < \VE 
+	$$
+	Пусть $m,n > N$, тогда:
+	$$
+		\left|\sum\limits_{k = m+1}^{n}a_k(x)b_k(x)\right|\leq \sup\limits_{x \in X \wedge m + 1 \leq k < n} |b_k(x)|{\cdot} C < \VE C
+	$$
+\end{proof}
+Это достаточно простые наблюдения, которые мы сможем усилить далее с помощью преобразования Абеля.
+\newpage
+\subsection*{Преобразование Абеля}
+
+Рассмотрим следующую сумму $\ddsum{n = 1}{N}a_nb_n$ (не важно, числа это или функции). Аналогично случаю для простых рядов, введем новые переменные: $B_n = b_1 + \dotsc + b_n, \, B_0 = 0$, тогда:
+$$
+	\ddsum{n = 1}{N}a_n b_n = \ddsum{n = 1}{N}a_n (B_n - B_{n-1}) = (a_1 B_1 - a_1 B_0) + (a_2 B_2 - a_2 B_1) + \dotsc + (a_N B_n - a_N B_{N-1}) = 
+$$
+$$
+	= (a_1 - a_2)B_1 + \dotsc + (a_{N-1} - a_N) B_{N-1} + a_N B_N - a_1B_0 = \ddsum{n = 1}{N - 1}(a_n - a_{n+1})B_n - a_1 B_0 + a_N B_N
+$$
+Мы это уже делали ранее. Только ради технического удобства, проделаем следующее:
+$$
+	\ddsum{n = 1}{N}a_n (B_n - B_{n-1}) = \ddsum{n = 1}{N}a_n ((B_n -B)  - (B_{n-1}-B)) = \ddsum{n = 1}{N - 1}(a_n - a_{n+1})(B_n - B) - a_1 (B_0 - B) + a_N (B_N - B)
+$$
+Тогда будет верно следующее равенство:
+$$
+	\ddsum{n = 1}{N}a_n(x) b_n(x) = \ddsum{n = 1}{N - 1}(a_n(x) - a_{n+1}(x)){\cdot}(B_n(x) - B(x)) + a_1(x){\cdot} B(x) + a_N(x){\cdot} (B_N(x) - B(x))
+$$
+
+Исходя из этого равенства, можно сформулировать следующую теорему.
+\begin{theorem}
+	Пусть функции $a_n(x), b_n(x)$ определены на $X$ и существует такая функция $B(x)$ на $X$, что функции $a_N(x)(B_N(x) - B(x))$ равномерно сходятся на $X$ (обозначения взяты из преобразования Абеля). Тогда ряды: 
+	$$
+		\ddsum{n = 1}{\infty}a_n(x) b_n(x) \text{ и } \ddsum{n = 1}{\infty}(a_n(x) - a_{n+1}(x))\left(B_n(x) - B(x)\right)
+	$$ 
+	одновременно сходятся или расходятся равномерно на $X$.
+\end{theorem}
+\begin{proof}
+	Очевидно следует из преобразования Абеля.
+\end{proof}
+
+\begin{corollary}(\textbf{признаки Абеля-Дирихле}):
+	\begin{itemize}
+		\item[1)] \textbf{Признак Дирихле}: Если $a_n(x) \uconv{X} 0$, $\forall x \in X$ последовательность $a_n(x)$ - монотонна и последовательность $B_n(x) =b_1 (x)  + \dotsc + b_n(x)$ - равномерно ограничена на $X$, то ряд $\ddsum{n = 1}{\infty}a_n(x)b_n(x)$ сходится на $X$ равномерно;
+		
+		\item [2)] \textbf{Признак Абеля}: Если $a_n(x)$ равномерно ограничены на $X$, $\forall x\in X$ числовая последовательность $\{a_n(x)\}$ монотонна и ряд $\ddsum{n = 1}{\infty}b_n(x)$ сходится равномерно на $X$, то ряд $\ddsum{n = 1}{\infty}a_n(x)b_n(x)$ сходится на $X$ равномерно;
+	\end{itemize}
+\end{corollary}
+\begin{rem}
+	То есть, берем обычные признаки Абеля-Дирихле и везде где можно вставляем ``равномерно'', получаются признаки Абеля-Дирихле равномерной сходимости.
+\end{rem}
+\begin{proof}\hfill
+	\begin{enumerate}[label={\arabic*)}]
+		\item \textbf{Признак Дирихле}: Применим теорему с функцией $B \equiv 0$. Поскольку $B_n(x)$ - равномерно ограничены, а последовательность $a_n \uconv{X} 0$, то по утверждению из лекции $10$: 
+		$$
+			a_N(x)B_N(x) \uconv{X} 0
+		$$ 
+		Тогда:
+		$$
+	 		\ddsum{n = 1}{\infty}a_n(x)b_n(x) \text{ - сходится равномерно} \Leftrightarrow \ddsum{n = 1}{\infty} \left(a_n(x) - a_{n + 1}(x)\right){\cdot} B_n(x) \text{ - сходится равномерно}
+		$$
+		Рассмотрим следующий ряд: $\ddsum{n = 1}{\infty} |a_n(x) - a_{n + 1}(x)|$ и его частичные суммы. Поскольку последовательность $a_n$ - монотонна, то мы знаем, как раскроется модуль при фиксированном $x$, тогда:
+		$$
+			\ddsum{n = 1}{N} \left|a_n(x) - a_{n+1}(x)\right| = \pm\left(a_1(x) - a_2(x) + a_2(x) - a_3(x) + \dotsc + a_N(x) - a_{N+1}(x)\right) = 
+		$$
+		$$	
+			= \pm(a_1(x) - a_{N+1}(x)) = \left|a_1(x) - a_{N+1}(x)\right| \uconv{X} |a_1(x)|
+		$$
+		где последнее верно в силу того, что:
+		$$
+			\left| |a_1(x)| - \left|a_1(x) - a_{N+1}(x)\right| \right| \leq \left|a_1(x) - a_1(x) + a_{N+1}(x)\right| \leq \sup\limits_{x \in X} \left|a_{N+1}(x)\right| \to 0
+		$$
+		то есть модуль разности сходится к $|a_1(x)|$ равномерно по определению равномерной сходимости. Тогда:
+		$$
+			\ddsum{n = 1}{N}|a_n(x) - a_{n+1}(x)| \uconv{X} |a_1(x)|
+		$$
+		то есть равномерно сходящаяся последовательность из модулей умножается на равномерно ограниченную $\Rightarrow$ по утверждению $2$ получаем равномерно сходящийся ряд $\Rightarrow$ сходится исходный ряд. 
+		\item \textbf{Признак Абеля}: Применим теорему с функцией $B(x) = \ddsum{n = 1}{\infty}b_n(x)$. Поскольку $a_n(x)$ - равномерно ограничены, а сходимость ряда $b_n$ это тоже самое, что и сходимость его частичных сумм (см. предыдущую лекцию про сходимость хвостов), то: 
+		$$
+			B_N(x) - B(x) \uconv{X} 0 \Rightarrow a_N{\cdot}(B_N(x) - B(x)) \uconv{X} 0
+		$$
+		Тогда:
+		$$
+			\ddsum{n = 1}{\infty}a_n(x)b_n(x) \text{ - сх. равномерно} \Leftrightarrow \ddsum{n = 1}{\infty} \left(a_n(x) - a_{n + 1}(x)\right){\cdot} \left(B_n(x) - B(x)\right) \text{ - сх. равномерно}
+		$$
+		Используя монтонность и равномерную ограниченность $a_n$, мы получим:
+		$$
+			\forall N, \, \forall x, \, \ddsum{n = 1}{N}|a_n(x) - a_{n+1}(x)| = \left|a_1(x) - a_{N+1}(x)\right| \leq C
+		$$
+		то есть частичные суммы равномерно ограничены. Поскольку $|B_N(x) - B(x)| \uconv{X} 0$ (см. предыдущую лекцию про сходимость хвостов), то по утвержденю $3$ равномерно сходится ряд: 
+		$$
+			\ddsum{n = 1}{\infty} \left(a_n(x) - a_{n + 1}(x)\right){\cdot} \left(B_n(x) - B(x)\right) 
+		$$ 
+		Следовательно, сходится исходный ряд.
+	\end{enumerate}	
+\end{proof}
+
+\textbf{Пример}: Рассмотрим следующий типичный пример для применения признаков:
+$$
+	\ddsum{n = 1}{\infty}\dfrac{\sin{nx}}{n}
+$$
+Рассмотрим два случая:
+\begin{enumerate}[label={\arabic*)}]
+	\item $0 < \delta < x < 2\pi - \delta$, в этом случае понятно, что $a_n(x) = \tfrac{1}{n}$ - монотонная и равномерно стремится к нулю. Функции $b_n(x) = \sin{nx}$. Необходимо понять, что суммы $\ddsum{n = 1}{N}\sin{nx}$ - равномерны ограничены:
+	$$
+		2\sin{\tfrac{x}{2}}\sin{kx} = \cos{\left(k - \tfrac{1}{2}\right)x} - \cos{\left(k +  \tfrac{1}{2}\right)x} 
+	$$
+	Тогда эти косинусы будут сокращаться в следующей сумме:
+	$$
+		2\sin{\tfrac{x}{2}}\ddsum{n = 1}{N}\sin{nx} = \cos{\tfrac{x}{2}} - \cos{\left(N+\tfrac{1}{2}\right)x} \Rightarrow \ddsum{n = 1}{N}\sin{nx} = \dfrac{\cos{\tfrac{x}{2}} - \cos{\left(N+\tfrac{1}{2}\right)x}}{2\sin{\tfrac{x}{2}}}
+	$$
+	Теперь необходимо найти равномерную оценку для этой суммы (одновременно и для $N$, и для $x$). Из условия:
+	$$
+		\dfrac{\delta}{2} < \dfrac{x}{2} < \pi - \dfrac{\delta}{2} \Rightarrow \sin{\tfrac{x}{2}} \geq \sin{\tfrac{\delta}{2}} \Rightarrow \left|\ddsum{n = 1}{N}\sin{nx}\right| \leq \dfrac{2}{2\sin{\tfrac{\delta}{2}}} = \dfrac{1}{\sin{\tfrac{\delta}{2}}}
+	$$
+	По признаку Дирихле ряд сходится равномерно;
+	\item $0 < x <2\pi$, в этом случае воспользуемся критерием Коши и распишем следующую сумму:
+	$$
+		\ddsum{n = m+1}{2m}\dfrac{\sin{nx}}{n}
+	$$
+	Выберем $x = \tfrac{1}{2m}$, тогда:
+	$$
+		\forall n = \overline{m + 1, 2m}, \, \dfrac{1}{2} \leq nx \leq 1 \Rightarrow  \sin{nx} > \sin{\dfrac{1}{2}} \Rightarrow \ddsum{n = m+1}{2m}\dfrac{\sin{nx}}{n} \geq \dfrac{\sin{\tfrac{1}{2}}}{2}
+	$$
+	Поскольку сумма по $a_n$ будет тоже больше $\tfrac{1}{2}$. Таким образом, какое бы далекое $m$ не взяли, заданная сумма будет выше фиксированного значения, а это опровергает условие Коши $\Rightarrow$ ряд не сходится равномерно;
+		
+\end{enumerate}
+
+
+\end{document}

@@ -1,0 +1,385 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MTI}{\mathbb{I}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+%%Функция для обозначения равномерной сходимости по множеству
+\newcommand{\uconv}[1]{\overset{#1}{\rightrightarrows}}
+\newcommand{\uconvm}[2]{\overset{#1}{\underset{#2}{\rightrightarrows}}}
+
+
+%%Функция для обозначения нижнего и верхнего интегралов
+\def\upint{\mathchoice%
+	{\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	\int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 20}
+\section*{Равномерная сходимость семейства функций}
+Пусть $X \neq \VN$ (непустое множество), $Y$ - метрическое пространство, $y_0$ - предельная точка $Y$ и обозначим через $Y^\prime = Y \setminus \{y_0\}$. Пусть $f \colon X \times Y^\prime \to \MR (\MC)$. Это функция двух переменных $f(x,y)$, но мы будем смотреть на это как на параметрическое семейство функций ($y$ как параметр): $x \mapsto f(x,y) \Rightarrow$  изучаем функции на $X$, запараметризованные параметром $y \in Y^\prime$.
+
+\textbf{Примеры}: $f(x,y) = 	\sin{(xy)}, \, f(x,y) = e^{x + y}, \, f(x,y) = x^y$
+
+Нас будет интересовать, что происходит с семейством функций, когда $y \to y_0$, к какой функции это семейство будет приближаться. Раньше, в качестве параметра были числа из $\MN$ и получалась последовательность функций, cейчас же будет произвольное метрическое пространство. Ранее было так: 
+$$
+	f_n(x) = f(x,n), \, Y^\prime = \MN
+$$ 
+Можем ли мы придумать такое пространство $Y$, чтобы сходимость на нем была тем же самым, что и сходимость при  $n \to \infty$? Можно доопределить $Y$ до $Y = \MN \cup \{+\infty\}$, где $y_0 = +\infty$ и взять метрику:
+$$
+	\rho(n,m) = |\arctg{(n)} - \arctg{(m)}|, \, \arctg{(\infty)} = \dfrac{\pi}{2} \Rightarrow n \to \infty \Leftrightarrow \rho(n, \infty) \to 0 
+$$
+Ровно также, как это было для последовательностей, здесь будет два вида сходимости.
+
+\begin{defn}
+	Функция $f(x,y)$ \uwave{сходится поточечно} на $X$ к $\varphi(x)$ при $y \to y_0$, если:
+	$$
+		\forall x \in X, \, \lim\limits_{y \to y_0} f(x,y) = \varphi(x)
+	$$
+	или в терминах \uwave{предела по Коши}:
+	$$
+		\forall \VE > 0, \, \exists \, \delta > 0 \colon \forall y \in Y^\prime, \, 0 < \rho(y,y_0) < \delta \Rightarrow |f(x,y) - \varphi(x)| < \VE
+	$$
+	или в терминах \uwave{предела по Гейне}:
+	$$
+		\forall y_n \to y_0, \, y_n \neq y_0, \, f(x,y_n) \xrightarrow[n \to \infty]{}\varphi(x)
+	$$
+\end{defn}
+
+\begin{defn}
+	Функция $f(x,y)$ \uwave{сходится равномерно} на $X$ к $\varphi(x)$ при $y \to y_0$, если:
+	$$
+		\lim\limits_{y \to y_0}h(y) = \lim\limits_{y \to y_0}\sup\limits_{x \in X}|f(x,y) - \varphi(x)| = 0
+	$$
+	или в терминах \uwave{предела по Коши}:
+	$$
+		\forall \VE > 0, \, \exists \, \delta > 0 \colon \forall x \in X, \, \forall y \in Y^\prime, \, 0 < \rho(y,y_0) < \delta \Rightarrow |f(x,y) - \varphi(x)| < \VE
+	$$
+	Обозначается следующим образом: 
+	$$
+		f(x,y) \uconvm{X}{y \to y_0} \varphi(x)
+	$$
+\end{defn}
+Видно, что это переход от предела последовательности к пределу функции, только теперь рассматривается функция от $y$ и у неё берется предел при $y \to y_0$.
+
+\newpage
+\begin{theorem}
+	$f(x,y) \uconvm{X}{y \to y_0} \varphi(x) \Leftrightarrow \forall y_n \to y_0, \, y_n \neq y_0, \, f(x,y_n) \uconvm{X}{n \to \infty}\varphi(x)$.
+\end{theorem}
+\begin{proof}
+	Это определение $\lim\limits_{y \to y_0}h(y) = 0$ по Гейне. То есть, предел по Коши $\Leftrightarrow$ предел по Гейне для $h(y)$.
+\end{proof}
+
+\begin{theorem}(\textbf{о перестановке пределов})
+	Пусть $X$ - метрическое пространство и $x_0$ - его предельная точка, $y_0$ - предельная точка $Y$. Обозначим: $X^\prime = X \setminus \{x_0\}$, $Y^\prime = Y \setminus \{y_0\}$. Если выполнены условия:
+	$$
+		\forall y \in Y^\prime, \, \exists \, \lim\limits_{x \to x_0}f(x,y) = b(y) \wedge f(x,y) \uconvm{X^\prime}{y \to y_0} \varphi(x)
+	$$
+	то $\exists \, \lim\limits_{y \to y_0}b(y)$ и $\exists \, \lim\limits_{x \to x_0}\varphi(x)$ и эти пределы равны. Или по-другому:
+	$$
+		\lim\limits_{y \to y_0}\lim\limits_{x \to x_0}f(x,y) = \lim\limits_{x \to x_0}\lim\limits_{y \to y_0}f(x,y)
+	$$
+\end{theorem}
+\begin{proof}
+	Пусть $y_n \to y_0, y_n \neq y_0$, тогда $f(x,y_n) \uconvm{X}{n \to \infty} \varphi(x)$, при этом $\forall n, \, \exists \, \lim\limits_{x \to x_0}f(x,y_n) = b(y_n)$. По теореме для последовательностей (см. лекцию $12$): 
+	$$
+		\exists \, \lim\limits_{n \to \infty} b(y_n), \, \exists \, \lim\limits_{x \to x_0}\varphi(x) \wedge \lim\limits_{n \to \infty} b(y_n) = \lim\limits_{x \to x_0}\varphi(x)
+	$$
+	По определению предела функции по Гейне $\exists \, \lim\limits_{y \to y_0}b(y)$, который равен $\lim\limits_{x \to x_0}\varphi(x)$.
+\end{proof}
+\begin{corollary}
+	Пусть $X, Y$ - метрические пространства, $x_0 \in X$, $y_0$ - предельная точка $Y$. Функция $f(x,y) \uconvm{X}{y\to y_0}\varphi(x)$. Если $\forall y \neq y_0$, $f(x,y)$ непрерывна в точке $x_0$, то $\varphi(x)$ непрерывна в точке $x_0$.
+\end{corollary}
+\begin{proof}
+	Доказательство идентично тому, что было в лекции $12$.
+\end{proof}
+\begin{corollary}
+	Возьмем пространство $X \times Y$ и введем метрику $\rho((x,y), (u,v)) = \rho_x(x,u) + \rho_y(y,v)$. В условиях теоремы, при $(x,y) \in X^\prime \times Y^\prime \subset X \times Y$, будет существовать двойной предел:
+	$$
+		\exists \, \lim\limits_{(x,y) \to (x_0, y_0)}f(x,y) = \lim\limits_{y \to y_0}\lim\limits_{x \to x_0}f(x,y) = \lim\limits_{x \to x_0}\lim\limits_{y \to y_0}f(x,y) = A
+	$$
+\end{corollary}
+\begin{proof}
+	Поскольку у $\varphi(x)$ есть равномерная сходимость, то:
+	$$
+		|f(x,y) - A| \leq |f(x,y) - \varphi(x)| + |\varphi(x) - A|
+	$$
+	Пусть $\VE > 0$, найдем такое $\delta_1 > 0$, что как только $0 < \rho_y(y,y_0) < \delta_1$, то $\forall x\in X^\prime, \, |f(x,y) - \varphi(x)| < \VE$. Выберем $\delta_2$ так, что когда $0 < \rho_x(x,x_0) < \delta_2$, то $|\varphi(x) - A| < \VE$, тогда:
+	$$
+		\forall \VE > 0, \, \exists \, \delta = \min\{\delta_1, \delta_2\} \colon 0 < \rho((x,y),(x_0,y_0)) < \delta \Rightarrow |f(x,y) - A| < 2\VE
+	$$
+\end{proof}
+\begin{rem}
+	Арифметика пределов переносится аналогично через определение предела по Гейне. Смотри лекцию $10$.
+\end{rem}
+
+\begin{theorem}
+	Пусть $X = (\alpha,\beta)$, $Y$ - метрическое пространство, $y_0$ - предельная точка в $Y$, $Y^\prime = Y \setminus \{y_0\}$. Пусть задана функция $f(x,y) \colon X \times Y^\prime \to \MR$. Если $\forall y \in Y^\prime, \, x \mapsto f(x,y)$ - дифференцируема на $(\alpha,\beta)$, производная по аргументу $x$: 
+	$$
+		\dfrac{\partial f}{\partial x}(x,y) = f_x^\prime(x,y) \uconvm{X}{y \to y_0}g(x)
+	$$ 
+	и $\exists \, x_0 \in (\alpha, \beta) \colon \exists \, \lim\limits_{y \to y_0}f(x_0, y)$, то тогда:
+	$$
+		f(x,y) \uconvm{X}{y \to y_0}\varphi(x)
+	$$
+	где $\varphi(x)$ - дифференцируема на $X$ и $\varphi^\prime(x) = g(x)$.
+\end{theorem}
+\begin{proof}
+	Пусть $y_n \to y_0, y_n \neq y_0$, тогда: 
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\exists \, \lim\limits_{n \to \infty}f(x_0, y_n)$;
+		\item $f_x^\prime(x,y_n) \uconvm{X}{n \to \infty}g(x)$;
+	\end{enumerate}
+	Следовательно, по теореме для последовательностей мы знаем: $f(x,y_n) \uconvm{X}{n \to \infty} \varphi(x)$, где $\varphi(x)$ будет дифференцируема и $\varphi^\prime(x) = g(x)$. Осталось показать, что сходимость не будет зависеть от выбора последовательности, сходящейся к $y_0$. 
+	
+	Знаем, что $\varphi(x_0) = \lim\limits_{y \to y_0}f(x_0,y)$, поскольку переход к последовательности вычисляет тот же самый предел $\Rightarrow$ это фиксированное значение. Более того, поскольку $\varphi^\prime(x) = g(x)$, то двух таких функций быть не может:
+	$$
+		(\varphi_1 - \varphi_2)^\prime = 0 \wedge \varphi_1(x_0) - \varphi_2(x_0) = 0 \Rightarrow \varphi_1 - \varphi_2 \equiv 0
+	$$
+\end{proof}
+\begin{rem}
+	Заметим, что ограниченность $X$ в данной теореме - важна, поскольку используется в теореме о дифференцируемости в последовательностях.
+\end{rem}
+
+\begin{theorem}
+	Пусть $X = [\alpha, \beta]$, $Y$ - метрическое пространство, $y_0$ - предельная точка $Y$, $Y^\prime = Y \setminus \{y_0\}$. Если $\forall y \in Y^\prime$ функция $f(x,y)$ интегрируема по Риману на отрезке $[\alpha,\beta]$ относительно $x$ и верно:
+	$$
+		f(x,y) \uconvm{X}{y \to y_0} \varphi(x)
+	$$
+	Тогда функция $\varphi(x)$ интегрируема по Риману и выполняется следующее равенство:
+	$$
+		\ddint{\alpha}{\beta}\varphi(x) dx = \lim\limits_{y \to y_0}\ddint{\alpha}{\beta}f(x,y)dx
+	$$
+\end{theorem}
+\begin{proof}
+	Пусть $y_n \to y_0, y_n \neq y_0$, тогда $f(x,y_n) \uconvm{X}{n \to \infty}\varphi(x)$ и применяем теорему для последовательностей:
+	$$
+		\ddint{\alpha}{\beta}\varphi(x) dx = \lim\limits_{n \to \infty}\ddint{\alpha}{\beta}f(x,y_n)dx
+	$$
+	Если это выполнено для любой укзанной последовательности $\{y_n\}$, то значит для этого предела выполнено определение Гейне.
+\end{proof}
+
+
+\begin{theorem}(\textbf{Арцела}):
+	Пусть $X = [\alpha, \beta]$, $Y$ - метрическое пространство, $y_0$ - предельная точка $Y$, $Y^\prime = Y \setminus \{y_0\}$. Пусть выполняются следующие условия:
+	\begin{enumerate}[label=(\arabic*)]
+		\item  $\forall y \in Y^\prime$ функция $f(x,y)$ интегрируема по Риману на отрезке $[\alpha,\beta]$ относительно $x$;
+		\item функция $\varphi(x)$ интегрируема на $[\alpha, \beta]$;
+		\item $\forall x \in X,\, f(x,y) \xrightarrow[y \to y_0]{} \varphi(x)$;
+		\item $\exists \, C > 0 \colon |f(x,y)| \leq C, \, \forall x \in X, \, \forall y \in Y^\prime$;
+	\end{enumerate}
+	Тогда выполняется следующее равенство:
+	$$
+		\ddint{\alpha}{\beta}\varphi(x) dx = \lim\limits_{y \to y_0}\ddint{\alpha}{\beta}f(x,y)dx
+	$$
+\end{theorem}
+\begin{proof}
+	Пусть $y_n \to y_0, y_n \neq y_0$, по теореме Арцела для последовательностей мы получим:
+	$$
+			\ddint{\alpha}{\beta}\varphi(x) dx = \lim\limits_{n \to \infty}\ddint{\alpha}{\beta}f(x,y_n)dx
+	$$
+	Поскольку мы имеем здесь предел по Гейне, то получаем требуемое.
+\end{proof}
+\begin{theorem}(\textbf{Критерий Коши}): Функция $f(x,y)$ сходится равномерно на $X$ при $y \to y_0$ тогда и только тогда, когда выполняется условие Коши:
+$$
+	\forall \VE > 0, \, \exists \, \delta > 0 \colon \forall y_1, y_2 \in Y^\prime, \, 0 < \rho(y_1, y_0) < \delta \wedge 0 < \rho(y_2, y_0) < \delta \Rightarrow \sup\limits_{x \in X}\left|f(x,y_1) - f(x,y_2)\right| <\VE
+$$
+\end{theorem}
+\begin{proof}\hfill\\
+	($\Rightarrow$) Пусть предел $\lim\limits_{y \to y_0} \sup\limits_{x \in X}|f(x,y) - \varphi(x)| = 0$ существует. Тогда по определению:
+	$$
+		\forall \VE > 0, \, \exists \, \delta > 0 \colon \forall x \in X, \, \forall y \in Y^\prime, \, 0 < \rho(y,y_0) < \delta \Rightarrow |f(x,y) - \varphi(x)| < \VE
+	$$
+	Возьмем $\dfrac{\VE}{2} > 0$ и найдем $\delta > 0$ такое, что: $0 < \rho(y_1,y_0) < \delta \wedge 0 < \rho(y_2,y_0) < \delta$, тогда:
+	$$
+		\forall x \in X, \,  |f(x,y_1) - \varphi(x)| < \dfrac{\VE}{2} \wedge |f(x,y_2) - \varphi(x)| < \dfrac{\VE}{2} \Rightarrow \forall x \in X, \,  |f(x,y_1) - f(x,y_2)| =
+	$$ 
+	$$
+		= |f(x,y_1) - \varphi(x) + \varphi(x) - f(x,y_2)| \leq |f(x,y_1) - \varphi(x)| + |f(x,y_2) - \varphi(x)| < \VE
+	$$
+	
+	($\Leftarrow$) Пусть $y_n \to y_0, y_n \neq y_0$, тогда 
+	$$
+		\exists \, N \colon \forall n,m > N,\, 0 < \rho(y_n, y_0) < \delta \wedge 0 < \rho(y_m, y_0) < \delta
+	$$ 
+	значит применимо неравенство из условия Коши:
+	$$
+		\sup\limits_{x \in X}|f(x,y_n) - f(x,y_m)| < \VE
+	$$
+	Последовательность $f(x,y_n)$ удовлетворяет условию Коши (см. лекцию $10$) $\Rightarrow f(x,y_n)\uconvm{X}{n \to \infty}\varphi(x)$. Докажем единственность. Пусть $\exists \, z_n \to y_0, z_n \neq y_0$, перемешаем последовательности и рассмотрим новую:
+	$$
+		u_n \colon y_1, z_1, y_2, z_2, \dotsc , y_n, z_n, \dotsc \Rightarrow u_n \to y_0, u_n \neq y_0 \Rightarrow \exists \, f(x,z_n)\uconvm{X}{n \to \infty}\varphi(x)
+	$$
+	Поскольку предел существует, то существуют пределы подпоследовательности и они равны пределу последовательности.
+\end{proof}
+
+\subsection*{Пример равномерной сходимости семейства функций}
+Рассмотрим пример, когда появляется естественным образом равномерная сходимость семейства функций. Возьмем функцию $f(x,y) \in C\left([a,b]\times [c,d]\right)$.
+
+\begin{prop}
+	$\forall y_0 \in [c,d], \, f(x,y) \uconvm{[a,b]}{y \to y_0} f(x,y_0)$.
+\end{prop}
+\begin{proof}
+	Поскольку $f(x,y)$ - непрерывна на компакте, то по теореме Кантора $f(x,y)$ - равномерно непрерывна на нём, тогда:
+	$$
+		\forall \VE > 0, \, \exists \, \delta > 0 \colon \forall (x,y), (x_0, y_0),\, \sqrt{|x - x_0|^2 + |y - y_0|^2} < \delta \Rightarrow |f(x,y) - f(x_0,y_0)| < \VE
+	$$
+	Таким образом, если $x = x_0$, то достаточно, чтобы $|y - y_0| < \delta$, тогда:
+	$$
+		x = x_0 \Rightarrow \sqrt{|x - x_0|^2 + |y - y_0|^2} = |y - y_0| < \delta \Rightarrow 
+	$$
+	$$
+		\Rightarrow \forall x \in [a,b], \, |f(x, y) - f(x, y_0)| < \VE \Rightarrow \sup\limits_{x \in [a,b]}|f(x,y) - f(x,y_0)| < \VE
+	$$
+\end{proof}
+\begin{prop}
+	Пусть $f(x,y)$ - непрерывна по $x$ и по $y$ в отдельности на $[a,b]\times [c,d]$ и $\forall y_0, \, f(x,y) \uconvm{[a,b]}{y \to y_0} f(x,y_0)$, тогда $f \in C([a,b] \times [c,d])$ - функция $f$ непрерывна по совокупности переменных на этом прямоугольнике.
+\end{prop}
+\begin{proof}
+	Пусть $(x_2, y_2) \to (x_1, y_1)$ - фиксированная точка, тогда распишем следующую разность:
+	$$
+		|f(x_1, y_1) - f(x_2, y_2)| \leq |f(x_1,y_1) - f(x_2, y_1)| + |f(x_2, y_1) - f(x_2, y_2)|
+	$$
+	Зафиксируем $\VE > 0$, пусть $y_0 = y_1$, тогда $\exists \, \delta > 0 \colon |y_2 - y_1| < \delta \Rightarrow$ мы получим:
+	$$
+		\forall x \in [a,b], \, |f(x, y_1) - f(x, y_2)| < \VE\Rightarrow\forall x_2 \in [a,b], \, |f(x_2, y_1) - f(x_2, y_2)| < \VE
+	$$ 
+	Из непрерывности по $x$, как только $|x_2 - x_1| < \delta$, то при фиксированном $y = y_1$, мы сразу получим:
+	$$
+		|f(x_2,y_1) - f(x_1,y_1)| < \VE
+	$$
+	Следовательно:
+	$$
+		\forall \VE > 0, \, \exists \, \delta > 0 \colon \sqrt{|x_2 - x_1|^2 + |y_2 - y_1|^2} < \delta \Rightarrow |x_2 - x_1| < \delta \wedge |y_2 - y_1| < \delta \Rightarrow
+	$$
+	$$
+		\Rightarrow |f(x_1, y_1) - f(x_2, y_2)| \leq |f(x_1,y_1) - f(x_2, y_1)| + \sup\limits_{x_2 \in [a,b]}|f(x_2, y_1) - f(x_2, y_2)| < \VE + \VE = 2 \VE
+	$$
+	Заметим, что сначала искали $\delta$ для переменной по которой есть равномерная сходимость.
+\end{proof}
+
+\end{document}

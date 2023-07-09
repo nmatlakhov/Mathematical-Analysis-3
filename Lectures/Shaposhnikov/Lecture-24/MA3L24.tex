@@ -1,0 +1,382 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MC}{\mathbb{C}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MTI}{\mathbb{I}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+%%Функция для обозначения равномерной сходимости по множеству
+\newcommand{\uconv}[1]{\overset{#1}{\rightrightarrows}}
+\newcommand{\uconvm}[2]{\overset{#1}{\underset{#2}{\rightrightarrows}}}
+
+
+%%Функция для обозначения нижнего и верхнего интегралов
+\def\upint{\mathchoice%
+	{\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	{\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+	\int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 24}
+\section*{Дробное дифференцирование и дробное интегрирование}
+Вспомним, что разбирая интегралы с параметром мы нашли решение уравнения $y^{(n)} = f$:
+$$
+	y(x) = \dfrac{1}{(n-1)!}\ddint{0}{x}(x-t)^{n-1}f(t)dt =\dfrac{1}{\Gamma(n)}\ddint{0}{x}(x-t)^{n-1}f(t)dt
+$$
+Будем считать, что $f\in C([0,1])$. Там же мы ввели следующие операторы:
+\begin{defn}
+	При любом $\alpha > 0$ будем называть следующее выражение:
+	$$
+		J^\alpha f(x) = \dfrac{1}{\Gamma (\alpha)}\ddint{0}{x}(x-t)^{\alpha - 1}f(t)dt, \, \alpha \in \MR^{+}
+	$$ 
+	\uwave{оператором дробного интегрирования Римана-Луивилля}.
+\end{defn}
+\begin{rem}
+	По договоренности будем считать, что $J^{0}f(x) = f(x)$. Когда $\alpha > 0$ у нас получается несобственный интеграл.
+\end{rem}
+
+\begin{prop}
+	Для любых положительных $\alpha$ и $\beta$ будет верно:
+	$$
+		J^{\alpha}\left(J^{\beta}f\right) = J^{\alpha + \beta}f, \, \alpha, \, \beta > 0
+	$$
+\end{prop}
+\begin{proof}
+	Распишем наше выражение в левой части:
+	$$
+		J^{\alpha}\left(J^{\beta}f\right) = \dfrac{1}{\Gamma(\alpha)}\ddint{0}{x}(x-t)^{\alpha - 1}\left(\dfrac{1}{\Gamma(\beta)}\ddint{0}{t}(t-s)^{\beta - 1}f(s)ds \right)dt = (*)
+	$$
+	Мы хотим показать, что оно будет равно следующему:
+	$$
+		\dfrac{1}{\Gamma(\alpha + \beta)}\ddint{0}{x}(x-t)^{\alpha + \beta - 1}f(t)dt = J^{\alpha + \beta}f
+	$$
+	Пусть $\alpha \geq 1, \, \beta \geq 1$, тогда наши интегралы будут обычными интегралами Римана, без особенностей. Попробуем поменять местами интегралы, для этого воспользуемся упражнением из лекции $22$:
+	$$
+		(*) = \dfrac{1}{\Gamma(\alpha)\Gamma(\beta)}\ddint{0}{x}\left(\ddint{s}{x}(x - t)^{\alpha - 1}(t -s)^{\beta - 1}dt\right)f(s)ds 
+	$$
+	Внутренний интеграл похож на бета-функцию, попробуем сделать замену, чтобы эту функцию получить:
+	$$
+		u = \dfrac{x - t}{x - s} \Rightarrow t = x - u(x-s) \Rightarrow \ddint{s}{x}(x - t)^{\alpha - 1}(t -s)^{\beta - 1}dt =(x-s)^{\alpha + \beta - 2}\ddint{0}{1}u^{\alpha - 1} (1 - u)^{\beta -1}(x - s)du = 
+	$$
+	$$
+		= (x - s)^{\alpha + \beta -1}\ddint{0}{1}u^{\alpha - 1}(1 - u)^{\beta- 1}du = (x - s)^{\alpha + \beta -1}\MB(\alpha, \beta) \Rightarrow
+	$$
+	$$
+		\Rightarrow (*) = \dfrac{1}{\Gamma(\alpha)\Gamma(\beta)}\ddint{0}{x}\left(\ddint{s}{x}(x - t)^{\alpha - 1}(t -s)^{\beta - 1}dt\right)f(s)ds  = \dfrac{\MB(\alpha,\beta)}{\Gamma(\alpha)\Gamma(\beta)}\ddint{0}{x}(x-s)^{\alpha + \beta -1}f(s)ds = 
+	$$
+	$$
+		= \dfrac{1}{\Gamma(\alpha + \beta)}\ddint{0}{x}(x- s)^{\alpha + \beta - 1}f(s)ds = J^{\alpha + \beta}f
+	$$
+	Встает вопрос, как доказать это же для $\alpha > 0,\, \beta > 0$? Можно попробовать сделать это с помощью несобственного интеграла, но часто сильно упрощает дело введение дополнительного параметра:
+	$$
+		J^{\alpha}\left(J^{\beta}f\right) = \dfrac{1}{\Gamma(\alpha)}\ddint{0}{x}(x-t + \VE)^{\alpha - 1}\left(\dfrac{1}{\Gamma(\beta)}\ddint{0}{t}(t-s + \VE)^{\beta - 1}f(s)ds \right)dt 
+	$$
+	Теперь можно переставить интегралы местами, а затем, пользуясь следствием $1$ из лекции $23$ про перестановку предела и интеграла, устремить $\VE \to 0$.
+\end{proof}
+\begin{exrc}
+	Обосновать предельный переход в теореме выше при $\VE \to 0$.
+\end{exrc}
+
+\begin{defn}
+	Пусть $n = \lceil \alpha \rceil, \, \alpha > 0$ будем называть следующее выражение:
+	$$
+		D^{\alpha}f(x) = D^n \left(J^{n - \alpha}f(x)\right)
+	$$ 
+	\uwave{оператором дробного дифференцирования Римана-Луивилля}.
+\end{defn}
+\begin{rem}
+	Заметим, что $D^n f(x)$ в определении оператора Римана-Луивилля это обычная производная, поскольку $n \in \MN$. $D^\alpha f(x)$ при $\alpha \in \MN$ также представляет из себя обычную производную.
+\end{rem}
+\begin{rem}
+	Отметим, что не важно $n = \lceil \alpha \rceil$ мы можем представить оператор по-другому для любого числа, большего чем $\alpha$: 
+	$$
+		D^{\alpha}f(x) = D^{m}\left(J^{m - \alpha}f(x)\right), \, \forall m \geq \alpha
+	$$
+	Это так, поскольку мы ранее установили: $\forall m \in \MN,\, D^mJ^mf(x) = f(x)$, тогда по утверждению $1$:
+	$$
+		J^{m -\alpha} = J^{m -n }J^{n - \alpha}, \, D^{m} = D^{n}D^{m - n} \Rightarrow 
+	$$
+	$$
+		\Rightarrow D^{\alpha}f(x) = D^n \left(J^{n - \alpha}f(x)\right) = D^{n}\left(D^{m -n}J^{m-n}J^{n-\alpha}f(x)\right) = D^{m}\left(J^{m - \alpha}f(x)\right)
+	$$
+\end{rem}
+Пусть $f \in C^1[0,1], \, \alpha \in (0,1)$, попробуем найти $D^{\alpha}f(x)$ по определению:
+$$
+	D^{\alpha}f(x) = D^{1}J^{1 - \alpha}f(x) = \dfrac{d}{dx}\left(\dfrac{1}{\Gamma(1- \alpha)} \ddint{0}{x}(x-t)^{-\alpha}f(t)dt\right) =(**)
+$$
+Здесь возникает трудность в том, что использовать дифференцирование по интегралу с параметром напрямую по многим причинам может оказаться некорректным. Как уже отмечалось, делать замены в интегралах с параметром при исследовании сходимости интеграла - плохая идея. Тем не менее при исследовании интеграла как функции параметра, замены очень часто помогают (убирать параметр там, где от него возникают проблемы), например:
+$$
+	\ddint{0}{+\infty}\alpha^2 e^{-\lambda x} dx \Rightarrow \alpha x = u \Rightarrow \alpha \ddint{0}{+\infty} e^{-u} du
+$$
+Видим, что интеграл дифференцируем и мы не воспользовались никакими теоремами. Часто ничего не выходит из дифференцирования интеграла по параметру, например, если рассмотрим интеграл:
+$$
+	\dfrac{d}{d \alpha}\left(\ddint{0}{+\infty}\dfrac{x\sin{ax}}{1 + x^2}dx\right) = \ddint{0}{+\infty}\dfrac{x^2 \cos{ax}}{1 + x^2}dx \Rightarrow \ddint{0}{+\infty}\dfrac{x^2}{1 + x^2}dx  \not< \infty
+$$
+Но если избавиться от параметра, вытащив его из-под $\sin{ax}$, то получим:
+$$
+	\ddint{0}{+\infty}\dfrac{x\sin{ax}}{1 + x^2}dx = \ddint{0}{+\infty}\dfrac{(a x)\sin{a x}}{(ax)^2 + a^2 }d(ax) = \ddint{0}{+\infty}\dfrac{u \sin{u}}{u^2 + a^2}du
+$$
+И можно будет дифференцировать уже сколь угодно раз по параметру. По аналогии сделаем замену в нашем интеграле $(**)$:
+$$
+	x - t = u \Rightarrow (**) = \dfrac{1}{\Gamma(1 - \alpha)}\dfrac{d}{dx}\left(\ddint{x}{0}u^{-\alpha}f(x - u)d(-u)\right) = \dfrac{1}{\Gamma(1 - \alpha)}\dfrac{d}{dx}\left(\ddint{0}{x}u^{-\alpha}f(x - u)du\right)
+$$
+Параметр в пределе интегрирования остался, но особенность ушла в точку, где нет параметра. Чтобы можно было воспользоваться доказанными теоремами, разобьем интеграл на два:
+$$
+	\dfrac{1}{\Gamma(1 - \alpha)}\dfrac{d}{dx}\left(\ddint{0}{x}u^{-\alpha}f(x - u)du\right) = \dfrac{1}{\Gamma(1 - \alpha)}\dfrac{d}{dx}\left(\ddint{0}{x_1}u^{-\alpha}f(x - u)du + \ddint{x_1}{x}u^{-\alpha}f(x - u)du\right)
+$$
+По аналогии с тем, как мы рассматривали интеграл Дирихле, нам нужно поведение функции рядом с точкой дифференцируемости $\Rightarrow$ будем считать, что $x \in [x_1,x_2]\subset[0,1]$. Поскольку $f \in C^1[0,1] \Rightarrow$ она ограниченна, её производная ограниченна $\Rightarrow$ рассмотрим левый интеграл:
+$$
+	\dfrac{d}{dx}\left(\ddint{0}{x_1}u^{-\alpha}f(x - u)du\right) = \ddint{0}{x_1}u^{-\alpha}f'(x - u)du, \, \left|\ddint{0}{x_1}u^{-\alpha}f'(x - u)du\right|\leq \ddint{0}{x_1}Cu^{-\alpha}du < \infty
+$$
+Следовательно по признаку Вейерштрасса получаем равномерно сходящийся интеграл. Значит можно дифференцировать по теореме о дифференцируемости несобственного интеграла. Правый интеграл не является несобственным, его можно дифференцировать:
+$$
+		\dfrac{d}{dx}\left(\ddint{x_1}{x}u^{-\alpha}f(x - u)du\right) = \dfrac{f(0)}{x^{\alpha}} + \ddint{x_1}{x}u^{-\alpha}f'(x - u)du 
+$$
+Таким образом, мы получаем общую формулу:
+$$
+	D^{\alpha}f(x) = \dfrac{f(0)}{\Gamma(1-\alpha) x^{\alpha}} +\dfrac{1}{\Gamma(1- \alpha)} \ddint{0}{x}u^{-\alpha}f'(x-u)du
+$$
+Таким образом, мы доказали следующее утверждение.
+\begin{prop}
+	Пусть $f \in C^1[0,1], \, \alpha \in (0,1)$, тогда: $	D^{\alpha}f(x) = \dfrac{f(0)}{\Gamma(1-\alpha) x^{\alpha}} +\dfrac{1}{\Gamma(1- \alpha)} \ddint{0}{x}u^{-\alpha}f'(x-u)du$.
+\end{prop}
+
+\textbf{Пример}: $f(x) = x$ найдем производную порядка $\alpha = \dfrac{1}{2}$.
+$$
+	D^{\frac{1}{2}}x = \dfrac{0}{\Gamma\left(\frac{1}{2}\right)x^{\frac{1}{2}}} + \dfrac{1}{\Gamma\left(\frac{1}{2}\right)}\ddint{0}{x}u^{-\frac{1}{2}}du = \dfrac{2 \sqrt{x}}{\Gamma\left(\frac{1}{2}\right)} = \dfrac{2}{\sqrt{\pi}}\sqrt{x}
+$$
+
+Заметим, что достаточно сложно будет найти производную $e^x$ порядка $\alpha \in (0,1)$.
+\begin{exrc}
+	Найти дробные производные для $x^m$ и $e^x$.
+\end{exrc}
+
+Заметим, что вообще-то не верно, что:
+$$
+	D^{\alpha}(D^{\beta}f) = D^{\alpha + \beta}f
+$$
+Одновременно с этим также не верно:
+$$
+	D^{\alpha}f{\cdot}D^{\beta}f = D^{\alpha + \beta}f
+$$
+
+\begin{exrc}
+	Используя степени $x^{\beta}$ подобрать степени, показывающие что равенства выше не верны.
+\end{exrc}
+Также заметим, что иногда эти равенства всё же выполняются.
+\begin{exrc}
+	Показать, что если $f = J^{\alpha + \beta}\varphi$, то $D^{\alpha}(D^{\beta}f) = D^{\alpha + \beta}f$
+\end{exrc}
+
+Теперь хотелось бы понять, как решать дифференциальные уравнения с дробными производными. Пусть $0 < \alpha <1$, рассмотрим следующее ДУ:
+$$
+	D^{\alpha}y = F(x,y)
+$$
+Когда $\alpha = 1$, то такой дифур решался интегрированием и задача Коши сводилась к задаче нахождения неподвижной точки. Здесь же не ясно даже как ставить начальные условия. Рассмотрим:
+$$
+	D^{\alpha}y = f(x) \Rightarrow J^{\alpha}D^{\alpha}y = J^{\alpha}D^{1}J^{1 - \alpha}y
+$$
+Таким образом, хотелось бы научиться менять местами $J$ и $D$. Обозначим $g = J^{1 - \alpha}y$, тогда мы получим:
+$$
+	J^{\alpha}D^{1}g = \dfrac{1}{\Gamma(\alpha)}\ddint{0}{x}(x-t)^{\alpha - 1}g^\prime(t)dt = \big|x-t = u\big| = \dfrac{1}{\Gamma(\alpha)}\ddint{0}{x}u^{-(1 -\alpha)}g^{\prime}(x-u)du = D^1 J^{\alpha}g - \dfrac{g(0)}{\Gamma(\alpha)x^{1 - \alpha}} 
+$$
+Возвращаясь к ДУ получится:
+$$
+	J^{\alpha}f = J^{\alpha}D^{\alpha}y =  J^{\alpha}D^{1}J^{1 - \alpha}y = D^{1}J^{\alpha}J^{1 - \alpha}y - \dfrac{J^{1-\alpha}y(0)}{\Gamma(\alpha)x^{1 - \alpha}} = y -\dfrac{J^{1-\alpha}y(0)}{\Gamma(\alpha)x^{1 - \alpha}}
+$$
+$$
+	D^{\alpha}y = f \Leftrightarrow y = \dfrac{J^{1-\alpha}y(0)}{\Gamma(\alpha)x^{1 - \alpha}} + J^{\alpha}f
+$$
+Если $\alpha = 1$, то никакого деления на $x$ не будет (сингулярности не останется) и справа вместо дроби будет просто константа. Таким образом, задача Коши в дробных производных будет иметь вид:
+$$
+	\left\{
+	\begin{array}{lll}
+		D^\alpha y &=& F(x,y) \\
+		J^{1 - \alpha}y(0) &=& b
+	\end{array}
+	\right.
+$$
+А её решение будет все равно, что искать следующую неподвижную точку:
+$$
+	y = \dfrac{b}{\Gamma(\alpha)x^{1- \alpha}} + J^{\alpha}F(x,y)
+$$
+Ранее, существование решения доказывалось через теорему о неподвижной точке. Здесь это делается абсолютно также. Мы этого делать не будем.
+
+\begin{exrc}
+	Решить следующие уравнения:
+	$$
+		y^{\left(\frac{1}{2}\right)} = 0, \, 
+		y^{\left(\frac{1}{2}\right)} = x, \,	
+		y^{\left(\frac{1}{2}\right)} = y
+	$$
+	Последнее уравнение можно попытаться найти в виде степенных рядов. Получится т.н. функции Мета-Клефлера.
+\end{exrc}
+
+\newpage
+\section*{Задача Абеля}
+Пусть есть некоторая функция $\varphi(h)$. Мы хотим найти форму кривой такой, что если отпустим материальную точку с высоты $h$ на этой кривой так, чтобы она спускалась под действием силы тяжести без трения (то есть на неё действует только сила реакции опоры) вниз за время $T = \varphi(h)$.
+
+Попробуем на высоте $h$ взять материальную точку массой $m$, она начнет падать. Пусть в какой-то момент времени она оказалась на уровне $y$, тогда по закону сохранения энергии, если в этот момент её скорость равна $v$, то её кинетическая энергия равна снижению материальной точки под действием силы тяжести с высоты $h$ на высоту $y$:
+$$
+	\dfrac{mv^2}{2} = mg(h-y)
+$$
+Если наше движение это $(x(t),y(t))$, то $v^2 = \dot{x}^2 + \dot{y}^2$ и по движению точки: $ y(0) = h, \, y(T) = h$. Пусть наша кривая описывается как: $x = g(y)$, тогда: $x(t) = g(y(t)) \Rightarrow v^2 = \left(|g'(y)|^2 + 1\right)\dot{y}^2 = u^2(y)\dot{y}^2$. Подставим в исходное равенство:
+$$
+	-u(y)\dot{y} = \sqrt{2g(h-y)}
+$$
+где слева стоит минус, поскольку $y$ - убывает. Разделим переменные, как в обычном ДУ:
+$$
+	\dfrac{-u(y)\dot{y}}{\sqrt{2g(h - y)}} = 1  \Rightarrow \ddint{0}{T} \dfrac{-u(y)\dot{y}}{\sqrt{2g(h - y)}}dt = \dfrac{1}{\sqrt{2g}}\ddint{0}{h}\dfrac{u(y)}{\sqrt{h - y}}dy = T = \varphi(h), \, dy = \dot{y}dt
+$$
+Таким образом, мы получаем следующее уравнение:
+$$
+	\dfrac{1}{\sqrt{2g}}\ddint{0}{h}\dfrac{u(y)}{\sqrt{h - y}}dy = \sqrt{\dfrac{\pi}{2g}}J^{\frac{1}{2}}u = \varphi(h)
+$$
+Найти форму кривой это всё равно, что найти $u(y)$, из-за её определения. Имеем дробный интеграл $\Rightarrow$ надо продифференцировать дробное число раз:
+$$
+	D^{\frac{1}{2}}J^{\frac{1}{2}}u = D^{1}J^{1 - \frac{1}{2}}J^{\frac{1}{2}}u = D^{1}J^{1}u = u = \sqrt{\dfrac{2g}{\pi}}D^{\frac{1}{2}}\varphi = \sqrt{\dfrac{2g}{\pi}}\dfrac{d}{dy}\left(\dfrac{1}{\Gamma(\frac{1}{2})}\ddint{0}{y}\dfrac{\varphi(t)}{\sqrt{y -t}}dt\right)
+$$
+Таким образом, мы получаем результат:
+$$
+	u(y) = \dfrac{\sqrt{2g}}{\pi}\dfrac{d}{dy}\left(\ddint{0}{y}\dfrac{\varphi(t)}{\sqrt{y -t}}dt\right) \Rightarrow g'(y) = \sqrt{u^2(y) - 1}
+$$
+Интегрируя $g'(y)$, мы найдем вид кривой.
+\begin{exrc}
+	Разобрать случай $\varphi \equiv 1$ и получить циклоиду в задаче об таутохроне.
+\end{exrc}
+\begin{proof}
+	$$
+		\ddint{0}{y}\dfrac{1}{\sqrt{y -t}}dt =  -\left.2\sqrt{y-t}\right|_{t = 0}^{y} = 2\sqrt{y} \Rightarrow u(y) = \dfrac{\sqrt{2g}}{\pi}\dfrac{2}{2\sqrt{y}} = \dfrac{\sqrt{2g}}{\pi\sqrt{y}} \Rightarrow g'(y) = \sqrt{\dfrac{2g}{\pi y} - 1 }
+	$$
+	$$
+		\int g'(y)dy = \int \sqrt{\dfrac{a - y}{y}}dy
+	$$
+\end{proof}
+
+\begin{exrc}
+	Доказать, что гамма-функция и бета-функции на своей области определения они непрерывно дифференцируемы. (Бета выражается через гамма, а для гаммы можно доказывать всё при x > 10, потому что формула понижения выдаст многочлен по иксам, икс большой следовательно в нуле никаких особенностей нет, есть только проблема сходимости на бесконечности и надо держать в голове замечание, что доказывать непр и дифф не надо требовать равномерность на всей оси, а достаточно x0 < x < x1 следовательно получит отличная равномерная сходимость , это будет следовать из теоремы вейерштрасса, а потом теорема о дифф + непр сразу даст нужный результат)
+\end{exrc}
+
+\end{document}

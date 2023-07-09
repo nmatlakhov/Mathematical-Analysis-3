@@ -1,0 +1,40 @@
+
+\textbf{Задача из листка}: Пусть $f(x)$ - непрерывная $2\pi$-периодическая функция. Тогда интеграл:
+$$
+	\ddint{\pi}{+\infty}\dfrac{f(x)}{\ln{(x)} + \cos{(x)}  }dx
+$$
+сходится тогда и только тогда, когда $f(x)$ - нечетна.
+\begin{proof}
+	Разложим функцию $f(x)$ на две части:
+	$$
+		f(x) = \dfrac{f(x) + f(-x)}{2} + \dfrac{f(x) - f(-x)}{2}
+	$$
+	Подынтегральное выражение устроено следующим образом:
+	$$
+		\dfrac{f(x)}{\ln{(x)} + \cos{(x)}  } = \dfrac{f(x)}{\ln{(x)}}\left(1 + \dfrac{\cos{(x)}}{ \ln{(x)}}\right)^{-1} = \dfrac{f(x)}{\ln{(x)}}\left(
+		1 - \dfrac{\cos{(x)}}{\ln{(x)} } + \dfrac{\cos^2{(x)}}{\ln^2{(x)} } - \dotsc 	 \right)
+	$$
+	где последнее верно в силу того, что: 
+	$$
+		\pi > e \Rightarrow \ln{(x)} > 1 \wedge \cos{(x)} \leq 1 \Rightarrow \dfrac{\cos{(x)}}{\ln{(x)} } < 1
+	$$ 
+	Поскольку функция $f$ непрерывная и периодическая $\Rightarrow$ она ограниченная. Раскроем скобки:
+	$$
+		\dfrac{f(x)}{\ln{(x)}}\left(
+		1 - \dfrac{\cos{(x)}}{\ln{(x)} } + \dfrac{\cos^2{(x)}}{\ln^2{(x)} } - \dotsc 	 \right) = \dfrac{f(x)}{\ln{(x)}} - \dfrac{f(x)\cos{(x)} }{\ln^2{(x)}} + \dotsc
+	$$
+	Вспоминая, признак Дирихле, $f(x)$ - периодическая, $\tfrac{1}{\ln{(x)}}$ - монотонно стремится к нулю. ...
+	$$
+		C = \dfrac{1}{2\pi}\ddint{0}{2\pi}f(x)dx
+	$$
+	
+	$$
+		\ddint{\pi}{+\infty}\dfrac{f(x)}{\ln{(x)} + \cos{(x)}  } = \ddint{\pi}{+\infty}\dfrac{f(x) - C}{\ln{(x)} } + \ddint{\pi}{+\infty}\dfrac{C}{\ln{(x)}  } + O\left(\dfrac{1}{\ln^2{(x)}} \right)
+	$$
+	
+	$$
+		0 = \ddint{0}{\pi}f(x)\cos^k{(x)}dx, \, k = 0,1, \dotsc
+	$$
+	
+	непонятно ... в общем... 
+\end{proof}

@@ -1,0 +1,486 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MB}{\mathcal{B}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\ML}{\mathcal{L}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 9}
+
+\section*{Асимптотика интегралов Лапласа}
+Мы рассмотрели интегралы Лапласа, поняв что они могут встречаться. Возникает необходимость исследовать такие выражения, например, отвечая на вопрос как себя ведет следующая функция от $\lambda$:
+$$
+	F(\lambda) = \ddint{a}{b}f(x)e^{\lambda g(x)}dx
+$$
+Как себя ведет эта сумма в отдельных точках? Мы рассмотрим один из таких вопросов: как ведет себя эта сумма, когда $\lambda \to +\infty$, можем ли мы найти асимптотику? Полезно разобрать два примера.
+
+\textbf{$1)$ Пример}: $f$ - непрерывная на $(0, +\infty)$, но в нуле она такая, чтобы интеграл сходился $\Rightarrow$ будем считать, что интеграл сходится абсолютно при некотором $\lambda_0 > 0$:
+$$
+	\ddint{0}{+\infty}f(x)e^{-\lambda x}dx
+$$
+Что будет при $\lambda \to +\infty$? Если кажется, что будет стремится к нулю, то полезно помнить о следующем интеграле:
+$$
+	\ddint{0}{+\infty}e^{-\lambda x}dx = \dfrac{1}{\lambda}
+$$
+Основная ``масса'' интеграла концентрируется рядом с точкой максимума функции стоящей в экспоненте (в данном случае, эта точка $0$). Попробуем это формализовать.
+
+\subsection*{Принцип локализации}
+$$
+	\ddint{0}{+\infty}f(x)e^{-\lambda x}dx = \ddint{0}{\delta}f(x)e^{-\lambda x}dx + \ddint{\delta}{+\infty}f(x)e^{-\lambda x}dx
+$$
+Попробуем понять, что второй интеграл стремится к нулю экспоненциально:
+$$
+	\forall \lambda > \lambda_0, \, \left|\ddint{\delta}{+\infty}f(x)e^{-\lambda x}dx\right| \leq \ddint{\delta}{+\infty} |f(x)|e^{-\lambda x}dx = \ddint{\delta}{+\infty} |f(x)|e^{-\lambda_0 x }{\cdot}e^{-(\lambda - \lambda_0)x}dx \leq 
+$$	
+$$
+	\leq \ddint{\delta}{+\infty} |f(x)|e^{-\lambda_0 x }{\cdot}e^{-(\lambda - \lambda_0)\delta}dx \leq
+	e^{-(\lambda - \lambda_0)\delta} \ddint{0}{+\infty} |f(x)|e^{-\lambda_0 x}dx = Ce^{-\lambda \delta} \xrightarrow[\lambda \to +\infty]{}0
+$$
+Когда есть стремление быстрее любой степени, мы будем это отмечать как $O(\lambda^{-\infty})$: 
+$$
+	f(\lambda) = O(\lambda^{-\infty}) \Leftrightarrow \forall k, \,  \dfrac{f(\lambda)}{\lambda^{-k}} \xrightarrow[\lambda \to \infty]{}0 \Leftrightarrow \forall k, \, f(\lambda) = O\left(\dfrac{1}{\lambda^k}\right)
+$$
+например, $e^{-\lambda} = O(\lambda^{-\infty})$. Таким образом, мы получаем \uwave{принцип локализации}:
+$$
+	\ddint{0}{+\infty}f(x)e^{-\lambda x}dx = \ddint{0}{\delta}f(x)e^{-\lambda x}dx + O(\lambda^{-\infty})
+$$
+Получили, что у интеграла слева поведение на бесконечности такое же, как и у интеграла от $0$ до $\delta$ с точностью до $O(\lambda^{-\infty}) \Rightarrow$ это означает поведение интеграла слева зависит от того, как функция $f(x)$ устроена рядом с нулем. Более того, эту запись можно читать в обе стороны, что интеграл на маленькой окрестности будет сводится к интегралу на полуинтервале от $0$ до $+\infty$.
+
+\begin{prop}
+	Пусть в окрестности $x = 0$ функция $f(x)$ имеет следующий вид:
+	$$
+		f(x) = x^{\alpha}\left(c_0 + c_1 x + \dotsc + c_n x^n \right) + O(x^{n + \alpha + 1}), \, \alpha > -1
+	$$
+	тогда интеграл Лапласа имеет следующий вид:
+	$$
+		\ddint{0}{+\infty}f(x)e^{-\lambda x}dx =\sum\limits_{k = 0}^n \dfrac{c_k \Gamma(k + \alpha + 1)}{\lambda^{k + \alpha + 1}} + O\left(\dfrac{1}{\lambda^{n + \alpha + 2}}\right)
+	$$
+\end{prop}
+\begin{proof}
+	Согласно принципу локализации, всё свелось к интегралу около нуля. Подставим в этот интеграл значение функции:
+	$$
+		\ddint{0}{+\infty}f(x)e^{-\lambda x}dx = \ddint{0}{\delta}f(x)e^{-\lambda x}dx + O(\lambda^{-\infty}) = \sum\limits_{k = 0}^n \ddint{0}{\delta}c_k x^{k + \alpha}e^{-\lambda x}dx + \ddint{0}{\delta}O\left(x^{n + \alpha + 1}\right)e^{-\lambda x}dx + O(\lambda^{-\infty})
+	$$
+	С точностью до $O(\lambda^{-\infty})$ можем заменить $\delta$ на $+\infty$:
+	$$
+		\ddint{0}{+\infty}f(x)e^{-\lambda x}dx =\sum\limits_{k = 0}^n \ddint{0}{+\infty}c_k x^{k + \alpha}e^{-\lambda x}dx + \ddint{0}{+\infty}O\left(x^{n + \alpha + 1}\right)e^{-\lambda x}dx + O(\lambda^{-\infty})
+	$$
+	Используем преобразование Лапласа и получаем требуемое.
+\end{proof}
+
+\textbf{$2)$ Пример}: вычисление асимптотики интегралов вида:
+$$
+	\ddint{-\infty}{+\infty}f(x)e^{-\lambda x^2}dx
+$$
+Считаем, что сходится абсолютно при $\lambda_0 > 0$ (при всех больших лямбда). Надо свести к чему-то знакомому, но есть трудность связанная с тем, что нельзя сделать замену $x^2 = t$, поскольку это не монотонное преобразование $\Rightarrow$ разбиваем интеграл на две части:
+$$
+	\ddint{-\infty}{+\infty}f(x)e^{-\lambda x^2}dx = \ddint{0}{+\infty}\left(f(x) + f(-x)\right)e^{-\lambda x^2}dx = \left|x = \sqrt{t}\right| = \ddint{0}{+\infty}\dfrac{f\left(\sqrt{t}\right) + f\left(-\sqrt{t}\right)}{2\sqrt{t}}e^{-\lambda t}dt 
+$$	
+Теперь можно находить асимптотику применяя известные факты. Например, рассмотрим первый член асимптотики:
+$$
+	f(x) = f(0) + f^\prime(0)x + O(x^2) \Rightarrow \dfrac{f\left(\sqrt{t}\right) + f\left(-\sqrt{t}\right)}{2\sqrt{t}} = \dfrac{f(0)}{\sqrt{t}} + O\left(\sqrt{t}\right) = t^{-\tfrac{1}{2}}\left(f(0) + O(t)\right) \Rightarrow
+$$
+$$
+	\Rightarrow \ddint{0}{+\infty}\dfrac{f\left(\sqrt{t}\right) + f\left(-\sqrt{t}\right)}{2\sqrt{t}}e^{-\lambda t}dt = \dfrac{f(0){\cdot}\Gamma\left(\tfrac{1}{2}\right)}{\lambda^{\tfrac{1}{2}}}
+	+ O\left(\dfrac{1}{\lambda^{\tfrac{3}{2}}}\right) = 
+	f(0)\sqrt{\dfrac{\pi}{\lambda}}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right) \right), \, \lambda \to +\infty
+$$
+Таким образом видно, что асимптотика зависит только от $f$ в нуле. Данная ситуация напоминает теорему Муавра-Лапласа.
+
+\newpage
+\section*{Метод Лапласа}
+Рассмотрим следующий интеграл, асимптотику которого мы хотим найти:
+$$
+	\ddint{a}{b}f(x)e^{\lambda g(x)}dx
+$$
+Будем считать, что всегда этот интеграл сходится абсолютно по промежутку $]a,b[$ при некотором $\lambda_0 > 0$. Весь метод Лапласа состоит из четырех наблюдений.
+
+\begin{prop}(\textbf{Оценка сверху})
+	Если $g(x) \leq M$, то тогда:
+	$$
+		\forall \lambda > \lambda_0, \, \left|\ddint{a}{b}f(x)e^{\lambda g(x)}dx \right| \leq C e^{\lambda M}
+	$$
+	где $C$ не зависит от $\lambda$.
+\end{prop}
+\begin{proof}
+	Распишем интеграл и внесем модуль под интеграл:
+	$$
+		\left|\ddint{a}{b}f(x)e^{\lambda g(x)}dx \right| \leq  \ddint{a}{b}|f(x)|e^{\lambda_0 g(x)}e^{(\lambda - \lambda_0)g(x)}dx \leq e^{\lambda M}e^{-\lambda_0 M}\ddint{a}{b}|f(x)|e^{\lambda_0 g(x)}dx = e^{\lambda M}C
+	$$
+	где мы получили, что:
+	$$
+		C = e^{-\lambda_0 M}\ddint{a}{b}|f(x)|e^{\lambda_0 g(x)}dx
+	$$
+\end{proof}
+
+\begin{prop}(\textbf{Оценка снизу})
+	Пусть $x_0 \in (a,b)$. Функции $f,g$ непрерывны в точке $x_0$ и $f(x_0) \neq 0$. Тогда:
+	$$
+		\forall \VE > 0, \, \exists \, r > 0 \colon (x_0 -r, x_0 + r) \subset (a,b) \wedge \forall \delta \in (0, r), \, \left|\, \ddint{x_0 - \delta}{x_0 + \delta}f(x)e^{\lambda g(x)}dx \right| \geq |f(x_0)|\delta e^{\lambda(g(x_0) - \VE)}
+	$$
+\end{prop}
+\begin{proof}
+	Пусть $f(x_0) > 0$, тогда выбираем $r > 0$ на $(x_0 - r, x_0 + r)$ так, чтобы:
+	$$
+		f(x) \geq \dfrac{f(x_0)}{2}, \, g(x) \geq g(x_0) - \VE
+	$$
+	это возможно в силу непрерывности (по определению). Тогда, учитывая что $\lambda > \lambda_0 > 0$, получим:
+	$$
+		\forall \delta \in (0,r), \, \ddint{x_0 - \delta}{x_0 + \delta}f(x)e^{\lambda g(x)}dx \geq \dfrac{f(x_0)}{2}e^{\lambda(g(x_0) - \VE)}2\delta = f(x_0)\delta e^{\lambda(g(x_0) - \VE)} 
+	$$
+\end{proof}
+\newpage
+\begin{prop}(\textbf{Принцип локализации})
+	Пусть $x_0 \in (a,b)$, $f,g$ - непрерывны в точке $x_0$ и $f(x_0) \neq 0$. Предположим, что $x_0$ - точка строгого глобального максимума $g$ на интервале $(a,b)$:
+	$$
+		\forall \, \MU(x_0), \, \sup\limits_{(a,b) \setminus \MU(x_0)} g(x) < g(x_0)
+	$$
+	Тогда $\forall (x_0 - r, x_0 + r) \subset (a,b)$ верно, что:
+	$$
+		\ddint{a}{b}f(x)e^{\lambda g(x)}dx = \ddint{x_0 - r}{x_0 + r}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right)
+	$$
+\end{prop}
+\begin{proof}
+	Докажем сначала, что $\exists \, 0 < \delta < r$ такое, что выполнено:
+	$$
+		\ddint{a}{b}f(x)e^{\lambda g(x)}dx = \ddint{x_0 - \delta}{x_0 + \delta}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right)
+	$$
+	$$
+		\ddint{x_0 - r}{x_0 +r }f(x)e^{\lambda g(x)}dx = \ddint{x_0 - \delta}{x_0 + \delta}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right)
+	$$
+	Заметим также, что выполняется равенство:
+	$$
+		\dfrac{1}{1 + O(\lambda^{-\infty})} = 1 + O(\lambda^{-\infty})
+	$$
+	поскольку:
+	$$
+		\dfrac{1}{1 + O(\lambda^{-\infty})} - 1 = \dfrac{O(\lambda^{-\infty})}{1 + O(\lambda^{-\infty})} = O(\lambda^{-\infty})
+	$$
+	где последнее равенство верно в силу того, что в знаменателе ограниченная величина. Отметим при этом, что слева и справа разные $O$. Следовательно, мы можем писать:
+	$$
+		F(\lambda) = G(\lambda)(1 + O(\lambda^{-\infty})) \Leftrightarrow G(\lambda) = F(\lambda)(1 + O(\lambda^{-\infty}))
+	$$
+	Таким образом, доказав равенства выше, мы получим:
+	$$
+		\ddint{x_0 - r}{x_0 +r }f(x)e^{\lambda g(x)}dx = \ddint{x_0 - \delta}{x_0 + \delta}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right) \Rightarrow \ddint{x_0 - \delta}{x_0 +\delta }f(x)e^{\lambda g(x)}dx = \ddint{x_0 - r}{x_0 + r}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right)
+	$$
+	Подставив в первое равенство, получим требуемое:
+	$$
+		\ddint{a}{b}f(x)e^{\lambda g(x)}dx = \ddint{x_0 - r}{x_0 + r}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right) \left(1 + O(\lambda^{-\infty})\right) = \ddint{x_0 - r}{x_0 + r}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right)
+	$$
+	Докажем их, пусть $f(x_0) > 0$, выбираем $\delta \in (0,r)$ так, чтобы 
+	$$
+		\forall x \in \MI = (x_0 - \delta, x_0 + \delta), \, f(x) > 0 
+	$$
+	Выберем $\VE > 0$ таким образом, чтобы:
+	$$
+		\exists \, \VE > 0 \colon g(x_0) - 2\VE > \sup\limits_{(a,b)\setminus \MI} g
+	$$
+	По утверждению про оценку снизу:
+	$$
+		\exists \, \gamma \in (0, \delta), \, \ddint{x_0 - \gamma}{x_0 + \gamma}f(x)e^{\lambda g(x)}dx \geq C_1 e^{\lambda (g(x_0) - \VE)}
+	$$
+	где $C_1$ не зависит от $\lambda$. Тогда:
+	$$
+		\dfrac{\ddint{a}{b}f(x)e^{\lambda g(x)}dx}{\displaystyle \int\limits_{\MI} f(x)e^{\lambda g(x)}dx } = \dfrac{\displaystyle \int\limits_{\MI}f(x)e^{\lambda g(x)}dx + \displaystyle \int\limits_{(a,b)\setminus \MI}f(x)e^{\lambda g(x)}dx}{\displaystyle \int\limits_{\MI} f(x)e^{\lambda g(x)}dx } = 1 + \dfrac{\displaystyle \int\limits_{(a,b)\setminus \MI}f(x)e^{\lambda g(x)}dx}{\displaystyle \int\limits_{\MI} f(x)e^{\lambda g(x)}dx} = 1 + (*)
+	$$
+	оценим второе слагаемое по модулю. В числитель подставим максимум функции $g$ на $(a,b)\setminus \MI$ и таким образом получим:
+	$$
+		\displaystyle \int\limits_{(a,b)\setminus \MI}f(x)e^{\lambda g(x)}dx \leq e^{\lambda (g(x_0) - 2\VE)}C_2
+	$$
+	Поскольку функция $f$ была предположена знакопостоянной (положительной), поэтому взяв интервал поменьше - числитель станет поменьше $\Rightarrow$ дробь станет побольше:
+	$$
+		\MI \leftrightarrow (x_0 - \gamma, x_0 + \gamma) \Rightarrow \displaystyle \int\limits_{\MI} f(x)e^{\lambda g(x)}dx \geq \ddint{x_0 - \gamma}{x_0 + \gamma}f(x)e^{\lambda g(x)}dx \geq e^{\lambda (g(x_0) - \VE)}C_1 \Rightarrow 
+	$$	
+	$$
+		\Rightarrow |(*)| \leq \dfrac{C_2 e^{\lambda (g(x_0) - 2\VE)}}{C_1 e^{\lambda (g(x_0) - \VE)}} = \dfrac{C_2}{C_1}e^{-\lambda \VE} = O(\lambda^{-\infty}) \Rightarrow |(*)|  = O(\lambda^{-\infty})
+	$$
+\end{proof}
+
+\newpage
+\section*{Метод Лапласа}
+
+\begin{prop}(\textbf{Принцип локализации})
+	Пусть $x_0 \in (a,b)$, $f,g$ - непрерывны в точке $x_0$ и $f(x_0) \neq 0$. Предположим, что $x_0$ - точка строгого глобального максимума $g$ на интервале $(a,b)$:
+	$$
+		\forall \, \MU(x_0), \, \sup\limits_{(a,b) \setminus \MU(x_0)} g < g(x_0)
+	$$
+	Тогда $\forall (x_0 - r, x_0 + r) \subset (a,b)$ верно, что:
+	$$
+		\ddint{a}{b}f(x)e^{\lambda g(x)}dx = \ddint{x_0 - r}{x_0 + r}f(x)e^{\lambda g(x)}dx \left(1 + O(\lambda^{-\infty})\right)
+	$$
+\end{prop}
+Таким образом, это дает нам следующий метод: вместо исследования страшного интеграла по непонятному промежутку, можно исследовать интгерал по промежутку сколь угодно малому вокруг точки экстремума. Чтобы воспользоваться этим методом, нам потребуется ещё одно утверждение.
+
+\begin{prop}
+	Пусть $g \in C^4$ в некоторой окрестности точки $x_0$, $g^\prime(x_0) = 0$, $g^{\prime\prime}(x_0) < 0$. Тогда существуют отрезки $\MU(x_0)$ и $\MV(0)$, диффеоморфизм $\varphi \colon \MV(0) \to \MU(x_0)$ (будем писать $x = \varphi(y)$) такие, что:
+	$$
+		\forall y \in \MV(0), \, g(\varphi(y)) = g(x_0) - y^2
+	$$
+	Более того, получается, что $\varphi(y) \in C^2$.
+\end{prop}
+\begin{rem}
+	Суть утверждения: функция в окрестности точки $x_0$ заменой координат приводится просто к параболе. Похоже на лемму Адамара и лемму Морса из конца прошлого семестра (см. лекция $23$). 
+\end{rem}
+\begin{proof}
+	Распишем формулу Тейлора с остатком в интегральной форме для функции $g(x)$ в точке $x_0$:
+	$$
+		g(x) = g(x_0) + g^\prime(x_0)(x - x_0) + (x - x_0)^2\ddint{0}{1}g^{\prime\prime}(x_0 + s(x - x_0))(1-s)ds 
+	$$
+	$$
+		= g(x_0) + (x - x_0)^2\ddint{0}{1}g^{\prime\prime}(x_0 + s(x - x_0))(1-s)ds \Rightarrow
+	$$
+	$$
+		 \Rightarrow g(x) - g(x_0) = (x - x_0)^2\left(\ddint{0}{1}g^{\prime\prime}(x_0 + s(x - x_0))(1-s)ds\right) = (x-x_0)^2h(x)
+	$$
+	Хотим, чтобы правая часть была равна $-y^2$, соответственно вопрос: какой надо взять $y$, чтобы получить требуемое? Возьмем корень из выражения:
+	$$
+		(x-x_0)^2h(x) = -y^2 \Rightarrow y(x) = (x - x_0)^2\sqrt{-h(x)}
+	$$
+	Рассмотрим функцию $h(x)$ подробнее. Нас интересует, чему равно $h(x_0)$:
+	$$
+		h(x_0) = \ddint{0}{1}g^{\prime\prime}(x_0 + s(x_0 - x_0))(1-s)ds = g^{\prime\prime}(x_0)\ddint{0}{1}(1-s)ds = \dfrac{g^{\prime\prime}(x_0)}{2} < 0 \Rightarrow -h(x_0) > 0
+	$$
+	Поскольку под интегралом стоит $g^{\prime\prime}(x_0 + s(x - x_0))$, которая является дважды непрерывно дифференцируемой по $x$, то по определению дифференцирования, можно получить, что $h(x)$ также является дважды дифференцируемой: написать приращение и поделить на $\Delta x$, все будет сходиться равномерно, затем переставляем равномерный предел и интеграл. 
+	
+	Таким образом, в маленькой окрестности точки $x_0$ под корнем стоит положительная функция. Для локального диффеоморфизма достаточно  проверить производную:
+	$$
+		y^\prime(x) = \sqrt{-h(x)} - \dfrac{(x - x_0)}{2\sqrt{-h(x)}}h^\prime(x) \Rightarrow y^\prime(x_0) = \sqrt{-h(x_0)}  = \sqrt{-\dfrac{g^{\prime\prime}(x_0)}{2}} > 0
+	$$
+	Производная в точке положительная, функция непрерывно дифференцируема $\Rightarrow$ локально она является диффеоморфизмом (теорема об обратной функции).
+	$x = \varphi(y)$ - обратная к $y = y(x)$
+\end{proof}
+\begin{rem}
+	Вместо $C^4$ можно без проблем взять $C^3$ и получить тот же результат.
+\end{rem}
+\begin{rem}
+	По теореме об обратной функции также можно сказать, что:
+	$$
+		\varphi(0) = x_0, \, \varphi^\prime(0) = \dfrac{1}{y^\prime(x_0)} = \sqrt{\dfrac{-2}{g^{\prime\prime}(x_0)}} > 0
+	$$
+\end{rem}
+
+\subsection*{Асимптотика преобразования Лапласа}
+
+Воспользуемся принципом локализации и утверждением выше, чтобы найти асимптотику у преобразования Лапласа. Пусть $x_0$ - внутренняя точка $\{a,b\}$, выбираем $\MU(x_0)\subset \{a,b\}$. Пусть $\forall x \in \MU(x_0), \, g(x) \in C^4$ и выполнены условия на производные: 
+$$
+	g^\prime(x_0) = 0, \, g^{\prime\prime}(x_0) < 0
+$$
+Пусть кроме того $g(x) \leq M$, $\exists \, \lambda_0 \colon$ интеграл сходится абсолютно, $f$ - непрерывно дифференцируема в точке $x_0$ и $f(x_0) \neq 0$. То есть выполнены все условия принципа локализации и утверждения выше. Можно считать, что $\MU(x_0)$ такова, что существует непрерывно дифференцируемая функция $\varphi \colon (-\VE, \VE) \to \MU(x_0)$ - диффеоморфизм, для которого справедливо:
+$$
+	\varphi(0) = x_0, \, \varphi^\prime(0) = \dfrac{1}{y^\prime(x_0)} = \sqrt{\dfrac{-2}{g^{\prime\prime}(x_0)}} > 0, \, g\left(\varphi(y)\right) = g(x_0) -y^2
+$$
+По принципу Локализации:
+$$
+	\ddint{a}{b}f(x)e^{\lambda g(x)}dx = \ddint{\MU(x_0)}{}f(x)e^{\lambda g(x)}dx\left(1 + O(\lambda^{-\infty})\right)
+$$
+Рассмотрим отдельно интеграл справа и сделаем в нем замену $x = \varphi(y)$:
+$$
+	\ddint{\MU(x_0)}{}f(x)e^{\lambda g(x)}dx = \ddint{-\VE}{\VE}f\left(\varphi(y)\right)\varphi^\prime(y)e^{\lambda\left(g(x_0) - y^2\right)}dy = e^{\lambda g(x_0)}\ddint{-\VE}{\VE}h(y)e^{-\lambda y^2}dy
+$$
+Пусть $h(y) = h(0) + y H(y)$, где $H(y)$ - ограниченная функция на $(-\VE,\VE)$. Так будет, когда $f$ непрерывно дифференцируема и $\varphi$ дважды непрерывно дифференцируема, что то же самое, что и $h$ - непрерывно дифференцируемая функция (получаем необходимое по теореме Лагранжа). Тогда:
+$$
+	\ddint{-\VE}{\VE}h(y)e^{-\lambda y^2}dy = h(0)\ddint{-\VE}{\VE}e^{-\lambda y^2}dy + \ddint{-\VE}{\VE}yH(y)e^{-\lambda y^2}dy = h(0)\ddint{-\infty}{+\infty}e^{-\lambda y^2}dy \left(1 + O(\lambda^{-\infty})\right) + \ddint{-\VE}{\VE}yH(y)e^{-\lambda y^2}dy
+$$
+где в последнем равенстве применили принцип локализации. Рассмотрим первый интеграл:
+$$
+	 \ddint{-\infty}{+\infty}e^{-\lambda y^2}dy =\dfrac{1}{\sqrt{\lambda}}\ddint{-\infty}{+\infty}e^{-y^2}dy =  \dfrac{1}{\sqrt{\lambda}}\sqrt{\pi} 
+$$
+Рассмотрим второй интеграл, из рассуждениый выше $\forall y \in (-\VE,\VE),\, |H(y)| \leq C$, тогда:
+$$
+	\left| \ddint{-\VE}{\VE}yH(y)e^{-\lambda y^2}dy \right|  \leq C \ddint{-\infty}{+\infty}|y|e^{-\lambda y^2}dy\left(1 + O(\lambda^{-\infty})\right) = \dfrac{C}{\lambda}\ddint{-\infty}{+\infty}|y|e^{- y^2}dy\left(1 + O(\lambda^{-\infty})\right) = O\left(\dfrac{1}{\lambda}\right)
+$$
+Итого:
+$$
+	\ddint{-\VE}{\VE}h(y)e^{-\lambda y^2}dy = h(0)\sqrt{\dfrac{\pi}{\lambda}}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right)\right), \, h(0) \neq 0
+$$
+Пусть $f$ - непрерывно дифференцируема, а $g \in C^4$ (чтобы $\varphi(y)$ была $C^2$), тогда: 
+$$
+	h(y) = f\left(\varphi(y)\right)\varphi^\prime(y) = f(x_0)\sqrt{\dfrac{-2}{g^{\prime\prime}(x_0) }} + H(y)y
+$$
+Следовательно:
+$$
+	\ddint{a}{b}f(x)e^{\lambda g(x)}dx = f(x_0)e^{\lambda g(x_0)}\sqrt{\dfrac{2 \pi}{-\lambda g^{\prime\prime}(x_0)}}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right)\right)
+$$
+Таким образом, получаем утверждение.
+\begin{prop}
+	Пусть $x_0$ - внутренняя точка $\{a,b\}$, выбираем $\MU(x_0)\subset \{a,b\}$. Пусть $\forall x \in \MU(x_0), \, g(x) \in C^4$ и выполнены условия на производные: 
+	$$
+		g^\prime(x_0) = 0, \, g^{\prime\prime}(x_0) < 0
+	$$
+	Кроме того, выполнены условия по максимуму на функцию:
+	$$
+		\forall \, \MU(x_0), \, \sup\limits_{\{a,b\} \setminus \MU(x_0)} g < g(x_0)
+	$$
+	Пусть $\exists \, \lambda_0 \colon$ интеграл сходится абсолютно, $f$ - непрерывна дифференцируемо в точке $x_0$ и $f(x_0) \neq 0$. Тогда:
+	$$
+		\ddint{a}{b}f(x)e^{\lambda g(x)}dx = f(x_0)e^{\lambda g(x_0)}\sqrt{\dfrac{2 \pi}{-\lambda g^{\prime\prime}(x_0)}}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right)\right)
+	$$
+\end{prop}
+\begin{rem}
+	Здесь мы получили главный член асимптотики, но часто бывает интересно, а что дальше? Рассмотренный метод позволяет получать, что дальше.
+\end{rem}
+
+\newpage
+\subsection*{Пример: Формула Стирлинга}
+Применим полученную теорию к доказательству гамма-функциям и снова докажем формулу Стирлинга. Рассмотрим следующую гамма-функцию:
+$$
+	\Gamma(\lambda + 1) = \ddint{0}{+\infty}t^{\lambda}e^{-t}dt
+$$
+Сделаем замену $t = \lambda x$, тогда этот интеграл превратится в следующий:
+$$
+	\Gamma(\lambda + 1) = \lambda^{\lambda + 1}\ddint{0}{+\infty}x^\lambda e^{-\lambda x}dx = \lambda^{\lambda + 1}\ddint{0}{+\infty}e^{\lambda (\ln{(x)} - x)}dx = \lambda^{\lambda + 1}\ddint{0}{+\infty}e^{\lambda g(x)}dx
+$$
+Таким образом, мы находимся в условиях утверждения выше, где $f(x) \equiv 1$ и $g(x) = \ln{(x)} - x$. Чтобы найти асимптотику надо найти вторую производную и точку максимума:
+$$
+	g^\prime(x_0) = \dfrac{1}{x_0} - 1 = 0 \Leftrightarrow x_0 = 1 \Rightarrow g(1) = -1, \, g^{\prime\prime}(x) = -\dfrac{1}{x^2} \Rightarrow g^{\prime\prime}(1) = -1
+$$
+Следовательно, получаем асимптотику:
+$$
+	\Gamma(\lambda + 1) = \lambda^{\lambda + 1}e^{-\lambda}\sqrt{\dfrac{2\pi}{\lambda}}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right)\right) = \sqrt{2 \pi \lambda}\lambda^{\lambda}e^{-\lambda}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right)\right)
+$$
+\begin{rem}
+	Если $x_0$ окажется на краю промежутка интегрирования, то вместо интервала $(-\VE, \VE)$ будет интервал $(0, \VE)$ и полученная оценка домножиться на $\tfrac{1}{2}$, поскольку замену переменной мы сможем сделать только с одной стороны и интегралы, которые вели себя как $\sqrt{\pi}$ будут вести себя, как $\tfrac{\sqrt{\pi}}{2}$.
+\end{rem}
+\begin{exrc}
+	Найти асимптотику по $\lambda$ при $\lambda \to \infty$ следующего интеграла:
+	$$
+		\ddint{0}{\tfrac{\pi}{2}}(\sin{(x)})^\lambda dx
+	$$
+\end{exrc}
+\begin{proof}
+	Приведем интеграл к виду, используемому в утверждении:
+	$$
+		\ddint{0}{\tfrac{\pi}{2}}(\sin{(x)})^\lambda dx = \ddint{0}{\tfrac{\pi}{2}}e^{\lambda \ln{(\sin{(x)})}}dx = \ddint{0}{\tfrac{\pi}{2}}e^{\lambda g(x)}dx
+	$$
+	Таким образом  $f(x) \equiv 1, \, g(x) = \ln{(\sin(x))}$, тогда:
+	$$
+		g^\prime(x) = \dfrac{\cos{(x)}}{x} = 0, \, x \in \left[0,\tfrac{\pi}{2}\right] \Leftrightarrow x_0 = \tfrac{\pi}{2} \Rightarrow g(x_0) = 0, \, g^{\prime\prime}(x_0) = -\dfrac{\sin{(x_0)}x_0 + \cos{(x_0)}}{x_0^2} = -\dfrac{2}{\pi} 
+	$$
+	Поскольку точка максимума оказалась на краю промежутка интегрирования, то мы домножем приближение на $\tfrac{1}{2}$, тогда:
+	$$
+		\ddint{0}{\tfrac{\pi}{2}}e^{\lambda g(x)}dx = \dfrac{1}{2}{\cdot} 1{\cdot}e^{\lambda{\cdot}0}\sqrt{\dfrac{2\pi}{-\lambda {\cdot}\left(-\tfrac{2}{\pi}\right)}}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right)\right) = \dfrac{\pi}{2\sqrt{\lambda}}\left(1 + O\left(\dfrac{1}{\sqrt{\lambda}}\right)\right)
+	$$
+\end{proof}
+\begin{rem}
+	Задача есть в книжке Арнольда от $5$ до $15$-ти.
+\end{rem}
+
+\end{document}

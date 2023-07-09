@@ -1,0 +1,328 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 3}
+\section*{Разложение $\sin x$ в бесконечное произведение}
+Применим формулу разложения функции $\sin{x}$ в бесконечное произведение.
+\begin{prop}(\textbf{Формула Валлиса})
+	$$
+		\lim\limits_{N \to \infty} \left(\dfrac{(2^N{\cdot}N! )^2}{(2N)!}\right)^2{\cdot}\dfrac{1}{2N + 1} = \dfrac{\pi}{2}
+	$$
+\end{prop}
+\begin{proof}
+	В формуле разложения синуса возьмем $x = \dfrac{\pi}{2}$, тогда получим:
+	$$
+		\sin{\dfrac{\pi}{2}} = 1 = \dfrac{\pi}{2} {\cdot}\lim\limits_{N \to \infty}\prod\limits_{n = 1}^{N}\left(1 - \dfrac{1}{4n^2}\right)
+	$$
+	Рассмотрим слагаемые в бесконечном произведении:
+	$$
+		1 - \dfrac{1}{4n^2} = \dfrac{4n^2 -1 }{4n^2} = \dfrac{(2n-1)(2n+1)}{(2n)^2} \Rightarrow 
+	$$
+	$$
+		\Rightarrow \dfrac{\pi}{2} = \lim\limits_{N \to \infty}\prod\limits_{n = 1}^{N} \dfrac{(2n)^2}{(2n-1)(2n+1)} = \lim\limits_{N \to \infty} \left(\dfrac{(2N)!!}{(2N - 1)!!}\right)^2{\cdot}\dfrac{1}{2N + 1} 
+	$$
+	где 
+	$$
+		(2N)!! = 2{\cdot}4{\cdot}6{\cdot}\dotsc{\cdot}(2N-2){\cdot}2N = 2^N{\cdot}(1{\cdot}2{\cdot}3{\cdot}\dotsc{\cdot}(N-1){\cdot}N) = 2^N{\cdot}N!
+	$$ 
+	а также выполнено следующее: 
+	$$
+		(2N - 1)!! = 1{\cdot}3{\cdot}5{\cdot}\dotsc{\cdot}(2N-3){\cdot}(2N-1) \Rightarrow (2N)! = (2N -1)!!{\cdot}(2N)!! \Rightarrow
+	$$ 
+	$$
+		\Rightarrow \dfrac{\pi}{2} = \lim\limits_{N \to \infty} \left(\dfrac{\left((2N)!!\right)^2}{(2N)!}\right)^2{\cdot}\dfrac{1}{2N + 1}  = \lim\limits_{N \to \infty} \left(\dfrac{\left(2^N{\cdot}N!\right)^2}{(2N)!}\right)^2{\cdot}\dfrac{1}{2N + 1} 
+	$$
+\end{proof}
+\begin{corollary}
+	Разложение косинуса:
+	$$
+		\cos{x} = \prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{4x^2}{\pi^2(2n-1)^2}\right) 
+	$$
+\end{corollary}
+\begin{proof}
+	Из формулы синуса двойного угла, мы знаем:
+	$$
+		\cos{x} = \dfrac{\sin{2x}}{2\sin{x}} 
+		= \dfrac{2x{\cdot}\prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{4x^2}{\pi^2 n^2}\right)}{2{\cdot}x{\cdot}\prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)}  
+		= \dfrac{\prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{4x^2}{\pi^2 n^2}\right)}{\prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)}
+	$$
+	Рассмотрим бесконечные произведения как следующие пределы:
+	$$
+		\dfrac{\prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{4x^2}{\pi^2 n^2}\right)}{\prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)} 
+		= \dfrac{\lim\limits_{N \to \infty}\prod\limits_{n = 1}^{2N}\left(1 - \dfrac{4x^2}{\pi^2 n^2}\right)}{\lim\limits_{N \to \infty}\prod\limits_{n = 1}^{2N}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)} 
+		= \dfrac{\lim\limits_{N \to \infty}\prod\limits_{n = 1}^{N}\left(1 - \dfrac{4x^2}{\pi^2 (2n-1)^2}\right){\cdot}\left(1 - \dfrac{4x^2}{\pi^2 (2n)^2}\right)}{\lim\limits_{N \to \infty}\prod\limits_{n = 1}^{2N}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)} \Rightarrow	
+	$$
+	$$
+		\Rightarrow \cos{x} = \lim\limits_{N \to \infty}\dfrac{\prod\limits_{n = 1}^{N}\left(1 - \dfrac{4x^2}{\pi^2 (2n-1)^2}\right){\cdot}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)}{\prod\limits_{n = 1}^{2N}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)}
+		= \lim\limits_{N \to \infty}\dfrac{\prod\limits_{n = 1}^{N}\left(1 - \dfrac{4x^2}{\pi^2 (2n-1)^2}\right)}{\prod\limits_{n = N + 1}^{2N}\left(1 - \dfrac{x^2}{\pi^2 n^2}\right)} = 
+	$$
+	$$
+		=	\dfrac{\prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{4x^2}{\pi^2 (2n-1)^2}\right)}{1} = \prod\limits_{n = 1}^{\infty}\left(1 - \dfrac{4x^2}{\pi^2 (2n-1)^2}\right)
+	$$
+\end{proof}
+
+\section*{Признак Гаусса}
+\begin{lemma}
+	Пусть $b_n > 0$ и известно, что: $\dfrac{b_n}{b_{n+1}} = 1 + \beta_n, \, \displaystyle\sum\limits_n |\beta_n| < \infty$, тогда $\exists \, \lim\limits_{n \to \infty} b_n > 0$.
+\end{lemma}
+\begin{proof}
+	Распишем $b_n$ следующим образом:
+	$$
+		b_n = b_1{\cdot}\dfrac{b_2}{b_1}{\cdot}\dfrac{b_3}{b_2}{\cdot}\dotsc{\cdot}\dfrac{b_n}{b_{n-1}} = \dfrac{b_1}{\prod\limits_{k=1}^{n-1}(1+\beta_k)}
+	$$
+	Бесконечное произведение сходится, поскольку сходится ряд $\displaystyle\sum\limits_n |\beta_n| \Rightarrow$ существует $\lim\limits_{n\to \infty} b_n$. Поскольку значеие $b_1 > 0$, бесконечное произведение сходится, то оно не ноль и не бесконечность $\Rightarrow \lim\limits_{n\to \infty} b_n > 0$.
+\end{proof}
+\begin{theorem}(\textbf{Признак Гаусса})
+	Пусть $a_n > 0$ и верно следующее:$\dfrac{a_n}{a_{n+1}} = 1 + \dfrac{p}{n} + \alpha_n, \, \sum\limits_n |\alpha_n| < \infty$, тогда будет верно, что: $a_n \sim \dfrac{C}{n^p}, \, C > 0$ или если записать по-другому:
+	$$
+		\lim\limits_{n \to \infty} \dfrac{a_n}{n^{-p}} = C > 0
+	$$
+\end{theorem}
+\begin{rem}
+	Где, к примеру, $\alpha_n = O\left(\dfrac{1}{n^{1 + \varepsilon}}\right)$.
+\end{rem}
+\begin{proof}
+	Рассмотрим следующую последовательность $b_n = a_nn^p$, хотим доказать, что $\lim\limits_{n \to \infty}b_n = C > 0$. Рассмотрим отношение слагаемых новой последовательности:
+	$$
+		\dfrac{b_n}{b_{n+1}} = \left(1 + \dfrac{p}{n} + \alpha_n\right){\cdot}\left(\dfrac{n}{n+1}\right)^p = \left(1 + \dfrac{p}{n} + \alpha_n\right){\cdot}\left(1 + \dfrac{1}{n}\right)^{-p} =  \left(1 + \dfrac{p}{n} + \alpha_n\right){\cdot}\left(1 - \dfrac{p}{n} + O\left(\dfrac{1}{n^2}\right)\right) =
+	$$
+	$$
+		=	1 + \dfrac{p}{n} + \alpha_n - \dfrac{p}{n} - \dfrac{p^2}{n^2} -\dfrac{\alpha_np}{n}  + O\left(\dfrac{1}{n^2}\right) = 1 + \alpha_n = 1 + \alpha_n{\cdot}\left(1 - \dfrac{p}{n}\right) + O\left(\dfrac{1}{n^2}\right) \Rightarrow
+	$$
+	$$
+		\Rightarrow \dfrac{b_n}{b_{n+1}} = 1 + O\left(\alpha_n\right) + O\left(\dfrac{1}{n^2}\right)
+	$$
+	Поскольку ряды из $\alpha_n$ и $\dfrac{1}{n^2}$ абсолютно сходятся, то по предыдущей лемме $\exists \, \lim\limits_{n \to \infty}b_n = C > 0$.
+\end{proof}
+\begin{corollary}
+	Ряд $\displaystyle \sum\limits_n a_n$, где члены ряда $a_n$ определены по теореме выше, сходится при $p > 1$ и расходится при $p \leq 1$.
+\end{corollary}
+
+\textbf{Пример}: Рассмотрим следующий стандартный пример:
+$$
+	\sum\limits_n\dfrac{p(p-1){\cdot}\dotsc{\cdot}(p + n-1)}{n!}{\cdot}\dfrac{1}{n^q} = 	\sum\limits_n a_n {\cdot}\dfrac{1}{n^q} = \sum\limits_n c_n
+$$
+При каких $p$ и $q$ данный ряд сходится? Применим признак Гаусса к этому ряду:
+$$
+	\dfrac{a_n}{a_{n+1}} = \dfrac{n + 1}{p + n} = 1 + \dfrac{1 - p }{p + n} = 1 + \dfrac{1 - p}{n} + \dfrac{1 - p }{p + n} - \dfrac{1 - p}{n} = 1 + \dfrac{1-p}{n} + O\left(\dfrac{1}{n^2}\right)
+$$
+Следовательно, по признаку Гаусса мы получаем, что:
+$$
+	a_n \sim \dfrac{C}{n^{1-p}} \Rightarrow c_n \sim \dfrac{C}{n^{1-p + q}}
+$$
+Таким образом, если $1 - p + q > 1$, то будет иметь место сходимость ряда, иначе ряд расходится.
+
+Используя лемму докажем ещё одну теорему.
+\begin{theorem}(\textbf{Формула Стирлинга})
+	Верно следующее:
+	$$
+		n! = \sqrt{2\pi n} n^n{\cdot}e^{-n + \varepsilon_n}, \, \lim\limits_{n \to \infty}\varepsilon_n = 0
+	$$
+\end{theorem}
+\begin{rem}
+	Без доказательства, значение последовательности $\varepsilon_n$ имеет следующий вид:
+	$$
+		\varepsilon_n = \dfrac{\theta_n}{12n}, \, 0 < \theta_n < 1
+	$$
+\end{rem}
+\begin{proof}
+	Докажем сначала, что существует предел $\lim\limits_{n\to \infty} \dfrac{n!e^n}{n^{n+\tfrac{1}{2}}} = C$. И затем докажем, что $C = \sqrt{2 \pi}$.
+	
+	Пусть $b_n = \dfrac{n!e^n}{n^{n+\tfrac{1}{2}}}$, рассмотрим отношение членов данной последовательности:
+	$$
+		\dfrac{b_n}{b_{n+1}} = \dfrac{n!e^n}{n^{n+\tfrac{1}{2}}} {\cdot}\dfrac{(n+1)^{n+1 + \tfrac{1}{2}}}{(n+1)!e^{n+1}} = e^{-1}{\cdot}\left(1 + \dfrac{1}{n}\right)^{n + \tfrac{1}{2}} = e^{-1 + \left(n+\tfrac{1}{2}\right){\cdot}\ln\left(1 + \tfrac{1}{n}\right)}
+	$$
+	Разложим логарифм в ряд Тейлора:
+	$$
+		\ln\left(1+ \dfrac{1}{n}\right) = \dfrac{1}{n} - \dfrac{1}{2n^2} + O\left(\dfrac{1}{n^3}\right) \Rightarrow -1 + 1 - \dfrac{1}{2n} + O\left(\dfrac{1}{n^2}\right) + \dfrac{1}{2n} - \dfrac{1}{4n^2} + O\left(\dfrac{1}{n^3}\right) = O\left(\dfrac{1}{n^2}\right)
+	$$
+	Таким образом, мы получили необходимый вид для применения леммы:
+	$$
+		e^{O\left(\tfrac{1}{n^2}\right)} = 1 + O\left(\dfrac{1}{n^2}\right) \Rightarrow \exists \, \lim\limits_{n \to \infty} b_n =  \lim\limits_{n\to \infty} \dfrac{n!e^n}{n^{n+\tfrac{1}{2}}} = C \Rightarrow n! \sim C{\cdot}n^{n+\tfrac{1}{2}}e^{-n}
+	$$
+	Или в другом виде: $n! = C{\cdot}n^{n+\tfrac{1}{2}}e^{-n + \varepsilon_n}$, где $\lim\limits_{n \to \infty}\varepsilon = 0$.
+	Извлечём корень из формулы Валлиса и получим:
+	$$
+		\lim\limits_{n \to \infty}\dfrac{(2^n{\cdot}n!)^2}{(2n)!}{\cdot}\dfrac{1}{\sqrt{2n + 1}} = \sqrt{\dfrac{\pi}{2}}
+	$$
+	Подставим в неё значение $n!$ и тогда получим следующее выражение:
+	$$
+		\lim\limits_{n \to \infty}\dfrac{(2^n{\cdot}C{\cdot}n^{n+\tfrac{1}{2}}e^{-n + \varepsilon_n})^2}{C{\cdot}(2n)^{2n+\tfrac{1}{2}}e^{-2n + \varepsilon_{2n}}}{\cdot}\dfrac{1}{\sqrt{2n + 1}} 
+		= \lim\limits_{n \to \infty}\dfrac{C^2 n^{\tfrac{1}{2}}e^{2\varepsilon_n}}{\sqrt{2}Ce^{\varepsilon_{2n}}}{\cdot}\dfrac{1}{\sqrt{2n+1}} 
+		= \lim\limits_{n\to \infty}\dfrac{C}{\sqrt{4 + \dfrac{2}{n}}}{\cdot}\dfrac{e^{2\varepsilon_n}}{e^{\varepsilon_{2n}}} = \dfrac{C}{2} = \sqrt{\dfrac{\pi}{2}}
+	$$
+	Таким образом, получаем $C = \sqrt{2\pi} \Rightarrow n! \sim \sqrt{2\pi n}{\cdot}n^{n}e^{-n}$.
+\end{proof}
+
+Рассмотрим одно из применений формулы Стирлинга.
+\section*{Теорема Муавра-Лапласа}
+Бросаем $n$ раз правильную монету. Какова вероятность, что было $k$ орлов? Надо количество всех подходящих расстановок $k$ орлов по $n$ местам, поделить на все расстановки по $n$ местам. Тогда:
+$$
+	\mathbb{P}(\text{$k$ - орлов}) = \dfrac{C_n^k}{2^n}
+$$
+Формула сложная, поскольку факториалы сложно считать при больших значениях $n$ и $k$. Возникает вопрос, нельзя ли это заменить на что-то простое и эквивалентное?
+\begin{theorem}(\textbf{Локальная теорема Муавра-Лапласа})
+	Рассмотрим $x_k = \dfrac{k - \tfrac{n}{2}}{\sqrt{\tfrac{n}{4}}}$ и предположим, что эта величина находится в отрезке $a \leq x_k \leq b$. Тогда:
+	$$
+		\mathbb{P}(\text{$k$ - орлов}) \sim \dfrac{2}{\sqrt{n}}{\cdot}\varphi(x_k), \, \varphi(x) = \dfrac{1}{\sqrt{2\pi}}e^{-\tfrac{x^2}{2}}
+	$$
+\end{theorem}
+\begin{proof}
+	Распишем вероятность:
+	$$
+		\mathbb{P}(\text{$k$ - орлов}) = C_n^k 2^{-n} = \dfrac{n!}{k!(n-k)!}{\cdot}2^{-n} = e^{-n\ln{2} + \ln{n!} - \ln{k!} - \ln{(n-k)!}}
+	$$
+	Используем формулу Стирлинга:
+	$$
+		\ln{n!} = \ln{\sqrt{2\pi}} + \left(n + \dfrac{1}{2}\right){\cdot}\ln{n} - n + o(1)
+	$$
+	По условию $k = \dfrac{n}{2} + \dfrac{x_k \sqrt{n}}{2}$, тогда $n-k = \dfrac{n}{2} - \dfrac{x_k \sqrt{n}}{2}$. Снова используем формулу Стирлинга:
+	$$
+		\ln{k!} = \ln{\sqrt{2\pi}} + \left(\dfrac{n +1}{2} + \dfrac{x_k \sqrt{n}}{2} \right){\cdot}\ln{\left(\dfrac{n}{2} + \dfrac{x_k \sqrt{n}}{2}\right)} - \dfrac{n}{2} - \dfrac{x_k \sqrt{n}}{2} + o(1)
+	$$
+	В силу ограниченности $x_k$, здесь $o(1)$ стремится к нулю при $k$ стремящемся к бесконечности, что эквивалентно стремлению к бесконечности $n$. Аналогично:
+	$$
+		\ln{(n-k)!} = \ln{\sqrt{2\pi}} + \left(\dfrac{n +1}{2} - \dfrac{x_k \sqrt{n}}{2} \right){\cdot}\ln{\left(\dfrac{n}{2} - \dfrac{x_k \sqrt{n}}{2}\right)} - \dfrac{n}{2} + \dfrac{x_k \sqrt{n}}{2} + o(1)
+	$$
+	Таким образом, получим:
+	$$
+		R_n = -n\ln{2} + \ln{n!} - \ln{k!} - \ln{(n-k)!} = -n\ln{2} - \ln{\sqrt{2\pi}} + \left(n + \dfrac{1}{2}\right){\cdot}\ln{n} - 
+	$$
+	$$
+		- \left(\dfrac{n +1}{2} + \dfrac{x_k \sqrt{n}}{2} \right){\cdot}\ln{\left(\dfrac{n}{2} + \dfrac{x_k \sqrt{n}}{2}\right)} - \left(\dfrac{n +1}{2} - \dfrac{x_k \sqrt{n}}{2} \right){\cdot}\ln{\left(\dfrac{n}{2} - \dfrac{x_k \sqrt{n}}{2}\right)} + o(1)
+	$$
+	Рассмотрим следующее выражение:
+	$$
+		\ln{\left(\dfrac{n}{2} \pm \dfrac{x_k \sqrt{n}}{2}\right)} = \ln{\dfrac{n}{2}} + \ln{\left(1 \pm \dfrac{x_k}{\sqrt{n}}\right)} = \ln{\dfrac{n}{2}} + \left(\pm \dfrac{x_k}{\sqrt{n}} - \dfrac{x_k^2}{2n} + o\left(\dfrac{1}{n}\right)\right) \Rightarrow
+	$$
+	$$
+		\Rightarrow R_n = -n\ln{2} - \ln{\sqrt{2\pi}} + \left(n + \dfrac{1}{2}\right){\cdot}\ln{n} 	- \left(\dfrac{n +1}{2} + \dfrac{x_k \sqrt{n}}{2} \right){\cdot}\left(\ln{\dfrac{n}{2}} +  \dfrac{x_k}{\sqrt{n}} - \dfrac{x_k^2}{2n} \right) - 
+	$$
+	$$
+		- \left(\dfrac{n +1}{2} - \dfrac{x_k \sqrt{n}}{2} \right){\cdot}\left(\ln{\dfrac{n}{2}} - \dfrac{x_k}{\sqrt{n}} - \dfrac{x_k^2}{2n}\right) + o(1) = -n\ln{2} - \ln{\sqrt{2\pi}} + \left(n + \dfrac{1}{2}\right){\cdot}\ln{n} - (n+1)\ln{\dfrac{n}{2}} +
+	$$
+	$$
+		+ \dfrac{x_k^2}{2} - x_k^2 + o(1) = - \ln{\sqrt{2\pi}} - \dfrac{1}{2}\ln{n} - \ln{2} - \dfrac{x_k^2}{2} + o(1) = - \ln{\sqrt{2\pi}} - \ln{\dfrac{\sqrt{n}}{2}}- \dfrac{x_k^2}{2} + o(1)
+	$$
+	Подставив $R_n$ в экспоненту, мы получим:
+	$$
+		e^{R_n} \sim \dfrac{2}{\sqrt{2\pi n}}{\cdot}e^{\tfrac{2}{x_k^2}} = \dfrac{2}{\sqrt{n}}\dfrac{1}{\sqrt{2\pi }}{\cdot}e^{-\tfrac{x_k^2}{2}}=  \dfrac{2}{\sqrt{n}}{\cdot}\varphi(x_k)
+	$$
+\end{proof}
+\end{document}

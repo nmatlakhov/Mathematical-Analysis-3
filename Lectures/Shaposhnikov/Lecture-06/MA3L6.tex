@@ -1,0 +1,453 @@
+\documentclass[12pt]{article}
+\usepackage[left=1cm, right=1cm, top=2cm,bottom=1.5cm]{geometry} 
+
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{enumitem}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb, mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+\usepackage{accents}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\usepackage{graphicx}
+\usepackage[figurename=Рис.]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%Наименование папки откуда забирать изображения
+\graphicspath{ {./images/} }
+
+%%Изменение формата для ввода доказательства
+\renewcommand{\proofname}{$\square$  \nopunct}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%%Изменение отступа на таблицах
+\addto\captionsrussian{%
+	\renewcommand{\proofname}{$\square$ \nopunct}%
+}
+%% Римские цифры
+\newcommand{\RN}[1]{%
+	\textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+%% Для удобства записи
+\newcommand{\MR}{\mathbb{R}}
+\newcommand{\MQ}{\mathbb{Q}}
+\newcommand{\MN}{\mathbb{N}}
+\newcommand{\MTB}{\mathbb{T}}
+\newcommand{\MI}{\mathrm{I}}
+\newcommand{\MJ}{\mathrm{J}}
+\newcommand{\MH}{\mathrm{H}}
+\newcommand{\MT}{\mathrm{T}}
+\newcommand{\MU}{\mathcal{U}}
+\newcommand{\MV}{\mathcal{V}}
+\newcommand{\MW}{\mathcal{W}}
+\newcommand{\VN}{\varnothing}
+\newcommand{\VE}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Опр:}
+\newtheorem{rem}{Rm:}
+\newtheorem{prop}{Утв.}
+\newtheorem{exrc}{Упр.}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+
+\newenvironment{cusdefn}[1]
+{\renewcommand\thedefn{#1}\defn}
+{\enddefn}
+
+\DeclareRobustCommand{\divby}{%
+	\mathrel{\text{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}}%
+}
+%Короткий минус
+\DeclareMathSymbol{\SMN}{\mathbin}{AMSa}{"39}
+%Длинная шапка
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Функция знака
+\DeclareMathOperator{\sgn}{sgn}
+
+%Функция ранга
+\DeclareMathOperator{\rk}{\text{rk}}
+
+%Обозначение константы
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator*{\dsum}{\displaystyle\sum}
+\newcommand{\ddsum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+%Интеграл в большом формате
+\DeclareMathOperator{\dint}{\displaystyle\int}
+\newcommand{\ddint}[2]{\displaystyle\int\limits_{#1}^{#2}}
+\newcommand{\ssum}[1]{\displaystyle \sum\limits_{n=1}^{\infty}{#1}_n}
+
+\newcommand{\smallerrel}[1]{\mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{\raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+
+\newcommand{\smallin}{\smallerrel{\in}}
+\newcommand{\smallnotin}{\smallerrel{\notin}}
+
+\newcommand*{\medcap}{\mathbin{\scalebox{1.25}{\ensuremath{\cap}}}}%
+\newcommand*{\medcup}{\mathbin{\scalebox{1.25}{\ensuremath{\cup}}}}%
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3.5}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+%Промежуточное значение для sup\inf, поскольку они имеют разную высоту
+\newcommand{\newsup}{\mathop{\smash{\mathrm{sup}}}}
+\newcommand{\newinf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+%Скалярное произведение
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1, #2}
+
+%Подпись символов снизу
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+%% Шапка для букв сверху
+\newcommand{\wte}[1]{\widetilde{#1}}
+
+\begin{document}
+\lhead{Математический анализ - \RN{3}}
+\chead{Шапошников С.В.}
+\rhead{Лекция - 6}
+\section*{Несобственный интеграл}
+Пусть $f$ определена на $[a,b), \, f \colon [a,b) \to \MR$, где $b$ может быть бесконечностью и $\forall c \in [a,b)$ функция $f$ интегрируема по Риману на отрезке $[a,c]$. Определим следующую функцию:
+$$
+	F(c) = \ddint{a}{c} f(x)dx
+$$
+
+\begin{defn}
+	Если существует предел $\lim\limits_{c \to b-} F(c)$, то он называется \uwave{несобственным интегралом Римана} по полуинтервалу $[a,b)$ и обозначается следующим образом:
+	$$
+		\lim\limits_{c \to b-} F(c) = \ddint{a}{b} f(x)dx
+	$$
+	при этом говорят, что несобственный интеграл \uwave{сходится}.
+\end{defn}
+
+\subsection*{Свойства несобственных интегралов}
+Поскольку несобственный интеграл это предел, то всё, что можно достичь предельным переходом, переносится с обычных интегралов на несобственные. 
+
+\begin{prop}(\textbf{Свойства несобственных интегралов})
+	\begin{enumerate}[label ={(\arabic*)}]
+		\item \uline{\textbf{{Линейность}}}: Если $f$ и $g$ интегрируемы в несобственном смысле на $[a,b)$, то $\forall \alpha, \beta \in \MR$, линейная комбинация этих функций $\alpha f + \beta g$ также интегрируема на $[a,b)$. И верно следующее:
+		$$
+			\ddint{a}{b}\left(\alpha f(x) + \beta g(x)\right)dx = \alpha \ddint{a}{b}f(x)dx + \beta\ddint{a}{b}g(x) dx
+		$$
+		\item \uline{\textbf{{Монотонность}}}:  Если $f$ и $g$ интегрируемы в несобственном смысле на $[a,b)$ и $f \leq g$, то:
+		$$
+			\ddint{a}{b}f(x)dx \leq \ddint{a}{b}g(x)dx
+		$$
+		
+		\item \uline{\textbf{{Формула замены переменных}}}: Пусть $\varphi \colon [\alpha,\beta) \to [a,b)$ - непрерывно дифференцируема, её производная $\varphi^\prime > 0$, $\varphi(\alpha) = a$ и $\lim\limits_{t \to \beta-} \varphi(t) = b$, тогда несобственные интегралы:
+		$$
+			\ddint{a}{b} f(x)dx, \, \ddint{\alpha}{\beta}f\left(\varphi(t)\right){\cdot}\varphi^\prime(t)dt 
+		$$
+		сходятся и расходятся одновременно и в случае сходимости равны;
+		
+		\item \uline{\textbf{Формула интегрирования по частям}}: Пусть $f, g$ - непрерывно дифференцируемы на $[a,b)$ и существует предел $\lim\limits_{c \to b-} f(c){\cdot}g(c)$. Тогда несобственные интегралы:
+		$$
+			\ddint{a}{b}f(x){\cdot}g^\prime(x)dx, \, \ddint{a}{b}f^\prime(x){\cdot}g(x)dx
+		$$  
+		сходятся и расходятся одновременно и верна формула:
+		$$
+			\ddint{a}{b} f(x){\cdot}g^\prime(x)dx = \lim\limits_{c \to b-}f(c){\cdot}g(c) - f(a){\cdot}g(a) - \ddint{a}{b}f^\prime(x){\cdot}g(x)dx
+		$$
+	\end{enumerate}
+\end{prop}
+\begin{rem}
+	В свойстве замены переменных есть условие $\varphi^\prime > 0$. В обычной замене переменных интеграла Римана данное свойство не требовалось.
+\end{rem}
+\begin{proof}\hfill
+	\begin{enumerate}[label ={(\arabic*)}]
+		\item Пусть $a < c < b$, тогда по свойству интеграла Римана будет верно:
+		$$
+			\ddint{a}{c}\left(\alpha f(x) + \beta g(x)\right)dx = \alpha \ddint{a}{c}f(x)dx + \beta\ddint{a}{c}g(x) dx
+		$$
+		Переходя к пределу и воспользовавшись арифметикой пределов функций, мы получим требуемое;
+		
+		\item Пусть $a < c < b$, тогда по свойству интеграла Римана будет верно:
+		$$
+			\ddint{a}{c}f(x)dx \leq \ddint{a}{c}g(x)dx
+		$$
+		Переходя к пределу и воспользовавшись арифметикой пределов функций, мы получим требуемое;
+		
+		\item Пусть $\alpha < \gamma < \beta$, тогда по свойству интеграла Римана будет верно:
+		$$
+			\ddint{\alpha}{\gamma}f\left(\varphi(t)\right){\cdot}\varphi^\prime(t)dt = \ddint{a}{\varphi(\gamma) = c}f(x)dx
+		$$
+		По теореме о промежуточном значении, $\forall c \in [a,b), \, \exists \, \gamma \colon \varphi(\gamma) = c$. Поскольку $\varphi^\prime > 0$, то $\varphi$ - диффеоморфизм (см. лекция 14, семестр 2) $\Rightarrow$ обратная функция также является непрерывно дифференцируемой $\Rightarrow$ если $c$ стремится к $b$, то $\gamma$ будет стремится к $\beta$. Тогда:
+		$$
+			\gamma \to \beta- \Leftrightarrow \varphi(\gamma) \to b- \Rightarrow \ddint{\alpha}{\gamma}f\left(\varphi(t)\right){\cdot}\varphi^\prime(t)dt < \infty \Leftrightarrow \ddint{a}{\varphi(\gamma) = c}f(x)dx < \infty
+		$$
+		Следовательно, мы получим:
+		$$
+			\lim\limits_{\gamma \to \beta- }\ddint{\alpha}{\gamma}f\left(\varphi(t)\right){\cdot}\varphi^\prime(t)dt = \ddint{\alpha}{\beta}f\left(\varphi(t)\right){\cdot}\varphi^\prime(t)dt = 
+			\lim\limits_{c \to b-}\ddint{a}{c} f(x)dx =
+			\ddint{a}{b} f(x)dx
+		$$
+		
+		\item Пусть $a < c < b$, тогда по свойству интеграла Римана будет верно:
+		$$
+			\ddint{a}{c}f(x){\cdot}g^\prime(x)dx = f(c){\cdot}g(c) - f(a){\cdot}g(a) - \ddint{a}{c}f^\prime(x){\cdot}g(x)dx
+		$$
+		Поскольку предел  $f(c){\cdot}g(c)$ существует и равен числу, то предел по интегралу слева будет существовать тогда и только тогда, когда будет существовать предел по интегралу справа:
+		$$
+			\lim\limits_{c \to b-}\ddint{a}{c}f(x){\cdot}g^\prime(x)dx = \lim\limits_{c \to b-}f(c){\cdot}g(c) - f(a){\cdot}g(a) - \lim\limits_{c \to b-}\ddint{a}{c}f^\prime(x){\cdot}g(x)dx
+		$$
+		Или, что то же самое:
+		$$
+			\ddint{a}{b}f(x){\cdot}g^\prime(x)dx = \lim\limits_{c \to b-}f(c){\cdot}g(c) - f(a){\cdot}g(a) - \ddint{a}{b}f^\prime(x){\cdot}g(x)dx
+		$$
+	\end{enumerate}
+\end{proof}
+\begin{rem}
+	В третьем свойстве важно, чтобы функция $\varphi$ была ``хорошей'', чтобы мы получили диффеоморфизм. Это есть основное отличие от обычного интегрирования.
+\end{rem}
+\begin{exrc}
+	Пусть $f \in C[a,b)$ и $\varphi$ - гладкая. Можно ли сделать замену?
+\end{exrc}
+\begin{proof}
+	Рассмотрим следующие функции: 
+	$$
+		f(x) = x, \, \varphi(t) = \cos{(t)} + e^{-t}, \, \varphi(t) \colon [0,+\infty) \to (-1, 2]
+	$$
+	$f(x)$ - непрерывная на $(-1,2]$ функция. $\varphi(t)$ - гладкая функция. Тогда:
+	$$
+		\ddint{-1}{2}xdx = \lim\limits_{c \to (-1)+}\ddint{c}{2}xdx = \lim\limits_{c \to (-1)+}\left.\dfrac{x^2}{2}\right|_{c}^{2} = 2 - \lim\limits_{c \to (-1)+}\dfrac{c^2}{2} = \dfrac{3}{2}
+	$$
+	При этом:
+	$$
+		\ddint{0}{+\infty}(\cos{(t)} + e^{-t}){\cdot}(\cos{(t)} + e^{-t})^\prime dt = 	\ddint{0}{+\infty}(\cos{(t)} + e^{-t}){\cdot\!}\left(-\sin{(t)} - e^{-t}\right)dt =
+	$$
+	$$
+		= \lim\limits_{c \to +\infty}\ddint{0}{c}(-\sin{(t)}\cos{(t)} -\sin{(t)}e^{-t} - \cos{(t)}e^{-t} - e^{-2t})dt = \lim\limits_{c\to +\infty}F(c)
+	$$
+	Тогда:
+	$$
+		\ddint{0}{c}\sin{(t)}\cos{(t)}dt = \dfrac{\sin^2{(c)}}{2},\, \ddint{0}{c}e^{-2t}dt = -\dfrac{1}{2}\left.e^{-2t}\right|_{t = 0}^{c} = -\dfrac{1}{2}e^{-2c} + \dfrac{1}{2}
+	$$
+	$$
+		\ddint{0}{c}\sin{(t)}e^{-t}dt = -e^{-c}\sin{(c)} + \ddint{0}{c}\cos{(t)}e^{-t}dt = -e^{-c}\sin{(c)} - e^{-t}\left.\cos{(t)}\right|_{t = 0}^{c} - \ddint{0}{c}\sin{(t)}e^{-t}dt =
+	$$
+	$$
+		= -e^{-c}\left(\sin{(c)} + \cos{(c)}\right) + 1 - \ddint{0}{c}\sin{(t)}e^{-t}dt \Rightarrow \ddint{0}{c}\sin{(t)}e^{-t}dt = \dfrac{1}{2} - \dfrac{1}{2}e^{-c}\left(\sin{(c)} + \cos{(c)}\right)
+	$$
+	$$
+		\ddint{0}{c}\cos{(t)}e^{-t}dt = -e^{-c}\cos{(c)} + 1 + e^{-c}\sin{(c)} - \ddint{0}{c}\cos{(t)}e^{-t}dt \Rightarrow 
+	$$
+	$$
+		\Rightarrow \ddint{0}{c}\cos{(t)}e^{-t}dt = \dfrac{1}{2} + \dfrac{1}{2}e^{-c}\left(\sin{(c)} - \cos{(c)}\right)
+	$$
+	Таким образом, собирая всё вместе:
+	$$
+		F(c) = -\dfrac{\sin^2{(c)}}{2} + \dfrac{1}{2}e^{-2c} - \dfrac{3}{2}  + e^{-c}\cos{(c)}
+	$$
+	$$
+		\nexists \lim\limits_{c \to +\infty}\dfrac{\sin^2{(c)}}{2}, \, \lim\limits_{c \to +\infty} \left(\dfrac{1}{2}e^{-2c} - \dfrac{3}{2}  + e^{-c}\cos{(c)}\right) = 0 - \dfrac{3}{2} + 0 = -\dfrac{3}{2}
+	$$
+	Следовательно, не существует предела $\lim\limits_{c \to +\infty}F(c)$ и интеграл расходится.
+\end{proof}
+
+
+\newpage
+\section*{Сходимость несобственного интеграла}
+
+\subsection*{Сходимость несобственных интегралов с положительными функциями}
+Пусть $f(x) \geq 0$ на $[a,b)$, тогда $F(c) = \ddint{a}{c}f(x)dx$ не убывает (можно это представить как увеличение площади под графиком функции). По теореме Вейерштрасса (см. лекция $15$, семестр $1$): 
+$$
+	\exists \, \lim\limits_{c \to b} F(c) \Leftrightarrow F(c) \text{ - ограничена}
+$$	
+\begin{prop}
+	Пусть $f,g$ - определены на $[a,b)$ и $\forall c \in [a,b)$ интегрируемы по Риману на $[a,c]$, причем будет верно следующее: $0 \leq f(x) \leq g(x), \, \forall x \in [a,b)$. Тогда справедливо следующее: 
+	$$
+		\ddint{a}{b}g(x)dx \text{ - сходится} \Rightarrow \ddint{a}{b}f(x)dx \text{ - сходится}
+	$$ 
+	и наоборот:
+	$$
+		\ddint{a}{b}f(x)dx \text{ - расходится} \Rightarrow \ddint{a}{b}g(x)dx \text{ - расходится}
+	$$
+\end{prop}
+\begin{proof}
+	Заметим, что $\forall c \in [a,b)$ будет выполнено:
+	$$
+		\ddint{a}{c} f(x)dx \leq \ddint{a}{c} g(x)dx
+	$$
+	Отсюда, по теореме Вейрштрасса ограниченность равносильна сходимости $\Rightarrow$ получаем требуемое.
+\end{proof}
+
+\begin{corollary}
+	Пусть $f(x),g(x) \geq 0$ и выполнено $c_1 g(x)\leq f(x) \leq c_2 g(x)$, где $c_1,c_2 \geq 0$, тогда:
+	$$
+		\ddint{a}{b}f(x)dx \text{ - сходится} \Leftrightarrow \ddint{a}{b}g(x)dx \text{ - сходится}
+	$$
+\end{corollary}
+\begin{proof}
+	Следует сразу из утверждения выше.
+\end{proof}
+
+\newpage
+\subsection*{Интегральный признак сходимости ряда}
+Сходимость рядов можно также исследовать с помощью несобственного интеграла.
+\begin{theorem}(\textbf{Интегральный признак сходимости ряда})\hfill\\
+	Пусть $f$ не возрастает на $[1, +\infty)$ и $f(x) \geq 0$. Тогда будет верно следующее:
+	$$
+		\sum\limits_{n=1}^{\infty}f(x) \text{ - сходится} \Leftrightarrow \ddint{1}{+\infty}f(x)dx \text{ - сходится}
+	$$
+\end{theorem}
+
+\begin{rem}
+	В теореме нельзя отменить условие монотонности функции $f$, потому что нельзя зная что-то в целочисленных точках утверждать что-то про интеграл и наоборот, поскольку изменение значений в счетном числе точек не влияет на интеграл.
+\end{rem}
+\begin{proof}
+	Рассмотрим следующее неравенство:
+	$$
+		f(k + 1) = \ddint{k}{k+1}f(k+1)dx \leq \ddint{k}{k+1}f(x)dx \leq  \ddint{k}{k+1}f(k)dx = f(k), \, \forall k \in \MN
+	$$
+	Оно верно, поскольку $f$ не возрастает. Просуммируем аналогичные неравенства при $k = 1, \dotsc, N$:
+	$$
+		\sum\limits_{n = 1}^{N+1}f(n) - f(1) = f(2) + \dotsc + f(N+1) \leq \ddint{1}{N}f(x)dx \leq f(1) + \dotsc + f(N) = \sum\limits_{n = 1}^{N}f(n)
+	$$
+	$(\Rightarrow)$ Если ряд $\ssum f(x)$ сходится, то его частичные суммы ограничены $\Rightarrow \ddint{1}{c}f(x)dx$ - ограничены по неравенству выше, поскольку: $\forall c, \, \exists  \, N \colon N-1 \leq c \leq N$, а также будет верно: 
+	$$
+		\ddint{1}{c}f(x)dx \leq \ddint{1}{N}f(x)dx
+	$$
+	Поскольку $f(x) \geq 0$, то $\ddint{1}{\infty}f(x)dx$ - сходится. 
+	
+	$(\Leftarrow)$ Если интеграл сходится, то все выражения вида $\ddint{1}{N}f(x)dx$ ограничены $\Rightarrow$ ограничены все частичные суммы знакопостоянного ряда $\Rightarrow$ он сходится.
+\end{proof}
+
+\textbf{Пример}: Исследуем сходимость ряда: $\ddsum{n = 1}{\infty}\dfrac{1}{n^p}, \, p > 0$. 
+\begin{proof}
+	По теореме он сходится $\Leftrightarrow$ сходится интеграл $\ddint{1}{+\infty}\dfrac{dx}{x^p}$, то есть при $p > 1$ (см. прошлую лекцию).
+\end{proof}
+
+\textbf{Пример}: Исследуем сходимость ряда: $\ddsum{n = 2}{\infty}\dfrac{1}{n \ln^p(x)}$. 
+\begin{proof}
+	С точки зрения интеграла, проверить сходимость можно легко:
+	$$
+	\ddint{2}{+\infty}\dfrac{dx}{x \ln^p{x}}= \ddint{2}{+\infty}\dfrac{d \ln{x}}{\ln^p{x}} = \ddint{\ln{2}}{+\infty}\dfrac{d u}{u^p} \Rightarrow \text{сходится при }p > 1 
+	$$
+\end{proof}
+
+Теорема применима в случае неотрицательной функции $f$, которая при этом еще и монотонна. Возникает вопрос: а можно ли в общем случае, как-то подверстать интеграл под исследование суммы ряда?
+
+\subsection*{Формула Эйлера}
+\begin{prop}(\textbf{Формула Эйлера})
+	Пусть $f \in C^1[1,+\infty)$ ($C^1 = $ непрерывно дифференцируемая функция), тогда верно следующее равенство:
+	$$
+		\sum\limits_{n = M}^{N}f(n) = f(M) + \int\limits_{M}^{N}f(x)dx + \int\limits_{M}^{N}\{x\}{\cdot}f^\prime(x)dx
+	$$
+	где $\{x\}$ - дробная часть $x$ и $M,N \in \MN$.
+\end{prop}
+\begin{proof}
+	Проверим, что формула верна. Пусть $k \in \MN$, рассмотрим следующее слагаемое:
+	$$
+		\int\limits_{k}^{k+1}\{x\}f^\prime(x)dx = \ddint{k}{k+1}(x-k)f^\prime(x)dx = f(k+1) - \ddint{k}{k+1}f(x)dx
+	$$
+	где последнее равенство верно в силу интегрирования по частям. Перепишем полученное выражение:
+	$$
+		f(k+1) = \ddint{k}{k+1}f(x)dx + \ddint{k}{k+1}\{x\}f^\prime(x)dx
+	$$
+	Просуммируем все такие выражения по $k$ от $M$ до $N-1$, тогда мы получим:
+	$$
+		\sum\limits_{k = M}^{N-1}f(k+1) = \sum\limits_{n = M}^{N}f(n) - f(M) \Rightarrow
+	$$
+	$$
+		\Rightarrow \sum\limits_{n = M}^{N}f(n) - f(M) = \ddint{M}{M+1} f(x)dx + \dotsc + \ddint{N-1}{N}f(x)dx + \ddint{M}{M+1}\{x\}f^\prime(x)dx + \dotsc + \ddint{N-1}{N}\{x\}f^\prime(x)dx
+	$$
+	В силу аддитивности интегралов,  мы получим требуемую формулу:
+	$$
+		\sum\limits_{n = M}^{N}f(n) = f(M) + \ddint{M}{N}f(x)dx + \ddint{M}{N}\{x\}f^\prime(x)dx
+	$$
+\end{proof}
+
+\textbf{Пример}: Рассмотрим сумму $\sum\limits_{n=1}^N \cos{(n^\alpha)}, \, 0 < \alpha < 1$. Применим формулу Эйлера:
+$$
+	\sum\limits_{n=1}^N \cos{(n^\alpha)} = \cos{(1)} + \ddint{1}{N}\cos{(x^\alpha)}dx - \alpha \ddint{1}{N}\{x\}\dfrac{\sin{(x^\alpha)}}{x^{1 - \alpha}}dx
+$$
+Оценим последний интеграл по модулю: вносим модуль под интеграл, $\{x\} \leq 1$, $\sin{x} \leq 1$, тогда:
+$$
+	\alpha \left| \ddint{1}{N}\{x\}\dfrac{\sin{(x^\alpha)}}{x^{1 - \alpha}}dx \right| \leq \alpha \ddint{1}{N}\dfrac{dx}{x^{1-\alpha}} = N^\alpha - 1 \leq N^\alpha
+$$ 
+Оценим первый интеграл. Сделаем замену $t = x^\alpha, \, x = t^{1/\alpha}, \, dx = \dfrac{1}{\alpha} t^{(1/\alpha)-1}dt$:
+$$
+	\ddint{1}{N}\cos{(x^\alpha)}dx = \dfrac{1}{\alpha}\ddint{1}{N^\alpha}(\cos{t}){\cdot}t^{(1/\alpha) - 1}dt = \dfrac{1}{\alpha}\ddint{1}{N^\alpha}\dfrac{d(\sin{t})}{t^{1 - (1/\alpha)}}
+$$
+$$
+	\ddint{1}{N^\alpha}\dfrac{d(\sin{t})}{t^{1 - 1/\alpha}} = \dfrac{\sin{N^\alpha}}{N^{\alpha - 1}} - \dfrac{\sin{1^\alpha}}{1} + \left(1 - \dfrac{1}{\alpha}\right)\ddint{1}{N^\alpha}\dfrac{\sin{t}}{t^{2 - 1/\alpha}}dt \leq CN^{1- \alpha}
+$$
+Таким образом, мы получили оценку сверху:
+$$
+	\sum\limits_{n=1}^N \cos{(n^\alpha)} \leq C_1 + CN^{1 - \alpha} + N^\alpha \leq C_2\left(1 + N^{1 - \alpha} + N^\alpha\right)
+$$
+Например, при $\alpha = \frac{1}{2}$ мы получим:
+$$
+	\sum\limits_{n=1}^N \cos{(\sqrt{n})} \leq C\sqrt{N}
+$$
+
+Таким образом, понять просто так поведение суммы ряда - крайне затруднительно, если реально. После применения формулы Эйлера появляются все технологии, которые используются в интегральном исчислении. И обычно, с интегралами разбираться гораздо проще, чем с суммами.
+
+\subsection*{Сходимость несобственных интегралов в общем случае}
+Обсудив сходимость с неотрицательными слагаемыми, возникает вопрос, а что делать в общей ситуации? В общей ситуации с рядми производились преобразования Абеля. 
+\begin{rem}
+	Стоит отметить, что преобразование Абеля важнее, чем признаки Абеля-Дирихле (следствие этого преобразования), поскольку часто ``зазор'' проходит в задачах о сходимости не там, где указано в этих признаках.
+\end{rem}
+В несобственных интегралах аналогом преобразования Абеля является интегрирование по частям. В следующий раз, мы на этом остановимся подробнее.
+
+\textbf{Пример}: рассмотрим интеграл: $\ddint{1}{+\infty}\dfrac{\sin{x}}{x}dx$. Надо понять сходится или нет? 
+\begin{proof}
+	Сходу дать ответ на вопрос сложно, поскольку не хватает $\dfrac{1}{x}$. Хотим усилить сходимость, поэтому используем интегрирование по частям:
+	$$
+		\ddint{1}{+\infty}\dfrac{\sin{x}}{x}dx = \lim\limits_{c \to +\infty} \ddint{1}{c}\dfrac{\sin{x}}{x}dx = -\lim\limits_{c \to +\infty} \ddint{1}{c}\dfrac{d \cos{x}}{x} = - \lim\limits_{c \to +\infty} \left.\dfrac{\cos{x}}{x}\right|_{1}^{c} - \ddint{1}{c}\dfrac{\cos{x}}{x^2}dx
+	$$
+	Пока что не умеем доказывать сходимость последнего интеграла, но в это уже не сложно поверить.
+\end{proof}
+
+
+\subsection*{Критерий Коши}
+Несобственный интеграл от $a$ до $b$ это предел функции:
+$$
+	\ddint{a}{b}f(x)dx =\lim\limits_{c \to b-}\ddint{a}{c}f(x)dx = \lim\limits_{c \to b-}F(c)
+$$
+Кроме случая, когда функция монотонна и там работает теорема Вейерштрасса из первого семестра есть ещё критерий Коши:
+
+\begin{theorem}(\textbf{Критерий Коши})
+	Несобственный интеграл сходится, а значит и предел функции $F(c)$ существует, если выполнен критерий Коши:
+	$$
+		\ddint{a}{b}f(x)dx = \lim\limits_{c \to b-}F(c) < \infty \Leftrightarrow \forall \VE > 0, \, \exists \, \delta > 0, \, \forall c_1, c_2 \in (b -\delta,b), \, \left|F(c_1) - F(c_2)\right| = \left|\ddint{c_1}{c_2}f(x)dx \right| < \VE
+	$$
+	Если $b = \infty$, то берем $c_1, c_2 > A$, где $A < \infty$.
+\end{theorem}
+
+\begin{rem}
+	Чаще всего критерий Коши нужен в двух местах: на лекции, для доказательств и в решении задач, при отрицательной части. То есть для доказательства того, что интеграл не сходится. Например, функции ``плохеет'' на каких-то отрезках, и следовательно оценивать лучше на этих отрезках.
+\end{rem}
+
+\begin{prop}
+	Пусть $f \colon [a,b) \to \MR, \, \forall c \in [a,b)$ интегрируема по Риману на $[a,c]$. Тогда: 
+	$$
+		\ddint{a}{b}\left|f(x)\right|dx \text{ - сходится} \Rightarrow \ddint{a}{b}f(x)dx \text{ - сходится}
+	$$
+\end{prop}
+\begin{proof}
+	Проверим критерий Коши:
+	$$
+		\left|\ddint{c_1}{c_2}f(x)dx \right| \leq \ddint{c_1}{c_2}\left|f(x)\right|dx
+	$$
+	Интеграл модуля сходится, поэтому:
+	$$
+		\forall \VE > 0, \, \exists \, \delta > 0, \, \forall c_1, c_2 \in (b -\delta,b), \,  \left|\ddint{c_1}{c_2}\left|f(x) \right| dx \right| = \ddint{c_1}{c_2}\left|f(x)\right|dx < \VE \Rightarrow \left|\ddint{c_1}{c_2}f(x)dx \right| < \VE
+	$$
+\end{proof}
+\end{document}
